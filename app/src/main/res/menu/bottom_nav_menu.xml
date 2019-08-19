@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_food"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="식단관리" />
+
+    <item
+        android:id="@+id/navigation_recommend"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="추천" />
+
+    <item
+        android:id="@+id/navigation_restaurant"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="레스토랑" />
+    <item
+        android:id="@+id/navigation_mypage"
+        android:icon="@drawable/ic_profile_24dp"
+        android:title="마이페이지" />
+
+</menu>
