@@ -6,6 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/search_restaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="" />
+
+    <Button
+        android:id="@+id/search_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="검색하기" />
+
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
