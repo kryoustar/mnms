@@ -17,16 +17,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
+
 import java.util.ArrayList;
 
 public class RestaurantListFragment extends Fragment  {
-    @Nullable
+    //@Nullable
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -82,6 +77,7 @@ public class RestaurantListFragment extends Fragment  {
 
 
         });
+        cursor.close();
         return view;
        // return inflater.inflate(R.layout.restaurantlist_view,container,false);
     }
