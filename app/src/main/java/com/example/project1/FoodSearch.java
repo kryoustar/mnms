@@ -1,5 +1,4 @@
 package com.example.project1;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;

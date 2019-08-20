@@ -1,5 +1,4 @@
 package com.example.project1;
-
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
