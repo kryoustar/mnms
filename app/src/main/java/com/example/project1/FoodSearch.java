@@ -56,6 +56,10 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
         boolean isDinner = (boolean) intent.getBooleanExtra("isDinner",false);
         boolean isSnack = (boolean) intent.getBooleanExtra("isSnack",false);
 
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference conditionRef = mRootRef.child("UserId");
+        TextView breakfastView;
+
         String search = searchText.getText().toString(); //검색 받아옴
          String sql;
         SQLiteDatabase db;   // db를 다루기 위한 SQLiteDatabase 객체 생성
@@ -89,60 +93,61 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String uid = user.getUid();
-                dbRef = database.getReference("/User");
-                //dbRef.child(uid).child("Meal").child("date")
-                if (isBreakfast){
-                    dbRef.child(uid).child("Meal").child(date).child("Breakfast").setValue(foodnumber[position]);
-                    //dbRef.child(date).child("Breakfast").setValue(result[position])
-                    //isBreakfast = false;
-                    boolean BreakfastFlag = false;
-                    bundle.putBoolean("BreakfastFlag",BreakfastFlag);
-                    foodListFragment.setArguments(bundle);
-                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
-                    startActivity(gobackIntent);
+                if(user != null) {
+                    String uid = user.getUid();
+                    dbRef = database.getReference("/User");
+                    //dbRef.child(uid).child("Meal").child("date")
+                    if (isBreakfast) {
+                        dbRef.child(uid).child("Meal").child(date).child("Breakfast").setValue(foodnumber[position]);
+                        //dbRef.child(date).child("Breakfast").setValue(result[position])
+                        //isBreakfast = false;
+                        boolean BreakfastFlag = false;
+                        bundle.putBoolean("BreakfastFlag", BreakfastFlag);
+                        foodListFragment.setArguments(bundle);
 
-                    // fragment 나가기
-                }
-                else if (isLunch){
-                    dbRef.child(uid).child("Meal").child(date).child("Lunch").setValue(foodnumber[position]);
-                    boolean LunchFlag = false;
-                    bundle.putBoolean("LunchFlag",LunchFlag);
-                    foodListFragment.setArguments(bundle);
-                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
-                    startActivity(gobackIntent);
+                        gobackIntent();
 
-                }
-                else if (isDinner){
-                    dbRef.child(uid).child("Meal").child(date).child("Dinner").setValue(foodnumber[position]);
-                    boolean DinnerFlag = false;
-                    bundle.putBoolean("DinnerFlag",DinnerFlag);
-                    foodListFragment.setArguments(bundle);
-                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
-                    startActivity(gobackIntent);
+                        // fragment 나가기
+                    } else if (isLunch) {
+                        dbRef.child(uid).child("Meal").child(date).child("Lunch").setValue(foodnumber[position]);
+                        boolean LunchFlag = false;
+                        bundle.putBoolean("LunchFlag", LunchFlag);
+                        foodListFragment.setArguments(bundle);
+                        gobackIntent();
+
+                    } else if (isDinner) {
+                        dbRef.child(uid).child("Meal").child(date).child("Dinner").setValue(foodnumber[position]);
+                        boolean DinnerFlag = false;
+                        bundle.putBoolean("DinnerFlag", DinnerFlag);
+                        foodListFragment.setArguments(bundle);
+                        gobackIntent();
 
 
+                    } else if (isSnack) {
+                        dbRef.child(uid).child("Meal").child(date).child("Snack").setValue(foodnumber[position]);
+                        boolean SnackFlag = false;
+                        bundle.putBoolean("SnackFlag", SnackFlag);
+                        foodListFragment.setArguments(bundle);
+                        gobackIntent();
+                    } else { //error
+                        Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
+                        startActivity(gobackIntent);
+                    }
                 }
-                else if (isSnack) {
-                    dbRef.child(uid).child("Meal").child(date).child("Snack").setValue(foodnumber[position]);
-                    boolean SnackFlag = false;
-                    bundle.putBoolean("SnackFlag",SnackFlag);
-                    foodListFragment.setArguments(bundle);
-                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
-                    startActivity(gobackIntent);
+                else { //로그인 되어있지 않을 경우
+                    Toast.makeText(getApplicationContext(), "로그인 후에 사용할 수 있습니다.", Toast.LENGTH_LONG).show();
+                    Intent gotoLogin = new Intent(FoodSearch.this, LoginActivity.class);
+                    startActivity(gotoLogin);
                 }
-                else{ //error
-                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
-                    startActivity(gobackIntent);
-                //    Toast.makeText(getApplicationContext(),((TextView)view).getText(),Toast.LENGTH_SHORT).show();
-                }
-                //Map<String, Object> childUpdates = new HashMap<>();
-              // childUpdates.put("Date/breakfast",result[position]);
-               // dbRef.child(result[position]);
+
             }
         });
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
         listView.setAdapter(adapter);   // listView 객체에 Adapter를 붙인다
+    }
+    public void gobackIntent(){
+        Intent intent = new Intent(FoodSearch.this, BottomActivity.class);
+        startActivity(intent);
     }
 }
 

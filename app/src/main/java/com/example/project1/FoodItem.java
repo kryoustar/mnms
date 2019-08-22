@@ -1,19 +1,122 @@
 package com.example.project1;
 
-public class FoodItem {
-    private String FoodName;
-    //탄수화물 지방 단백질 나트륨
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
-    public String getFoodName(){
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+public class FoodItem {
+    //탄수화물 지방 단백질 나트륨
+    //number type name amount kcal carbs protein fat sugar natrium cholesterol saturatedfat transfat year
+    public int FoodNumber;
+    public String FoodName;
+    public int FoodAmount;
+    public float FoodKcal;
+    public float FoodCarbs;
+    public float FoodProtein;
+    public float FoodFat;
+    public float FoodSugar;
+    public float FoodNatrium;
+    public float FoodCholesterol;
+    public float FoodSaturatedfat;
+    public float FoodTransfat;
+    /*public static void main(String[] args){
+        FoodItem foodItem = new FoodItem();
+        foodItem.FoodItemSearch(Integer index);
+    }*/
+    public int getFoodNumber() {
+        return FoodNumber;
+    }
+
+    public String getFoodName() {
         return FoodName;
     }
 
-
-
-
-
-
-    public FoodItem(String foodName){
-       this.FoodName = foodName;
+    public int getFoodAmount() {
+        return FoodAmount;
     }
+
+    public float getFoodKcal() {
+        return FoodKcal;
+    }
+
+    public float getFoodCarbs() {
+        return FoodCarbs;
+    }
+
+    public float getFoodProtein() {
+        return FoodProtein;
+    }
+
+    public float getFoodFat() {
+        return FoodFat;
+    }
+
+    public float getFoodSugar() {
+        return FoodSugar;
+    }
+
+    public float getFoodNatrium() {
+        return FoodNatrium;
+    }
+
+    public float getFoodCholesterol() {
+        return FoodCholesterol;
+    }
+
+    public float getFoodSaturatedfat() {
+        return FoodSaturatedfat;
+    }
+
+    public float getFoodTransfat() {
+        return FoodTransfat;
+    }
+
+
+    public FoodItem(int FoodNumber, String FoodName, int FoodAmount, float FoodKcal, float FoodCarbs,
+                    float FoodProtein, float FoodFat, float FoodSugar, float FoodNatrium,
+                    float FoodCholesterol, float FoodSaturatedfat, float FoodTransfat) {
+        this.FoodNumber = FoodNumber;
+        this.FoodName = FoodName;
+        this.FoodAmount = FoodAmount;
+        this.FoodKcal = FoodKcal;
+        this.FoodCarbs = FoodCarbs;
+        this.FoodProtein = FoodProtein;
+        this.FoodFat = FoodFat;
+        this.FoodNatrium = FoodNatrium;
+        this.FoodCholesterol = FoodCholesterol;
+        this.FoodSaturatedfat = FoodSaturatedfat;
+        this.FoodTransfat = FoodTransfat;
+    }
+
+
+    public static FoodItem FoodItemSearch(Integer keyIndex, Context context) {
+        Context myContext = context;
+        String sql;
+        SQLiteDatabase db;   // db를 다루기 위한 SQLiteDatabase 객체 생성
+        Cursor c;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
+        db = myContext.openOrCreateDatabase("nutrients.db", android.content.Context.MODE_PRIVATE, null);
+        sql = "select * from tb_nutrients where number = " + keyIndex;
+        c = db.rawQuery(sql, null);
+        c.moveToNext();
+        int number = c.getInt(0);
+        String name = c.getString(2);
+        int amount = c.getInt(3);
+        float kcal = c.getFloat(4);
+        float carbs = c.getFloat(5);
+        float protein = c.getFloat(6);
+        float fat = c.getFloat(7);
+        float sugar = c.getFloat(8);
+        float natrium = c.getFloat(9);
+        float cholesterol = c.getFloat(10);
+        float saturatedfat = c.getFloat(11);
+        float transfat = c.getFloat(12);
+
+        FoodItem foodItem = new FoodItem(number, name, amount, kcal, carbs, protein,
+                fat, sugar, natrium, cholesterol, saturatedfat, transfat);
+        return foodItem;
+    }
+
 }

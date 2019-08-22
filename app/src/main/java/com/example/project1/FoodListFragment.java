@@ -3,6 +3,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,8 +13,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class FoodListFragment extends Fragment{
@@ -50,87 +54,126 @@ public class FoodListFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.food_list,container,false);
+        breakfastView = view.findViewById(R.id.breakfast_list);
+        lunchView = view.findViewById(R.id.lunch_list);
+        dinnerView = view.findViewById(R.id.dinner_list);
+        snackView = view.findViewById(R.id.snack_list);
+        //nutrientView = view.findViewById(R.id.n)
+        Button selectDateButton = view.findViewById(R.id.btnDate);
+
+
+        //날짜 지정
         Date time = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String date = format.format(time);
+
+        Calendar selectedCal = Calendar.getInstance();
+
+        selectDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int todayYear = calendar.get(Calendar.YEAR);
+                int todayMonth = calendar.get(Calendar.MONTH);
+                int todayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                //DatePickerDialog dialog = new DatePickerDialog(this,listener,2013,9,22);
+                // dialog.show();
+                //private DatePickerDialog.OnDateSetListener listener =
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                selectDateButton.setText((month + 1) + "/" + day  + "/" + year);
+                               // selectedCal.set(Calendar.YEAR,year);
+                                //selectedCal.set(Calendar.MONTH,month);
+                               // selectedCal.set(Calendar.DAY_OF_MONTH,day);
+                               // selectedCal.toString();
+                                //System.out.println(selectedCal);
+
+                            }
+                        }, todayYear, todayMonth, todayOfMonth);
+                datePickerDialog.show();
+            }
+        });
+        //selectedCal.toString();
+
+
         DatabaseReference Database = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-
-        DatabaseReference ConditionRef = Database.child("User")
-                .child(uid).child("Meal")
-                .child(date);
+        if(user !=null) {
 
 
+            String uid = user.getUid();
 
-        breakfastView = view.findViewById(R.id.breakfast_list);
+            DatabaseReference ConditionRef = Database.child("User")
+                    .child(uid).child("Meal")
+                    .child(date);
 
-        ConditionRef.child("Breakfast").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Integer breakfastIndex = dataSnapshot.getValue(Integer.class);
-                if(breakfastIndex !=null){
-                    FoodItem breakfastItem = FoodItemSearch(breakfastIndex);
-                    breakfastView.setText(breakfastItem.getFoodName());
+
+            ConditionRef.child("Breakfast").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Integer breakfastIndex = dataSnapshot.getValue(Integer.class);
+                    if (breakfastIndex != null) {
+                        FoodItem breakfastItem = FoodItem.FoodItemSearch(breakfastIndex,getActivity());
+                        breakfastView.setText(breakfastItem.getFoodName());
+                    }
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
 
-        lunchView = view.findViewById(R.id.lunch_list);
-        ConditionRef.child("Lunch").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Integer lunchIndex = dataSnapshot.getValue(Integer.class);
-                if(lunchIndex !=null){
-                    FoodItem lunchItem = FoodItemSearch(lunchIndex);
-                    lunchView.setText(lunchItem.getFoodName());
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
-            }
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        dinnerView = view.findViewById(R.id.dinner_list);
-        ConditionRef.child("Dinner").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Integer dinnerIndex = dataSnapshot.getValue(Integer.class);
-                if(dinnerIndex !=null){
-                    FoodItem dinnerItem = FoodItemSearch(dinnerIndex);
-                    dinnerView.setText(dinnerItem.getFoodName());
+            ConditionRef.child("Lunch").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Integer lunchIndex = dataSnapshot.getValue(Integer.class);
+                    if (lunchIndex != null) {
+                        FoodItem lunchItem = FoodItem.FoodItemSearch(lunchIndex,getActivity());
+                        lunchView.setText(lunchItem.getFoodName());
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        snackView = view.findViewById(R.id.snack_list);
-        ConditionRef.child("Snack").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Integer snackIndex = dataSnapshot.getValue(Integer.class);
-                if(snackIndex != null){
-                    FoodItem snackItem = FoodItemSearch(snackIndex);
-                    snackView.setText(snackItem.getFoodName());
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            }
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            ConditionRef.child("Dinner").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Integer dinnerIndex = dataSnapshot.getValue(Integer.class);
+                    if (dinnerIndex != null) {
+                        FoodItem dinnerItem = FoodItem.FoodItemSearch(dinnerIndex,getActivity());
+                        dinnerView.setText(dinnerItem.getFoodName());
+                    }
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                }
+            });
+
+            ConditionRef.child("Snack").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Integer snackIndex = dataSnapshot.getValue(Integer.class);
+                    if (snackIndex != null) {
+                        FoodItem snackItem = FoodItem.FoodItemSearch(snackIndex,getActivity());
+                        snackView.setText(snackItem.getFoodName());
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
 
 
 
@@ -160,7 +203,8 @@ public class FoodListFragment extends Fragment{
         dinner_add = view.findViewById(R.id.dinner_add);
         snack_add = view.findViewById(R.id.snack_add);
         Intent intent = new Intent(getActivity(), FoodSearch.class);
-        intent.putExtra("Date",date);
+
+        intent.putExtra("Date",selectedCal);
 
         breakfast_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,17 +244,6 @@ public class FoodListFragment extends Fragment{
 
 
         return view;
-    }
-    public FoodItem FoodItemSearch(Integer keyIndex){
-        String sql;
-        SQLiteDatabase db;   // db를 다루기 위한 SQLiteDatabase 객체 생성
-        Cursor c;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
-        db = getActivity().openOrCreateDatabase("nutrients.db",android.content.Context.MODE_PRIVATE,null);
-        sql = "select * from tb_nutrients where number = " +keyIndex;
-        c = db.rawQuery(sql, null);
-        c.moveToNext();
-        FoodItem foodItem = new FoodItem(c.getString(2));
-        return foodItem;
     }
 
 }
