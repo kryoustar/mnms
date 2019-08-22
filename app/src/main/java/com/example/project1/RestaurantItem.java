@@ -7,6 +7,12 @@ public class RestaurantItem {
     private String RestaurantPhoneNumber;
     private String RestaurantOpeningHours;
 
+
+    public int getNumber(){
+
+        return Number;
+    }
+
     public void setNumber(int number) {
         Number = number;
     }
@@ -42,8 +48,6 @@ public class RestaurantItem {
     public void setRestaurantOpeningHours(String restaurantOpeningHours) {
         RestaurantOpeningHours = restaurantOpeningHours;
     }
-
-
 
     public RestaurantItem(int Number, String RestaurantName, String RestaurantAddress, String RestaurantPhoneNumber, String RestaurantOpeningHours){
         this.Number = Number;

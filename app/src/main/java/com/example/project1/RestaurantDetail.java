@@ -55,9 +55,9 @@ public class RestaurantDetail extends AppCompatActivity {
         tvResAdd.setText(intent.getStringExtra("Restaurant Address"));
         tvResPhone.setText(intent.getStringExtra("Restaurant Phone Number"));
         tvResOpen.setText(intent.getStringExtra("Restaurant Opening Hours"));
-        FirebaseApp.initializeApp(this);/////??
+        FirebaseApp.initializeApp(this);
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image1.jpg");
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_"+getIntent().getIntExtra("Restaurant Number", 0)+".jpg");
         try {
             final File localFile = File.createTempFile("images", "jpg");
             storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -73,7 +73,10 @@ public class RestaurantDetail extends AppCompatActivity {
                 public void onFailure(@NonNull Exception exception) {
                 }
             });
-        } catch (IOException e ) {}
+        }
+
+        catch (IOException e ) {}
+        /*
         final long ONE_MEGABYTE = 1024 * 1024;
         storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
@@ -82,7 +85,7 @@ public class RestaurantDetail extends AppCompatActivity {
                 ImageView myImage = (ImageView) findViewById(R.id.image);
                 myImage.setImageBitmap(bitmap);
             }
-        });
+        });*/
     }
 
 }
