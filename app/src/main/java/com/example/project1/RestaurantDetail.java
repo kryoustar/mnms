@@ -39,7 +39,6 @@ import java.nio.file.Path;
 
 public class RestaurantDetail extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

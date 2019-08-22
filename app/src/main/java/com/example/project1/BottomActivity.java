@@ -1,21 +1,15 @@
 package com.example.project1;
-import android.content.Intent;
+
 import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import android.view.MenuItem;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-//import andorid.support.v7.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.FragmentManager;
 
 public class BottomActivity extends AppCompatActivity {
    private TextView mTextMessage;
-//
+
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FoodListFragment foodListFragment= new FoodListFragment();
     private RecommendMainFragment recommendMainFragment = new RecommendMainFragment();
