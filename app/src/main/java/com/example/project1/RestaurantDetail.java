@@ -19,7 +19,6 @@ import java.io.IOException;
 
 public class RestaurantDetail extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
