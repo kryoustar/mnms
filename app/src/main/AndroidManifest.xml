@@ -22,6 +22,9 @@
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".RegistrationActivity"></activity>
         <activity android:name=".SelectVeganism"></activity>
+        <activity android:name=".PersonalInfo"></activity>
+        <activity android:name=".CalendarActivity"></activity>
+        
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
