@@ -4,18 +4,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -64,12 +61,10 @@ public class FoodListFragment extends Fragment{
 
 
         //날짜 지정
-        Date time = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String date = format.format(time);
-
+        //Date time = new Date();
+       // SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        //String date = format.format(time);
         Calendar selectedCal = Calendar.getInstance();
-
         selectDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,109 +72,127 @@ public class FoodListFragment extends Fragment{
                 int todayYear = calendar.get(Calendar.YEAR);
                 int todayMonth = calendar.get(Calendar.MONTH);
                 int todayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-                //DatePickerDialog dialog = new DatePickerDialog(this,listener,2013,9,22);
-                // dialog.show();
-                //private DatePickerDialog.OnDateSetListener listener =
+
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                 selectDateButton.setText((month + 1) + "/" + day  + "/" + year);
-                               // selectedCal.set(Calendar.YEAR,year);
-                                //selectedCal.set(Calendar.MONTH,month);
-                               // selectedCal.set(Calendar.DAY_OF_MONTH,day);
-                               // selectedCal.toString();
-                                //System.out.println(selectedCal);
+                                selectedCal.set(Calendar.YEAR,year);
+                                selectedCal.set(Calendar.MONTH,month);
+                                selectedCal.set(Calendar.DAY_OF_MONTH,day);
+
+                            }
+                            public void onOkay(DialogInterface dialog){
 
                             }
                         }, todayYear, todayMonth, todayOfMonth);
+
                 datePickerDialog.show();
+                ;
             }
         });
-        //selectedCal.toString();
+
+
+        String date;
+        String year = Integer.toString(selectedCal.get(Calendar.YEAR));
+        String month = Integer.toString(selectedCal.get(Calendar.MONTH)+1);
+        String day = Integer.toString(selectedCal.get(Calendar.DATE));
+        date = year + "-" + month + "-" + day;
+
 
         DatabaseReference Database = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user !=null) {
+        if(user ==null) {
+            gotoLogin();
+        }
+        String uid = user.getUid();
 
-
-            String uid = user.getUid();
-
-            DatabaseReference ConditionRef = Database.child("User")
+        DatabaseReference ConditionRef = Database.child("User")
                     .child(uid).child("Meal")
                     .child(date);
 
 
-            ConditionRef.child("Breakfast").addValueEventListener(new ValueEventListener() {
+        ConditionRef.child("Breakfast").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Integer breakfastIndex = dataSnapshot.getValue(Integer.class);
-                    if (breakfastIndex != null) {
-                        FoodItem breakfastItem = FoodItem.FoodItemSearch(breakfastIndex,getActivity());
-                        breakfastView.setText(breakfastItem.getFoodName());
+                    String breakfastItemList =null;
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        Integer breakfastIndex = snapshot.getValue(Integer.class);
+                        if(breakfastIndex !=null){
+                            FoodItem breakfastItem = FoodItem.FoodItemSearch(breakfastIndex,getActivity());
+                            breakfastItemList = breakfastItemList +"\n"+ breakfastItem.getFoodName();
+                        }
                     }
+                    breakfastView.setText(breakfastItemList);
+
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
-            });
+        });
 
-            ConditionRef.child("Lunch").addValueEventListener(new ValueEventListener() {
+        ConditionRef.child("Lunch").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Integer lunchIndex = dataSnapshot.getValue(Integer.class);
-                    if (lunchIndex != null) {
-                        FoodItem lunchItem = FoodItem.FoodItemSearch(lunchIndex,getActivity());
-                        lunchView.setText(lunchItem.getFoodName());
+                    String lunchItemList =null;
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        Integer breakfastIndex = snapshot.getValue(Integer.class);
+                        if(breakfastIndex !=null){
+                            FoodItem breakfastItem = FoodItem.FoodItemSearch(breakfastIndex,getActivity());
+                            lunchItemList = lunchItemList +"\n"+ breakfastItem.getFoodName();
+                        }
                     }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            ConditionRef.child("Dinner").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Integer dinnerIndex = dataSnapshot.getValue(Integer.class);
-                    if (dinnerIndex != null) {
-                        FoodItem dinnerItem = FoodItem.FoodItemSearch(dinnerIndex,getActivity());
-                        dinnerView.setText(dinnerItem.getFoodName());
-                    }
+                    lunchView.setText(lunchItemList);
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            });
+        });
 
-            ConditionRef.child("Snack").addValueEventListener(new ValueEventListener() {
+        ConditionRef.child("Dinner").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Integer snackIndex = dataSnapshot.getValue(Integer.class);
-                    if (snackIndex != null) {
-                        FoodItem snackItem = FoodItem.FoodItemSearch(snackIndex,getActivity());
-                        snackView.setText(snackItem.getFoodName());
-
+                    String dinnerItemList =null;
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        Integer breakfastIndex = snapshot.getValue(Integer.class);
+                        if(breakfastIndex !=null){
+                            FoodItem breakfastItem = FoodItem.FoodItemSearch(breakfastIndex,getActivity());
+                            dinnerItemList = dinnerItemList +"\n"+ breakfastItem.getFoodName();
+                        }
                     }
+                    dinnerView.setText(dinnerItemList);
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            });
-        }
+        });
 
-      //  if (user == null){
-     //       Toast.makeText(getActivity(), "로그인 이후 사용하실 수 있습니다.", Toast.LENGTH_SHORT).show();
-     //       Intent gotoLogin = new Intent(getActivity(), LoginActivity.class);
-      //      startActivity(gotoLogin);
-    //    }
+        ConditionRef.child("Snack").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String snackItemList ="";
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        Integer breakfastIndex = snapshot.getValue(Integer.class);
+                        if(breakfastIndex !=null){
+                            FoodItem breakfastItem = FoodItem.FoodItemSearch(breakfastIndex,getActivity());
+                            snackItemList = snackItemList +"\n"+ breakfastItem.getFoodName();
+                        }
+                    }
+                    snackView.setText(snackItemList);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+        });
+
         Button breakfast_add;
         Button lunch_add;
         Button dinner_add;
