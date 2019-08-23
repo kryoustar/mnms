@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.os.Bundle;
 import android.view.View;
@@ -174,8 +175,11 @@ public class FoodListFragment extends Fragment{
             });
         }
 
-
-
+      //  if (user == null){
+     //       Toast.makeText(getActivity(), "로그인 이후 사용하실 수 있습니다.", Toast.LENGTH_SHORT).show();
+     //       Intent gotoLogin = new Intent(getActivity(), LoginActivity.class);
+      //      startActivity(gotoLogin);
+    //    }
         Button breakfast_add;
         Button lunch_add;
         Button dinner_add;
@@ -208,41 +212,76 @@ public class FoodListFragment extends Fragment{
         breakfast_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isBreakfast = true;
-                intent.putExtra("isBreakfast",isBreakfast);
-                startActivity(intent);
+                if(Login.isLogin(user)){
+                    isBreakfast = true;
+                    intent.putExtra("isBreakfast", isBreakfast);
+                    startActivity(intent);
+                }
+                else {
+                    gotoLogin();
+                }
             }
         });
 
         lunch_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isLunch = true;
-                intent.putExtra("isLunch",isLunch);
-                startActivity(intent);
+                if(Login.isLogin(user)) {
+                    isLunch = true;
+                    intent.putExtra("isLunch", isLunch);
+                    startActivity(intent);
+                }
+                else {
+                    gotoLogin();
+                }
             }
         });
 
         dinner_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isDinner = true;
-                intent.putExtra("isDinner",isDinner);
-                startActivity(intent);
+                if(Login.isLogin(user)){
+                    isDinner = true;
+                    intent.putExtra("isDinner",isDinner);
+                    startActivity(intent);
+                }
+                else{
+                    gotoLogin();
+
+                }
             }
         });
 
         snack_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isSnack = true;
-                intent.putExtra("isSnack",isSnack);
-                startActivity(intent);
+                if(Login.isLogin(user)) {
+                    isSnack = true;
+                    intent.putExtra("isSnack",isSnack);
+                    startActivity(intent);
+
+                }
+                else{
+                    gotoLogin();
+                }
             }
         });
+
+
 
 
         return view;
     }
 
+    public void gotoLogin(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null){
+            Toast.makeText(getActivity(), "로그인 이후 사용하실 수 있습니다.", Toast.LENGTH_SHORT).show();
+            Intent gotoLogin = new Intent(getActivity(), LoginActivity.class);
+            startActivity(gotoLogin);
+        }
+
+    }
+
 }
+
