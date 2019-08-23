@@ -80,6 +80,7 @@ public class RestaurantListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Intent intent = new Intent(getActivity(), RestaurantDetail.class);
+                intent.putExtra("Restaurant Number", finalData.get(position).getNumber());
                 intent.putExtra("Restaurant Name", finalData.get(position).getRestaurantName());
                 intent.putExtra("Restaurant Address", finalData.get(position).getRestaurantAddress());
                 intent.putExtra("Restaurant Phone Number", finalData.get(position).getRestaurantPhoneNumber());
@@ -121,6 +122,7 @@ public class RestaurantListFragment extends Fragment {
                         @Override
                         public void onItemClick(AdapterView parent, View v, int position, long id) {
                             Intent intent = new Intent(getActivity(), RestaurantDetail.class);
+                            intent.putExtra("Restaurant Number", finalData2.get(position).getNumber());
                             intent.putExtra("Restaurant Name", finalData2.get(position).getRestaurantName());
                             intent.putExtra("Restaurant Address", finalData2.get(position).getRestaurantAddress());
                             intent.putExtra("Restaurant Phone Number", finalData2.get(position).getRestaurantPhoneNumber());

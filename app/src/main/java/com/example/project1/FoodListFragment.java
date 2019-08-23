@@ -97,7 +97,6 @@ public class FoodListFragment extends Fragment{
         });
         //selectedCal.toString();
 
-
         DatabaseReference Database = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user !=null) {
@@ -204,7 +203,7 @@ public class FoodListFragment extends Fragment{
         snack_add = view.findViewById(R.id.snack_add);
         Intent intent = new Intent(getActivity(), FoodSearch.class);
 
-        intent.putExtra("Date",selectedCal);
+        intent.putExtra("Date", date);
 
         breakfast_add.setOnClickListener(new View.OnClickListener() {
             @Override
