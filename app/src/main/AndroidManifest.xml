@@ -21,11 +21,8 @@
         </activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".RegistrationActivity"></activity>
-<<<<<<< HEAD
         <activity android:name=".PersonalInfo"></activity>
-=======
         <activity android:name=".CalendarActivity"></activity>
->>>>>>> remotes/origin/master
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
