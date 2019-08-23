@@ -74,7 +74,9 @@ public class MypageMainFragment extends Fragment {
                             break;
 
                         case 2: //개인정보
-                            Toast.makeText(getContext(), items.get(position)+"", Toast.LENGTH_SHORT).show();
+                            Intent Intent = new Intent(getActivity(), PersonalInfo.class);
+                            startActivity(Intent);
+                            //Toast.makeText(getContext(), items.get(position)+"", Toast.LENGTH_SHORT).show();
                             break;
 
                         case 3: //로그아웃

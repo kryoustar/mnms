@@ -21,8 +21,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;
     private ProgressBar progressBar;
     private Button registerBtn;
-
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginUserAccount();
             }
         });
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
