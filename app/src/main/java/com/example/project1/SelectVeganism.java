@@ -91,9 +91,7 @@ public class SelectVeganism extends AppCompatActivity {
                                 Toast.LENGTH_SHORT)
                                 .show();
                         dbRef.child(uid).child("Personal Info").child("Veganism Type").setValue(radioButton.getText().toString());
-                        Intent intent = new Intent(SelectVeganism.this, BottomActivity.class);
-                        intent.putExtra("VeganType", radioButton.getText().toString());
-                        startActivity(intent);
+                        onBackPressed();
 
 
                     }
