@@ -14,7 +14,7 @@ public class DatabaseManager extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference dbRef = database.getReference("/User");  //FromUrl("https://project1-cecd8.firebaseio.com/");
+        DatabaseReference dbRef = database.getReference("/User");
         DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date).child("Breakfast");
 
         if(tempRef == null){
@@ -29,7 +29,7 @@ public class DatabaseManager extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference dbRef = database.getReference("/User");  //FromUrl("https://project1-cecd8.firebaseio.com/");
+        DatabaseReference dbRef = database.getReference("/User");
         DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date).child("Lunch");
 
         if(tempRef == null){
@@ -58,7 +58,7 @@ public class DatabaseManager extends AppCompatActivity {
         String uid = user.getUid();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReference("/User");
-        DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date).child("Lunch");
+        DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date).child("Snack");
 
         if(tempRef == null){
             tempRef.setValue(foodNumber);
@@ -67,7 +67,4 @@ public class DatabaseManager extends AppCompatActivity {
             tempRef.push().setValue(foodNumber);
         }
     }
-
-
-
 }

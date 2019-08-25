@@ -36,8 +36,6 @@ import static android.content.Intent.getIntent;
 public class FoodListFragment extends Fragment {
 
 
-
-
     boolean isBreakfast;
     boolean isLunch;
     boolean isDinner;
@@ -51,6 +49,9 @@ public class FoodListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //if(getArguments() !=null){
+
+        //}
     }
 
     @Override
@@ -71,39 +72,6 @@ public class FoodListFragment extends Fragment {
             }
         });
 /*
-        //날짜 지정
-        //Date time = new Date();
-       // SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        //String date = format.format(time);
-        Calendar selectedCal = Calendar.getInstance();
-        selectDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar calendar = Calendar.getInstance();
-                int todayYear = calendar.get(Calendar.YEAR);
-                int todayMonth = calendar.get(Calendar.MONTH);
-                int todayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                selectDateButton.setText((month + 1) + "/" + day  + "/" + year);
-                                selectedCal.set(Calendar.YEAR,year);
-                                selectedCal.set(Calendar.MONTH,month);
-                                selectedCal.set(Calendar.DAY_OF_MONTH,day);
-
-                            }
-                            public void onOkay(DialogInterface dialog){
-
-                            }
-                        }, todayYear, todayMonth, todayOfMonth);
-
-                datePickerDialog.show();
-
-            }
-        });
-
 
         String date; //선택한 날짜
         String year = Integer.toString(selectedCal.get(Calendar.YEAR));
@@ -126,25 +94,23 @@ public class FoodListFragment extends Fragment {
         String date = format.format(time);*/
         // isBreakfast = bundle.getBoolean("BreakfastFlag",false);
 
-        String selectedYear, selectedMonth,selectedDay;
-       String date="";
+        String selectedYear, selectedMonth, selectedDay;
+        String date = "";
 
-        Bundle bundle = getActivity().getIntent().getExtras();
-        if(bundle == null){
+        Bundle bundle1 = getActivity().getIntent().getExtras();
+        if (bundle1 == null) {
             Calendar todayCal = Calendar.getInstance();
             String toYear = Integer.toString(todayCal.get(Calendar.YEAR));
-            String toMonth = Integer.toString(todayCal.get(Calendar.MONTH)+1);
+            String toMonth = Integer.toString(todayCal.get(Calendar.MONTH) + 1);
             String toDayofMonth = Integer.toString(todayCal.get(Calendar.DATE));
             date = toYear + "-" + toMonth + "-" + toDayofMonth;
             selectDateButton.setText(date);
-        }
-
-        else{
-            int yearselect = bundle.getInt("Selected Year");
+        } else {
+            int yearselect = bundle1.getInt("Selected Year");
             selectedYear = Integer.toString(yearselect);
-            int monthselect = bundle.getInt("Selected Month");
+            int monthselect = bundle1.getInt("Selected Month");
             selectedMonth = Integer.toString(monthselect);
-            int dayselect = bundle.getInt("Selected Day");
+            int dayselect = bundle1.getInt("Selected Day");
             selectedDay = Integer.toString(dayselect);
             date = selectedYear + "-" + selectedMonth + "-" + selectedDay;
             selectDateButton.setText(date);
@@ -153,15 +119,11 @@ public class FoodListFragment extends Fragment {
         DatabaseReference Database = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (user == null) {
-            gotoLogin();
-        }
-
         String uid = user.getUid();
 
         DatabaseReference ConditionRef = Database.child("User")
                 .child(uid).child("Meal")
-                .child(date);
+                .child("tryTemp");
 
 
         ConditionRef.child("Breakfast").addValueEventListener(new ValueEventListener() {
@@ -189,10 +151,10 @@ public class FoodListFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String lunchItemList = "";
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Integer breakfastIndex = snapshot.getValue(Integer.class);
-                    if (breakfastIndex != null) {
-                        FoodItem breakfastItem = FoodItem.FoodItemSearch(breakfastIndex, getActivity());
-                        lunchItemList = lunchItemList + "\n" + breakfastItem.getFoodName();
+                    Integer lunchIndex = snapshot.getValue(Integer.class);
+                    if (lunchIndex != null) {
+                        FoodItem lunchItem = FoodItem.FoodItemSearch(lunchIndex, getActivity());
+                        lunchItemList = lunchItemList + "\n" + lunchItem.getFoodName();
                     }
                 }
                 lunchView.setText(lunchItemList);
@@ -209,10 +171,10 @@ public class FoodListFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String dinnerItemList = "";
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Integer breakfastIndex = snapshot.getValue(Integer.class);
-                    if (breakfastIndex != null) {
-                        FoodItem breakfastItem = FoodItem.FoodItemSearch(breakfastIndex, getActivity());
-                        dinnerItemList = dinnerItemList + "\n" + breakfastItem.getFoodName();
+                    Integer dinnerIndex = snapshot.getValue(Integer.class);
+                    if (dinnerIndex != null) {
+                        FoodItem dinnerItem = FoodItem.FoodItemSearch(dinnerIndex, getActivity());
+                        dinnerItemList = dinnerItemList + "\n" + dinnerItem.getFoodName();
                     }
                 }
                 dinnerView.setText(dinnerItemList);
@@ -229,10 +191,10 @@ public class FoodListFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String snackItemList = "";
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Integer breakfastIndex = snapshot.getValue(Integer.class);
-                    if (breakfastIndex != null) {
-                        FoodItem breakfastItem = FoodItem.FoodItemSearch(breakfastIndex, getActivity());
-                        snackItemList = snackItemList + "\n" + breakfastItem.getFoodName();
+                    Integer snackIndex = snapshot.getValue(Integer.class);
+                    if (snackIndex != null) {
+                        FoodItem snackItem = FoodItem.FoodItemSearch(snackIndex, getActivity());
+                        snackItemList = snackItemList + "\n" + snackItem.getFoodName();
                     }
                 }
                 snackView.setText(snackItemList);
@@ -248,77 +210,91 @@ public class FoodListFragment extends Fragment {
         Button lunch_add;
         Button dinner_add;
         Button snack_add;
-        if (bundle == null) {
-            isBreakfast = false;
-            isLunch = false;
-            isDinner = false;
-            isSnack = false;
-        } else {
-            isBreakfast = bundle.getBoolean("BreakfastFlag", false);
-            isLunch = bundle.getBoolean("LunchFlag", false);
-            isDinner = bundle.getBoolean("DinnerFlag", false);
-            isSnack = bundle.getBoolean("SnackFlag", false);
-        }
-
-
-        //setTitle("식단관리");
-
 
         breakfast_add = view.findViewById(R.id.breakfast_add);
         lunch_add = view.findViewById(R.id.lunch_add);
         dinner_add = view.findViewById(R.id.dinner_add);
         snack_add = view.findViewById(R.id.snack_add);
-        Intent intent = new Intent(getActivity(), FoodSearch.class);
 
-        intent.putExtra("Date", date);
+        Bundle b = new Bundle();
+        b.putString("Date",date);
+        FoodSearchFragment fSearchFrag = new FoodSearchFragment();
+        fSearchFrag.setArguments(b);
+
 
         breakfast_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Login.isLogin(user)) {
                     isBreakfast = true;
-                    intent.putExtra("isBreakfast", isBreakfast);
-                    startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isBreakfast", isBreakfast);
+                    FoodSearchFragment foodSearchFragment = new FoodSearchFragment();
+                    foodSearchFragment.setArguments(bundle);
+                    ((BottomActivity) getActivity()).replaceFragment(FoodSearchFragment.newInstance(bundle));
+
+
                 } else {
                     gotoLogin();
                 }
             }
         });
-
+        // isLunch = false;
         lunch_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Login.isLogin(user)) {
                     isLunch = true;
-                    intent.putExtra("isLunch", isLunch);
-                    startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isLunch", isLunch);
+                    FoodSearchFragment foodSearchFragment = new FoodSearchFragment();
+                    foodSearchFragment.setArguments(bundle);
+
+                    ((BottomActivity) getActivity()).replaceFragment(FoodSearchFragment.newInstance(bundle));
+
+                    // intent.putExtra("isLunch", isLunch);
+                    //   startActivity(intent);
                 } else {
                     gotoLogin();
                 }
             }
         });
-
+        //isDinner = false;
         dinner_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Login.isLogin(user)) {
                     isDinner = true;
-                    intent.putExtra("isDinner", isDinner);
-                    startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isLunch", isLunch);
+                    FoodSearchFragment foodSearchFragment = new FoodSearchFragment();
+                    foodSearchFragment.setArguments(bundle);
+
+                    ((BottomActivity) getActivity()).replaceFragment(FoodSearchFragment.newInstance(bundle));
+
+                    //intent.putExtra("isDinner", isDinner);
+                    //startActivity(intent);
                 } else {
                     gotoLogin();
 
                 }
             }
         });
-
+        //isSnack = false;
         snack_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Login.isLogin(user)) {
                     isSnack = true;
-                    intent.putExtra("isSnack", isSnack);
-                    startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isLunch", isLunch);
+                    FoodSearchFragment foodSearchFragment = new FoodSearchFragment();
+                    foodSearchFragment.setArguments(bundle);
+
+                    ((BottomActivity) getActivity()).replaceFragment(FoodSearchFragment.newInstance(bundle));
+
+                    //  intent.putExtra("isSnack", isSnack);
+                    //  startActivity(intent);
 
                 } else {
                     gotoLogin();
@@ -338,6 +314,12 @@ public class FoodListFragment extends Fragment {
             startActivity(gotoLogin);
         }
 
+    }
+
+    public static FoodListFragment newInstance(Bundle bundle) {
+        FoodListFragment fragment = new FoodListFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
 }
