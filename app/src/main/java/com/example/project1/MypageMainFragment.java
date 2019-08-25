@@ -80,7 +80,7 @@ public class MypageMainFragment extends Fragment {
 
             DatabaseReference ConditionRef = dbRef.child("User").child(uid)
                     .child("Personal Info").child("Veganism Type");
-            // String type;
+
             ConditionRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -123,34 +123,12 @@ public class MypageMainFragment extends Fragment {
 
                             Intent intent1 = new Intent(getActivity(), SelectVeganism.class);
                             startActivity(intent1);
-                            /*FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            String uid = user.getUid();
-                            dbRef = database.getReference("/User");
-
-                            dbRef.child("Personal Info").child("Veganism Type").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                   String veganType = (String)dataSnapshot.child("Veganism Type").getValue(String.class);
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });*/
                             break;
 
                         case 2: //개인정보
-//<<<<<<< HEAD
                             Toast.makeText(getContext(), items.get(position) + "", Toast.LENGTH_SHORT).show();
-
-//=======
                             Intent Intent = new Intent(getActivity(), PersonalInfo.class);
                             startActivity(Intent);
-                            //Toast.makeText(getContext(), items.get(position)+"", Toast.LENGTH_SHORT).show();
-//>>>>>>> remotes/origin/master
                             break;
 
                         case 3: //로그아웃
@@ -166,7 +144,6 @@ public class MypageMainFragment extends Fragment {
         } else { //로그인 되어있지 않을 경우
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
-            //View view = inflater.inflate(R.layout.activity_login, container, false);
             return null;
         }
     }
