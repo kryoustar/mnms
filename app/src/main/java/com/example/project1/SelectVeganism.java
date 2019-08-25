@@ -33,7 +33,7 @@ public class SelectVeganism extends AppCompatActivity{
         radioGroup = (RadioGroup) findViewById(R.id.groupradio);
 
         // Uncheck or reset the radio buttons initially
-       // radioGroup.clearCheck();
+       radioGroup.clearCheck();
 
         // Add the Listener to the RadioGroup
         radioGroup.setOnCheckedChangeListener(

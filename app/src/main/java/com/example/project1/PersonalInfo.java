@@ -23,12 +23,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class PersonalInfo extends AppCompatActivity {
-    private EditText nicknameTV, ageTV;
-    private Button register_btn;
-    private RadioGroup radioGender;
-    private RadioButton gender_female_btn, gender_male_btn, gender_non_btn;
-    private FirebaseAuth mAuth;
-    private ProgressBar progressBar;
+    public EditText nicknameTV, ageTV;
+    public Button register_btn;
+    public RadioGroup radioGender;
+    public RadioButton gender_female_btn, gender_male_btn, gender_non_btn;
+    public FirebaseAuth mAuth;
+    public ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,22 @@ public class PersonalInfo extends AppCompatActivity {
         });
 
          */
+        radioGender.setOnCheckedChangeListener(
+                new RadioGroup
+                        .OnCheckedChangeListener() {
+                    @Override
 
+                    public void onCheckedChanged(RadioGroup group,
+                                                 int checkedId) {
+
+                        // Get the selected Radio Button
+                        RadioButton
+                                radioButton
+                                = (RadioButton) group
+                                .findViewById(checkedId);
+
+                    }
+                });
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,9 +110,13 @@ public class PersonalInfo extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         dbRef = database.getReference("/User");
+        int selectedId = radioGender.getCheckedRadioButtonId();
+        RadioButton radioButton
+                = (RadioButton) radioGender
+                .findViewById(selectedId);
         dbRef.child(uid).child("Personal Info").child("Nickname").setValue(nickname); //닉네임 저장
         dbRef.child(uid).child("Personal Info").child("Age").setValue(age); //나이 저장
-        //dbRef.child(uid).child("Personal Info").child("Gender").setValue(rb.getText().toString()); //나이 저장
+        dbRef.child(uid).child("Personal Info").child("Gender").setValue(radioButton.getText().toString()); //나이 저장
         //dbRef.child(uid).child("Personal Info").child("Gender").setValue(radioButton.getText().toString());
 
         Toast.makeText(getApplicationContext(), "개인정보가 수정되었습니다.", Toast.LENGTH_LONG).show();

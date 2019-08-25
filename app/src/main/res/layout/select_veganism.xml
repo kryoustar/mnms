@@ -31,13 +31,9 @@
             android:id="@+id/vegan"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:checked="false"
-            android:clickable="false"
             android:text="비건"
             android:textColor="#4CAF50"
-            android:textIsSelectable="false"
-            android:textSize="20dp"
-            android:visibility="visible" />
+            android:textSize="20dp" />
 
         <RadioButton
             android:id="@+id/ovoorlacto"

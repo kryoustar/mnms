@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.os.Bundle;
 import android.view.View;
@@ -53,18 +54,17 @@ public class MypageMainFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         if (user != null) { //로그인 되어있을 경우
             View view = inflater.inflate(R.layout.activity_mypage, container, false);
             String email = user.getEmail(); //get user email
-            // Bundle bundle = getArguments();
-
 
             ListView list;
             ArrayList<String> items;
             list = view.findViewById(R.id.list);
             items = new ArrayList<String>();
             items.add("User Email: "+email);
-            items.add("Types of Veganism" );
+            items.add("Types of Veganism");
             items.add("Personal Information");
             items.add("Logout");
 
