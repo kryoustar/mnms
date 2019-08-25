@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.EOFException;
+
 public class PersonalInfo extends AppCompatActivity {
     public EditText nicknameTV, ageTV;
     public Button register_btn;
@@ -38,20 +40,6 @@ public class PersonalInfo extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         initializeUI();
 
-
-        /*
-        //좃나 안되는 라디오버튼^^ 누가 해줘
-        radioGender = (RadioGroup) findViewById(R.id.gender);
-        radioGender.clearCheck();
-        radioGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // Get the selected Radio Button
-                RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
-            }
-        });
-
-         */
         radioGender.setOnCheckedChangeListener(
                 new RadioGroup
                         .OnCheckedChangeListener() {
@@ -78,58 +66,47 @@ public class PersonalInfo extends AppCompatActivity {
     }
 
     private void registerInfo() {
-        String nickname, age;
-        int gender;
-
-        nickname = nicknameTV.getText().toString();
-        age = ageTV.getText().toString();
-
-        //gender = radioGender.getCheckedRadioButtonId();
-        //int selectedId = radioGender.getCheckedRadioButtonId();
-        //RadioButton radioButton = (RadioButton) radioGender.findViewById(selectedId);
-        //RadioButton rb = (RadioButton) findViewById(gender);
-        //rb.getText().toString();
-
-
-        /*
-        //null값 처리
-        if (nickname==null) {
-            Toast.makeText(getApplicationContext(), "닉네임을 입력해주세요.", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(Integer.toString(age))) {
-            Toast.makeText(getApplicationContext(), "나이를 입력해주세요.", Toast.LENGTH_LONG).show();
-            return;
-        }
-        */
-
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        dbRef = database.getReference("/User");
-        int selectedId = radioGender.getCheckedRadioButtonId();
-        RadioButton radioButton
-                = (RadioButton) radioGender
-                .findViewById(selectedId);
-        dbRef.child(uid).child("Personal Info").child("Nickname").setValue(nickname); //닉네임 저장
-        dbRef.child(uid).child("Personal Info").child("Age").setValue(age); //나이 저장
-        dbRef.child(uid).child("Personal Info").child("Gender").setValue(radioButton.getText().toString()); //나이 저장
-        //dbRef.child(uid).child("Personal Info").child("Gender").setValue(radioButton.getText().toString());
+        if (user != null) {
+            String uid = user.getUid();
+            dbRef = database.getReference("/User");
+            int selectedId = radioGender.getCheckedRadioButtonId();
+            String nickname = nicknameTV.getText().toString();
+            String age = ageTV.getText().toString();
+            //null값 처리
+            if (selectedId == -1) {
+                Toast.makeText(PersonalInfo.this, "Please select one", Toast.LENGTH_SHORT).show();
+            }
 
-        Toast.makeText(getApplicationContext(), "개인정보가 수정되었습니다.", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(PersonalInfo.this, BottomActivity.class);
-        startActivity(intent);
-        //progressBar.setVisibility(View.GONE);
+            else if (nickname.matches("")||age.matches("")) {
+                Toast.makeText(PersonalInfo.this, "입력해주세요.", Toast.LENGTH_LONG).show();
+            }
+            else{
+                RadioButton radioButton
+                        = (RadioButton) radioGender
+                        .findViewById(selectedId);
+                dbRef.child(uid).child("Personal Info").child("Nickname").setValue(nickname); //닉네임 저장
+                dbRef.child(uid).child("Personal Info").child("Age").setValue(age); //나이 저장
+                dbRef.child(uid).child("Personal Info").child("Gender").setValue(radioButton.getText().toString()); //나이 저장
+
+                Toast.makeText(PersonalInfo.this, "개인정보가 수정되었습니다.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(PersonalInfo.this, BottomActivity.class);
+                startActivity(intent);
+                //progressBar.setVisibility(View.GONE);
+            }
+        }
     }
 
 
     private void initializeUI() {
         nicknameTV = findViewById(R.id.nickname);
+
         ageTV = findViewById(R.id.age);
-        register_btn = findViewById(R.id.submit);
+
+        register_btn = findViewById(R.id.inforegister);
         radioGender = findViewById(R.id.gender);
         //gender_female_btn = findViewById(R.id.gender_female);
         //gender_male_btn = findViewById(R.id.gender_male);

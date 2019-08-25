@@ -30,7 +30,7 @@
         android:ems="10"
         android:inputType="number"
         android:hint="나이" />
-        ///android:digits="0123456789"
+    ///android:digits="0123456789"
 
 
     <RadioGroup
@@ -39,29 +39,29 @@
         android:layout_height="wrap_content">
 
 
-            <RadioButton
-                android:id="@+id/gender_female"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:text="여성" />
+        <RadioButton
+            android:id="@+id/gender_female"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="여성" />
 
-            <RadioButton
-                android:id="@+id/gender_male"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:text="남성" />
+        <RadioButton
+            android:id="@+id/gender_male"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="남성" />
 
-            <RadioButton
-                android:id="@+id/gender_non"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:text="선택안함" />
+        <RadioButton
+            android:id="@+id/gender_non"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="선택안함" />
 
 
     </RadioGroup>
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/inforegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="등록" />

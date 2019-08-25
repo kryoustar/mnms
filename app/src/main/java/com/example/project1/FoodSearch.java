@@ -88,33 +88,38 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
 
                 String uid = user.getUid();
                 dbRef = database.getReference("/User");
-                //dbRef.child(uid).child("Meal").child("date")
+
                 if (isBreakfast) {
                     DatabaseManager.BreakfastDataAdd(date, foodnumber[position]);
                     boolean BreakfastFlag = false;
                     bundle.putBoolean("BreakfastFlag", BreakfastFlag);
                     foodListFragment.setArguments(bundle);
-                    gobackIntent();
+
+                    onBackPressed();
                 } else if (isLunch) {
                     DatabaseManager.LunchDataAdd(date, foodnumber[position]);
                     boolean LunchFlag = false;
                     bundle.putBoolean("LunchFlag", LunchFlag);
                     foodListFragment.setArguments(bundle);
-                    gobackIntent();
+
+                    onBackPressed();
                 } else if (isDinner) {
                     DatabaseManager.DinnerDataAdd(date, foodnumber[position]);
                     boolean DinnerFlag = false;
                     bundle.putBoolean("DinnerFlag", DinnerFlag);
                     foodListFragment.setArguments(bundle);
-                    gobackIntent();
+
+                    onBackPressed();
                 } else if (isSnack) {
                     DatabaseManager.SnackDataAdd(date, foodnumber[position]);
                     boolean SnackFlag = false;
                     bundle.putBoolean("SnackFlag", SnackFlag);
                     foodListFragment.setArguments(bundle);
-                    gobackIntent();
+
+                    onBackPressed();
                 } else { //error ?
-                    gobackIntent();
+
+                    onBackPressed();
                 }
             }
         });
@@ -122,9 +127,5 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
         listView.setAdapter(adapter);   // listView 객체에 Adapter를 붙인다
     }
 
-    public void gobackIntent() {
-        Intent intent = new Intent(FoodSearch.this, BottomActivity.class);
-        startActivity(intent);
-    }
 }
 
