@@ -18,9 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SelectVeganism extends AppCompatActivity{
+public class SelectVeganism extends AppCompatActivity {
     public RadioGroup radioGroup;
-    Button submit, clear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +27,12 @@ public class SelectVeganism extends AppCompatActivity{
         setContentView(R.layout.select_veganism);
         SharedPreferences pref = getSharedPreferences("preferencesName", MODE_PRIVATE);
         final SharedPreferences.Editor prefEdit = pref.edit();
-        submit = (Button) findViewById(R.id.submit);
-        clear = (Button) findViewById(R.id.clear);
+        Button submit = (Button) findViewById(R.id.submit);
+        //clear = (Button) findViewById(R.id.clear);
         radioGroup = (RadioGroup) findViewById(R.id.groupradio);
 
         // Uncheck or reset the radio buttons initially
-       radioGroup.clearCheck();
+        radioGroup.clearCheck();
 
         // Add the Listener to the RadioGroup
         radioGroup.setOnCheckedChangeListener(
@@ -58,7 +57,7 @@ public class SelectVeganism extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
+                DatabaseReference dbRef;//= database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     String uid = user.getUid();
@@ -78,10 +77,11 @@ public class SelectVeganism extends AppCompatActivity{
                         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                if (isChecked)
-                                {radioButton.setChecked(true);}
-                                else
-                                {radioButton.setChecked(false);}
+                                if (isChecked) {
+                                    radioButton.setChecked(true);
+                                } else {
+                                    radioButton.setChecked(false);
+                                }
                                 //prefEdit.putBoolean("booleanValue", true).commit();
                             }
                         });
@@ -91,9 +91,9 @@ public class SelectVeganism extends AppCompatActivity{
                                 Toast.LENGTH_SHORT)
                                 .show();
                         dbRef.child(uid).child("Personal Info").child("Veganism Type").setValue(radioButton.getText().toString());
-                        Intent i = new Intent(SelectVeganism.this, BottomActivity.class);
-                        i.putExtra("VeganType", radioButton.getText().toString());
-                        startActivity(i);
+                        Intent intent = new Intent(SelectVeganism.this, BottomActivity.class);
+                        intent.putExtra("VeganType", radioButton.getText().toString());
+                        startActivity(intent);
 
 
                     }

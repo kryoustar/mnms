@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- add RadioGroup which contain the many RadioButton-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,13 +18,12 @@
         android:textSize="20dp"
         android:textStyle="bold" />
 
-    <!-- add RadioGroup which contain the many RadioButton-->
     <RadioGroup
-        android:layout_marginTop="50dp"
         android:id="@+id/groupradio"
-        android:layout_marginLeft="10dp"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp">
 
         <!-- In RadioGroup create the 1 Radio Button-->
         <!-- like this we will add some more Radio Button-->
@@ -72,22 +72,9 @@
 
     <Button
         android:id="@+id/submit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="180dp"
-        android:layout_marginTop="240dp"
-        android:text="확인"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:text="확인" />
 
     <!-- add clear button for clear the selected item-->
-    <Button
-        android:id="@+id/clear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="240dp"
-        android:text="취소"
-        android:textSize="20dp"
-        android:textStyle="bold" />
-</RelativeLayout>
+</LinearLayout>
