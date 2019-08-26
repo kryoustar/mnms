@@ -35,17 +35,11 @@ import static android.content.Intent.getIntent;
 
 public class FoodListFragment extends Fragment {
 
-
-
-
+    TextView breakfastView, lunchView, dinnerView, snackView;
     boolean isBreakfast;
     boolean isLunch;
     boolean isDinner;
     boolean isSnack;
-
-    // DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    //DatabaseReference conditionRef = mRootRef.child("UserId");
-    TextView breakfastView, lunchView, dinnerView, snackView;
 
     @Nullable
     @Override
@@ -127,7 +121,7 @@ public class FoodListFragment extends Fragment {
         // isBreakfast = bundle.getBoolean("BreakfastFlag",false);
 
         String selectedYear, selectedMonth,selectedDay;
-       String date="";
+        String date="";
 
         Bundle bundle = getActivity().getIntent().getExtras();
         if(bundle == null){
@@ -162,7 +156,6 @@ public class FoodListFragment extends Fragment {
         DatabaseReference ConditionRef = Database.child("User")
                 .child(uid).child("Meal")
                 .child(date);
-
 
         ConditionRef.child("Breakfast").addValueEventListener(new ValueEventListener() {
             @Override
@@ -248,17 +241,19 @@ public class FoodListFragment extends Fragment {
         Button lunch_add;
         Button dinner_add;
         Button snack_add;
-        if (bundle == null) {
+
+        //if (bundle ==null){
             isBreakfast = false;
             isLunch = false;
             isDinner = false;
             isSnack = false;
-        } else {
-            isBreakfast = bundle.getBoolean("BreakfastFlag", false);
-            isLunch = bundle.getBoolean("LunchFlag", false);
-            isDinner = bundle.getBoolean("DinnerFlag", false);
-            isSnack = bundle.getBoolean("SnackFlag", false);
-        }
+       // }
+        //else{
+         //   isBreakfast = bundle.getBoolean("BreakfastFlag",false);
+         //   isLunch = bundle.getBoolean("LunchFlag",false);
+         //  isDinner = bundle.getBoolean("DinnerFlag",false);
+         //   isSnack = bundle.getBoolean("SnackFlag", false);
+       // }
 
 
         //setTitle("식단관리");
@@ -268,14 +263,20 @@ public class FoodListFragment extends Fragment {
         lunch_add = view.findViewById(R.id.lunch_add);
         dinner_add = view.findViewById(R.id.dinner_add);
         snack_add = view.findViewById(R.id.snack_add);
-        Intent intent = new Intent(getActivity(), FoodSearch.class);
 
+        Intent intent = new Intent(getActivity(), FoodSearch.class);
         intent.putExtra("Date", date);
 
         breakfast_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Login.isLogin(user)) {
+
+                    //Bundle b = getActivity().getIntent().getExtras();
+                    //isBreakfast = b.getBoolean("BreakfastFlag");
+                    //isLunch = b.getBoolean("LunchFlag");
+                    //isDinner = b.getBoolean("DinnerFlag");
+                    //isSnack = b.getBoolean("SnackFlag");
                     isBreakfast = true;
                     intent.putExtra("isBreakfast", isBreakfast);
                     startActivity(intent);
@@ -289,6 +290,12 @@ public class FoodListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (Login.isLogin(user)) {
+
+                    //Bundle b = getActivity().getIntent().getExtras();
+                    //isBreakfast = b.getBoolean("BreakfastFlag");
+                    //isLunch = b.getBoolean("LunchFlag");
+                    //isDinner = b.getBoolean("DinnerFlag");
+                    //isSnack = b.getBoolean("SnackFlag");
                     isLunch = true;
                     intent.putExtra("isLunch", isLunch);
                     startActivity(intent);
@@ -302,6 +309,12 @@ public class FoodListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (Login.isLogin(user)) {
+
+                    //Bundle b = getActivity().getIntent().getExtras();
+                    //isBreakfast = b.getBoolean("BreakfastFlag");
+                    //isLunch = b.getBoolean("LunchFlag");
+                    //isDinner = b.getBoolean("DinnerFlag");
+                    //isSnack = b.getBoolean("SnackFlag");
                     isDinner = true;
                     intent.putExtra("isDinner", isDinner);
                     startActivity(intent);
@@ -316,10 +329,15 @@ public class FoodListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (Login.isLogin(user)) {
+
+                    //Bundle b = getActivity().getIntent().getExtras();
+                    //isBreakfast = b.getBoolean("BreakfastFlag");
+                    //isLunch = b.getBoolean("LunchFlag");
+                    //isDinner = b.getBoolean("DinnerFlag");
+                    //isSnack = b.getBoolean("SnackFlag");
                     isSnack = true;
                     intent.putExtra("isSnack", isSnack);
                     startActivity(intent);
-
                 } else {
                     gotoLogin();
                 }

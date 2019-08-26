@@ -58,7 +58,7 @@ public class DatabaseManager extends AppCompatActivity {
         String uid = user.getUid();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReference("/User");
-        DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date).child("Lunch");
+        DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date).child("Snack");
 
         if(tempRef == null){
             tempRef.setValue(foodNumber);
