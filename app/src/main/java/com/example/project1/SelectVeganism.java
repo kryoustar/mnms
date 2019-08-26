@@ -35,14 +35,20 @@ public class SelectVeganism extends AppCompatActivity {
         radioGroup.clearCheck();
 
         // Add the Listener to the RadioGroup
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        radioGroup.setOnCheckedChangeListener(
+                new RadioGroup
+                        .OnCheckedChangeListener() {
                     @Override
 
                     public void onCheckedChanged(RadioGroup group,
                                                  int checkedId) {
 
                         // Get the selected Radio Button
-                        RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
+                        RadioButton
+                                radioButton
+                                = (RadioButton) group
+                                .findViewById(checkedId);
+
                     }
                 });
 
@@ -80,9 +86,15 @@ public class SelectVeganism extends AppCompatActivity {
                             }
                         });
 
-                        Toast.makeText(SelectVeganism.this, radioButton.getText(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SelectVeganism.this,
+                                radioButton.getText(),
+                                Toast.LENGTH_SHORT)
+                                .show();
                         dbRef.child(uid).child("Personal Info").child("Veganism Type").setValue(radioButton.getText().toString());
-                        onBackPressed();
+                        Intent gobackIntent = new Intent(SelectVeganism.this, BottomActivity.class);
+                        startActivity(gobackIntent);
+
+
                     }
                 }
             }

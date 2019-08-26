@@ -85,6 +85,7 @@ public class MypageMainFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String veganType = dataSnapshot.getValue(String.class);
+                    Toast.makeText(getActivity(), veganType + "", Toast.LENGTH_SHORT).show();
                     if (veganType != null) {
                         items.set(1, "Types of Veganism: " + veganType);
                     } else {
@@ -133,8 +134,6 @@ public class MypageMainFragment extends Fragment {
                         case 3: //로그아웃
                             FirebaseAuth.getInstance().signOut();
                             Toast.makeText(getContext(), "로그아웃 되었습니다." + "", Toast.LENGTH_SHORT).show();
-                            //Intent intent2 = new Intent(getActivity(), BottomActivity.class);
-
                             Intent intent2 = new Intent(getActivity(), BottomActivity.class);
                             startActivity(intent2);
                             break;
