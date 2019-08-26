@@ -1,5 +1,6 @@
 package com.example.project1;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,12 +25,10 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
     Button searchButton;
     EditText searchText;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.food_search);
-
         searchText = findViewById(R.id.search_nutrients);
         searchButton = findViewById(R.id.add_btn);
         searchButton.setOnClickListener(this);
@@ -47,6 +46,7 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
         boolean isLunch = (boolean) intent.getBooleanExtra("isLunch", false);
         boolean isDinner = (boolean) intent.getBooleanExtra("isDinner", false);
         boolean isSnack = (boolean) intent.getBooleanExtra("isSnack", false);
+
         //DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
         //DatabaseReference conditionRef = mRootRef.child("UserId");
         TextView breakfastView;
@@ -80,7 +80,7 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                //Toast.makeText(getApplicationContext(), ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -88,48 +88,45 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
                 String uid = user.getUid();
                 dbRef = database.getReference("/User");
 
-
-
                 if (isBreakfast) {
                     DatabaseManager.BreakfastDataAdd(date, foodnumber[position]);
                     boolean BreakfastFlag = false;
                     bundle.putBoolean("BreakfastFlag", BreakfastFlag);
                     foodListFragment.setArguments(bundle);
-
-                    onBackPressed();
+                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
+                    startActivity(gobackIntent);
                 }
                 if (isLunch) {
                     DatabaseManager.LunchDataAdd(date, foodnumber[position]);
                     boolean LunchFlag = false;
                     bundle.putBoolean("LunchFlag", LunchFlag);
                     foodListFragment.setArguments(bundle);
-
-                    onBackPressed();
+                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
+                    startActivity(gobackIntent);
                 }
                 if (isDinner) {
                     DatabaseManager.DinnerDataAdd(date, foodnumber[position]);
                     boolean DinnerFlag = false;
                     bundle.putBoolean("DinnerFlag", DinnerFlag);
                     foodListFragment.setArguments(bundle);
+                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
+                    startActivity(gobackIntent);
 
-                    onBackPressed();
                 }
-                if (isSnack) {
+                if (isSnack){
                     DatabaseManager.SnackDataAdd(date, foodnumber[position]);
                     boolean SnackFlag = false;
                     bundle.putBoolean("SnackFlag", SnackFlag);
                     foodListFragment.setArguments(bundle);
-
-                    onBackPressed();
-                } /*else { //error ?
-
-                    onBackPressed();
-                }*/
+                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
+                    startActivity(gobackIntent);
+                }
             }
         });
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
         listView.setAdapter(adapter);   // listView 객체에 Adapter를 붙인다
     }
+
 
 }
 

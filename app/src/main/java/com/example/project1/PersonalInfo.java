@@ -93,7 +93,8 @@ public class PersonalInfo extends AppCompatActivity {
                 dbRef.child(uid).child("Personal Info").child("Gender").setValue(radioButton.getText().toString()); //나이 저장
 
                 Toast.makeText(PersonalInfo.this, "개인정보가 수정되었습니다.", Toast.LENGTH_LONG).show();
-                onBackPressed();
+                Intent gobackIntent = new Intent(PersonalInfo.this, BottomActivity.class);
+                startActivity(gobackIntent);
                 //progressBar.setVisibility(View.GONE);
             }
         }
