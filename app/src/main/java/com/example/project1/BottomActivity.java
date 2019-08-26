@@ -4,12 +4,11 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.FragmentManager;
 
 public class BottomActivity extends AppCompatActivity {
-   private TextView mTextMessage;
+    private TextView mTextMessage;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FoodListFragment foodListFragment= new FoodListFragment();
@@ -26,7 +25,7 @@ public class BottomActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frame_layout, foodListFragment).commitAllowingStateLoss();
 
-                //(getApplicationContext(),foodList_main).commitAllowingStateLoss()
+        //(getApplicationContext(),foodList_main).commitAllowingStateLoss()
         bottomNavigationView.setOnNavigationItemSelectedListener((item)->{
             FragmentTransaction transaction2 = fragmentManager.beginTransaction();
             switch (item.getItemId()){
@@ -90,10 +89,6 @@ public class BottomActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }*/
-    public void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout,fragment).commit();
-    }
+    } */
+
 }
