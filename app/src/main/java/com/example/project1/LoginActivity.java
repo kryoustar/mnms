@@ -91,5 +91,5 @@ public class LoginActivity extends AppCompatActivity {
         registerBtn = findViewById(R.id.register);
     }
 
-    
+
 }

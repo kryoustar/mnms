@@ -1,39 +1,24 @@
 package com.example.project1;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.view.LayoutInflater;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
-public class RestaurantListFragment extends Fragment {
-    @Nullable
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+public class RestaurantListByCity extends AppCompatActivity {
 
     Button searchBtn;
     EditText searchText;
-    Button citySearchBtn;
 
     String sql;
     SQLiteDatabase db;   // db를 다루기 위한 SQLiteDatabase 객체 생성
@@ -42,20 +27,20 @@ public class RestaurantListFragment extends Fragment {
     String[] result;   // ArrayAdapter에 넣을 배열 생성
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.restaurantlist_view, container, false);
-        searchText = view.findViewById(R.id.search_restaurant);
-        searchBtn = (Button) view.findViewById(R.id.search_btn);
-        citySearchBtn = (Button) view.findViewById(R.id.citysearch_btn);
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.restaurantlist_bycity);
+        searchText = findViewById(R.id.search_restaurant);
+        searchBtn = (Button) findViewById(R.id.search_btn);
         ArrayList<RestaurantItem> data = null;
         data = new ArrayList<>();
 
-        db = getActivity().openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
-        listView = view.findViewById(R.id.listView);
+        db = openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
+        listView = findViewById(R.id.listView);
 
-        sql = "select * from veganRes03";
+        Intent intent = getIntent();
+
+        sql = "select * from veganRes03 where RestaurantCity like '%" + "용산구" + "%'";
         cursor = db.rawQuery(sql, null);
 
         int count = cursor.getCount();   // db에 저장된 행 개수를 읽어온다
@@ -71,11 +56,12 @@ public class RestaurantListFragment extends Fragment {
             String RestaurantCity = cursor.getString(2);
             String RestaurantVeganType = cursor.getString(6);
             RestaurantItem restaurantItem = new RestaurantItem(Number, RestaurantName, RestaurantAddress, RestaurantPhoneNumber, RestaurantOpeningHours, RestaurantCity, RestaurantVeganType);
+
             result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
             data.add(restaurantItem);
         }
 
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
         listView.setAdapter(adapter);
 
         //클릭 시 다음페이지
@@ -83,7 +69,7 @@ public class RestaurantListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                Intent intent = new Intent(getActivity(), RestaurantDetail.class);
+                Intent intent = new Intent(RestaurantListByCity.this, RestaurantDetail.class);
                 intent.putExtra("Restaurant Number", finalData.get(position).getNumber());
                 intent.putExtra("Restaurant Name", finalData.get(position).getRestaurantName());
                 intent.putExtra("Restaurant Address", finalData.get(position).getRestaurantAddress());
@@ -94,14 +80,7 @@ public class RestaurantListFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        citySearchBtn.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CityList.class);
-                startActivity(intent);
-            }
-        });
         //검색기능
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,13 +110,13 @@ public class RestaurantListFragment extends Fragment {
                     result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
                     data2.add(restaurantItem);
 
-                    ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
+                    ArrayAdapter adapter = new ArrayAdapter(RestaurantListByCity.this, android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
                     listView.setAdapter(adapter);
                     final ArrayList<RestaurantItem> finalData2 = data2;
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView parent, View v, int position, long id) {
-                            Intent intent = new Intent(getActivity(), RestaurantDetail.class);
+                            Intent intent = new Intent(RestaurantListByCity.this, RestaurantDetail.class);
                             intent.putExtra("Restaurant Number", finalData2.get(position).getNumber());
                             intent.putExtra("Restaurant Name", finalData2.get(position).getRestaurantName());
                             intent.putExtra("Restaurant Address", finalData2.get(position).getRestaurantAddress());
@@ -152,6 +131,5 @@ public class RestaurantListFragment extends Fragment {
             }
 
         });
-        return view;
     }
 }

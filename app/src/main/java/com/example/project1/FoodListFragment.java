@@ -243,17 +243,17 @@ public class FoodListFragment extends Fragment {
         Button snack_add;
 
         //if (bundle ==null){
-            isBreakfast = false;
-            isLunch = false;
-            isDinner = false;
-            isSnack = false;
-       // }
+        isBreakfast = false;
+        isLunch = false;
+        isDinner = false;
+        isSnack = false;
+        // }
         //else{
-         //   isBreakfast = bundle.getBoolean("BreakfastFlag",false);
-         //   isLunch = bundle.getBoolean("LunchFlag",false);
-         //  isDinner = bundle.getBoolean("DinnerFlag",false);
-         //   isSnack = bundle.getBoolean("SnackFlag", false);
-       // }
+        //   isBreakfast = bundle.getBoolean("BreakfastFlag",false);
+        //   isLunch = bundle.getBoolean("LunchFlag",false);
+        //  isDinner = bundle.getBoolean("DinnerFlag",false);
+        //   isSnack = bundle.getBoolean("SnackFlag", false);
+        // }
 
 
         //setTitle("식단관리");
@@ -359,4 +359,3 @@ public class FoodListFragment extends Fragment {
     }
 
 }
-

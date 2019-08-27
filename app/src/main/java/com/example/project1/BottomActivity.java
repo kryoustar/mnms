@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.FragmentManager;
 
 public class BottomActivity extends AppCompatActivity {
-   private TextView mTextMessage;
+    private TextView mTextMessage;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FoodListFragment foodListFragment= new FoodListFragment();
@@ -25,7 +25,7 @@ public class BottomActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frame_layout, foodListFragment).commitAllowingStateLoss();
 
-                //(getApplicationContext(),foodList_main).commitAllowingStateLoss()
+        //(getApplicationContext(),foodList_main).commitAllowingStateLoss()
         bottomNavigationView.setOnNavigationItemSelectedListener((item)->{
             FragmentTransaction transaction2 = fragmentManager.beginTransaction();
             switch (item.getItemId()){
