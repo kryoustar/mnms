@@ -39,17 +39,6 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
         Intent intent = getIntent();
         String date = intent.getStringExtra("Date");
 
-        Bundle bundle = new Bundle();
-        FoodListFragment foodListFragment = new FoodListFragment();
-
-        boolean isBreakfast = (boolean) intent.getBooleanExtra("isBreakfast", false);
-        boolean isLunch = (boolean) intent.getBooleanExtra("isLunch", false);
-        boolean isDinner = (boolean) intent.getBooleanExtra("isDinner", false);
-        boolean isSnack = (boolean) intent.getBooleanExtra("isSnack", false);
-
-        //DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-        //DatabaseReference conditionRef = mRootRef.child("UserId");
-        TextView breakfastView;
 
         String search = searchText.getText().toString(); //검색 받아옴
         String sql;
@@ -76,6 +65,7 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
             result[i] = str_name;
             foodnumber[i] = food_number;
         }
+
         listView.setClickable(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -85,42 +75,16 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
                 DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+
                 String uid = user.getUid();
                 dbRef = database.getReference("/User");
 
-                if (isBreakfast) {
-                    DatabaseManager.BreakfastDataAdd(date, foodnumber[position]);
-                    boolean BreakfastFlag = false;
-                    bundle.putBoolean("BreakfastFlag", BreakfastFlag);
-                    foodListFragment.setArguments(bundle);
-                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
-                    startActivity(gobackIntent);
-                }
-                if (isLunch) {
-                    DatabaseManager.LunchDataAdd(date, foodnumber[position]);
-                    boolean LunchFlag = false;
-                    bundle.putBoolean("LunchFlag", LunchFlag);
-                    foodListFragment.setArguments(bundle);
-                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
-                    startActivity(gobackIntent);
-                }
-                if (isDinner) {
-                    DatabaseManager.DinnerDataAdd(date, foodnumber[position]);
-                    boolean DinnerFlag = false;
-                    bundle.putBoolean("DinnerFlag", DinnerFlag);
-                    foodListFragment.setArguments(bundle);
-                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
-                    startActivity(gobackIntent);
+                DatabaseManager.MealDataAdd(date, foodnumber[position]);
 
-                }
-                if (isSnack){
-                    DatabaseManager.SnackDataAdd(date, foodnumber[position]);
-                    boolean SnackFlag = false;
-                    bundle.putBoolean("SnackFlag", SnackFlag);
-                    foodListFragment.setArguments(bundle);
-                    Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
-                    startActivity(gobackIntent);
-                }
+                Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
+                //onBackPressed();
+                startActivity(gobackIntent);
+
             }
         });
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
