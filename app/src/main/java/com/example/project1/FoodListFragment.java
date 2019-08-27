@@ -41,7 +41,7 @@ public class FoodListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_list, container, false);
-       // TextView mealView = view.findViewById(R.id.mealList);
+        // TextView mealView = view.findViewById(R.id.mealList);
         Button selectDateButton = view.findViewById(R.id.btnDate);
 
         ListView mealListview = view.findViewById(R.id.mealListView); // listview  생성 및 adapter 지정
@@ -94,19 +94,23 @@ public class FoodListFragment extends Fragment {
                 .child(uid).child("Meal")
                 .child(date);
 
+        String[] result;
+        result = new String[100];
+        final String dateTemp = date;
+
         ConditionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String mealItemList = "";
+                Integer i = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Integer mealIndex = snapshot.getValue(Integer.class);
+                    result[i] = Integer.toString(mealIndex); //food number 저장
+                    i++;
                     if (mealIndex != null) {
-                        FoodItem breakfastItem = FoodItem.FoodItemSearch(mealIndex, getActivity());
-                        mealItemList = mealItemList + "\n" + breakfastItem.getFoodName();
-                        mealItems.add(breakfastItem.getFoodName());
+                        FoodItem mealItem = FoodItem.FoodItemSearch(mealIndex, getActivity());
+                        mealItems.add(mealItem.getFoodName());
                     }
                 }
-                //mealView.setText(mealItemList);
                 adapter.notifyDataSetChanged();
             }
 
@@ -117,20 +121,20 @@ public class FoodListFragment extends Fragment {
 
         mealListview.setAdapter(adapter);
         mealListview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Intent intent = new Intent(getActivity(), FoodDetail.class);
+                String foodnumber = result[i];
+                intent.putExtra("Food number", foodnumber);
+                intent.putExtra("Date", dateTemp);
+                startActivity(intent);
             }
         });
 
 
         Button meal_add;
 
-        meal_add = view.findViewById(R.id.breakfast_add);
-        //lunch_add = view.findViewById(R.id.lunch_add);
-        //dinner_add = view.findViewById(R.id.dinner_add);
-        //snack_add = view.findViewById(R.id.snack_add);
+        meal_add = view.findViewById(R.id.meal_add);
 
         Intent intent = new Intent(getActivity(), FoodSearch.class);
         intent.putExtra("Date", date);
@@ -161,4 +165,3 @@ public class FoodListFragment extends Fragment {
     }
 
 }
-

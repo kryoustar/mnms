@@ -40,9 +40,7 @@ public class PersonalInfo extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         initializeUI();
 
-        radioGender.setOnCheckedChangeListener(
-                new RadioGroup
-                        .OnCheckedChangeListener() {
+        radioGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
 
                     public void onCheckedChanged(RadioGroup group,
