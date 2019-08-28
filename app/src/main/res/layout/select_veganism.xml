@@ -36,10 +36,18 @@
             android:textSize="20dp" />
 
         <RadioButton
-            android:id="@+id/ovoorlacto"
+            android:id="@+id/ovo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="락토 / 오보"
+            android:text="오보"
+            android:textColor="#FF9800"
+            android:textSize="20dp" />
+
+        <RadioButton
+            android:id="@+id/lacto"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="락토"
             android:textColor="#FF9800"
             android:textSize="20dp" />
 
