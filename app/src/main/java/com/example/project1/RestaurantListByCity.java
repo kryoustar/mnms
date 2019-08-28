@@ -91,7 +91,7 @@ public class RestaurantListByCity extends AppCompatActivity {
                 ArrayList<RestaurantItem> data2 = null;
                 data2 = new ArrayList<>();
 
-                sql = "select * from veganRes03 where RestaurantName like '%" + search + "%'";
+                sql = "select * from veganRes03 where RestaurantName like '%" + search + "%' AND RestaurantCity like '%" + clickedRestaurantCity + "%'";
                 cursor = db.rawQuery(sql, null);   // select 사용시 사용(sql문, where조건 줬을 때 넣는 값)
 
                 int count = cursor.getCount();   // db에 저장된 행 개수를 읽어온다
