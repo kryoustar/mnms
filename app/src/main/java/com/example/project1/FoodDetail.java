@@ -65,8 +65,8 @@ public class FoodDetail extends AppCompatActivity {
                             // else{}
                         }
 
-                        //Intent intent = new Intent(FoodDetail.this, BottomActivity.class);
-                        //startActivity(intent);
+                        Intent intent = new Intent(FoodDetail.this, BottomActivity.class);
+                        startActivity(intent);
                     }
 
                     @Override
