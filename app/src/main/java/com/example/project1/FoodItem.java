@@ -85,6 +85,7 @@ public class FoodItem {
         this.FoodCarbs = FoodCarbs;
         this.FoodProtein = FoodProtein;
         this.FoodFat = FoodFat;
+        this.FoodSugar = FoodSugar;
         this.FoodNatrium = FoodNatrium;
         this.FoodCholesterol = FoodCholesterol;
         this.FoodSaturatedfat = FoodSaturatedfat;
@@ -102,17 +103,17 @@ public class FoodItem {
         c = db.rawQuery(sql, null);
         c.moveToNext();
         int number = c.getInt(0);
-        String name = c.getString(2);
-        int amount = c.getInt(3);
-        float kcal = c.getFloat(4);
-        float carbs = c.getFloat(5);
-        float protein = c.getFloat(6);
-        float fat = c.getFloat(7);
-        float sugar = c.getFloat(8);
-        float natrium = c.getFloat(9);
-        float cholesterol = c.getFloat(10);
-        float saturatedfat = c.getFloat(11);
-        float transfat = c.getFloat(12);
+        String name = c.getString(2); //식품이름
+        int amount = c.getInt(3);  // 1회제공량
+        float kcal = c.getFloat(4); // 열량
+        float carbs = c.getFloat(5); // 탄수화물
+        float protein = c.getFloat(6); // 단백질
+        float fat = c.getFloat(7); // 지방
+        float sugar = c.getFloat(8); // 당류
+        float natrium = c.getFloat(9); //나트륨
+        float cholesterol = c.getFloat(10); // 콜레스테롤
+        float saturatedfat = c.getFloat(11);// 포화지방산
+        float transfat = c.getFloat(12); //트랜스지방산
 
         FoodItem foodItem = new FoodItem(number, name, amount, kcal, carbs, protein,
                 fat, sugar, natrium, cholesterol, saturatedfat, transfat);

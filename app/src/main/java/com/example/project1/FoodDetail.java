@@ -31,8 +31,21 @@ public class FoodDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.food_detail);
         setContentView(R.layout.food_detail);
 
+        TextView amount = (TextView) findViewById(R.id.food_amount);
+        TextView kcal =  (TextView) findViewById(R.id.food_kcal);
+        TextView protein =  (TextView) findViewById(R.id.food_protein);
+        TextView fat =  (TextView) findViewById(R.id.food_fat);
+        TextView natrium =  (TextView) findViewById(R.id.food_natrium);
+        TextView sugar =  (TextView) findViewById(R.id.food_sugar);
+        TextView cholesterol =  (TextView) findViewById(R.id.food_cholesterol);
+        TextView saturatedFat =  (TextView) findViewById(R.id.food_saturatedfat);
+        TextView transFat =  (TextView) findViewById(R.id.food_transfat);
+
+
+        //FoodItem foodItem = new FoodItem();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
 
@@ -40,7 +53,21 @@ public class FoodDetail extends AppCompatActivity {
         Intent intent = getIntent();
         String foodIndex = intent.getStringExtra("Food number");
         String date = intent.getStringExtra("Date");
-        foodTitle.setText(foodIndex);
+        //foodTitle.setText(foodIndex);
+        Integer index = Integer.valueOf(foodIndex);
+        FoodItem foodItem = FoodItem.FoodItemSearch(index, getApplicationContext());
+
+
+        foodTitle.setText(foodItem.getFoodName());
+        amount.setText(Float.toString(foodItem.getFoodAmount())+" (kcal)");
+        kcal.setText(Float.toString(foodItem.getFoodKcal())+" (g)");
+        protein.setText(Float.toString(foodItem.getFoodProtein())+" (g)");
+        fat.setText(Float.toString(foodItem.getFoodFat())+" (g)");
+        natrium.setText("나트륨 :          "+Float.toString(foodItem.getFoodNatrium())+" (mg)");
+        sugar.setText("당류 :             "+Float.toString(foodItem.getFoodSugar())+" (g)");
+        cholesterol.setText("콜레스테롤 :            "+Float.toString(foodItem.getFoodCholesterol())+" (mg)");
+        saturatedFat.setText("포화지방산 :           "+Float.toString(foodItem.getFoodSaturatedfat())+" (g)");
+        transFat.setText("트랜스지방산 :              "+Float.toString(foodItem.getFoodTransfat())+" (g)");
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         DatabaseReference ConditionRef = ref.child("User").child(uid).child("Meal").child(date);
