@@ -57,16 +57,13 @@ public class FoodDetail extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Integer mealIndex = snapshot.getValue(Integer.class);
                             String deleteKey = snapshot.getKey();
-                            Toast.makeText(getApplicationContext(), String.valueOf(mealIndex) + " " + foodIndex + " " + deleteKey, Toast.LENGTH_SHORT).show();
-                            if (Integer.toString(mealIndex).equals(foodIndex) ) {
+                            if (String.valueOf(mealIndex) != foodIndex) {
                                 ConditionRef.child(deleteKey).removeValue();
                                 break;
                             }
-                            // else{}
                         }
-
-                        //Intent intent = new Intent(FoodDetail.this, BottomActivity.class);
-                        //startActivity(intent);
+                        Intent intent = new Intent(FoodDetail.this, BottomActivity.class);
+                        startActivity(intent);
                     }
 
                     @Override
