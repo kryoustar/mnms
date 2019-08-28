@@ -32,12 +32,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/citysearch_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="지역 선택" />
-
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
@@ -45,5 +39,3 @@
 
 
 </LinearLayout>
-
-

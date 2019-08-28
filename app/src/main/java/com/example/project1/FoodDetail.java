@@ -62,7 +62,7 @@ public class FoodDetail extends AppCompatActivity {
                                 ConditionRef.child(deleteKey).removeValue();
                                 break;
                             }
-                           // else{}
+                            // else{}
                         }
 
                         Intent intent = new Intent(FoodDetail.this, BottomActivity.class);

@@ -6,7 +6,8 @@ public class RestaurantItem {
     private String RestaurantAddress;
     private String RestaurantPhoneNumber;
     private String RestaurantOpeningHours;
-
+    private String RestaurantCity;
+    private String RestaurantVeganType;
 
     public int getNumber(){
 
@@ -49,11 +50,29 @@ public class RestaurantItem {
         RestaurantOpeningHours = restaurantOpeningHours;
     }
 
-    public RestaurantItem(int Number, String RestaurantName, String RestaurantAddress, String RestaurantPhoneNumber, String RestaurantOpeningHours){
+    public String getRestaurantCity() {
+        return RestaurantCity;
+    }
+
+    public void setRestaurantCity(String restaurantCity) {
+        RestaurantCity = restaurantCity;
+    }
+
+    public String getRestaurantVeganType() {
+        return RestaurantVeganType;
+    }
+
+    public void setRestaurantVeganType(String restaurantVeganType) {
+        RestaurantVeganType = restaurantVeganType;
+    }
+
+    public RestaurantItem(int Number, String RestaurantName, String RestaurantAddress, String RestaurantPhoneNumber, String RestaurantOpeningHours, String RestaurantCity, String RestaurantVeganType){
         this.Number = Number;
         this.RestaurantName = RestaurantName;
         this.RestaurantAddress = RestaurantAddress;
         this.RestaurantPhoneNumber = RestaurantPhoneNumber;
         this.RestaurantOpeningHours = RestaurantOpeningHours;
+        this.RestaurantCity = RestaurantCity;
+        this.RestaurantVeganType = RestaurantVeganType;
     }
 }

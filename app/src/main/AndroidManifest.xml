@@ -24,8 +24,10 @@
         <activity android:name=".SelectVeganism"></activity>
         <activity android:name=".PersonalInfo"></activity>
         <activity android:name=".CalendarActivity"></activity>
+        <activity android:name=".CityList"></activity>
+        <activity android:name=".RestaurantListByCity"></activity>
         <activity android:name=".FoodDetail"></activity>
-        
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
