@@ -64,7 +64,6 @@ public class MypageMainFragment extends Fragment {
             String email = user.getEmail(); //get user email
             String uid = user.getUid();
 
-
             ArrayList<String> items = new ArrayList<String>(); // 빈 데이터 리스트 생성
             items.add("");
             items.add("");
@@ -75,25 +74,44 @@ public class MypageMainFragment extends Fragment {
             ArrayAdapter<String> adapter =
                     new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, items);
 
-            items.set(0, "User Email: " + email);
+            //items.set(0, "User Email: " + email);
+
+            DatabaseReference ConditionRef1 = dbRef.child("User").child(uid)
+                    .child("Personal Info").child("Nickname");
+
+            ConditionRef1.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String Nickname = dataSnapshot.getValue(String.class);
+                    //Toast.makeText(getActivity(), Nickname + "", Toast.LENGTH_SHORT).show();
+                    if (Nickname != null) {
+                        items.set(0, "Nickname: " + Nickname);
+                    } else {
+                        items.set(0, "Nickname ");
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+         });
 
 
-            DatabaseReference ConditionRef = dbRef.child("User").child(uid)
+            DatabaseReference ConditionRef2 = dbRef.child("User").child(uid)
                     .child("Personal Info").child("Veganism Type");
 
-            ConditionRef.addValueEventListener(new ValueEventListener() {
+            ConditionRef2.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String veganType = dataSnapshot.getValue(String.class);
-                    Toast.makeText(getActivity(), veganType + "", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), veganType + "", Toast.LENGTH_SHORT).show();
                     if (veganType != null) {
                         items.set(1, "Types of Veganism: " + veganType);
                     } else {
-                        items.set(1, "Types of Veganism: ");
+                        items.set(1, "Types of Veganism ");
 
                     }
                     adapter.notifyDataSetChanged();
-
                 }
 
                 @Override
@@ -115,18 +133,18 @@ public class MypageMainFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     switch (position) {
                         case 0: //user email
-                            Toast.makeText(getContext(), items.get(position) + "", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), items.get(position) + "", Toast.LENGTH_SHORT).show();
                             break;
 
                         case 1: //채식타입
-                            Toast.makeText(getContext(), items.get(position) + "", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), items.get(position) + "", Toast.LENGTH_SHORT).show();
 
                             Intent intent1 = new Intent(getActivity(), SelectVeganism.class);
                             startActivity(intent1);
                             break;
 
                         case 2: //개인정보
-                            Toast.makeText(getContext(), items.get(position) + "", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), items.get(position) + "", Toast.LENGTH_SHORT).show();
                             Intent Intent = new Intent(getActivity(), PersonalInfo.class);
                             startActivity(Intent);
                             break;

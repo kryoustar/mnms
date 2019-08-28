@@ -10,12 +10,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class DatabaseManager extends AppCompatActivity {
 
-    public static void BreakfastDataAdd(String date, int foodNumber){
+    public static void MealDataAdd(String date, int foodNumber){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReference("/User");  //FromUrl("https://project1-cecd8.firebaseio.com/");
-        DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date).child("Breakfast");
+        DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date);
 
         if(tempRef == null){
             tempRef.setValue(foodNumber);
@@ -25,47 +25,14 @@ public class DatabaseManager extends AppCompatActivity {
         }
 
     }
-    public static void LunchDataAdd(String date, int foodNumber){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference dbRef = database.getReference("/User");  //FromUrl("https://project1-cecd8.firebaseio.com/");
-        DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date).child("Lunch");
-
-        if(tempRef == null){
-            tempRef.setValue(foodNumber);
-        }
-        else{
-            tempRef.push().setValue(foodNumber);
-        }
-    }
-    public static void DinnerDataAdd(String date, int foodNumber){
+    public static void mealDateDelete(String date, int foodNumber){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReference("/User");
-        DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date).child("Dinner");
+        DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date);
 
-        if(tempRef == null){
-            tempRef.setValue(foodNumber);
-        }
-        else{
-            tempRef.push().setValue(foodNumber);
-        }
-    }
-    public static void SnackDataAdd(String date, int foodNumber){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference dbRef = database.getReference("/User");
-        DatabaseReference tempRef = dbRef.child(uid).child("Meal").child(date).child("Snack");
 
-        if(tempRef == null){
-            tempRef.setValue(foodNumber);
-        }
-        else{
-            tempRef.push().setValue(foodNumber);
-        }
     }
 
 
