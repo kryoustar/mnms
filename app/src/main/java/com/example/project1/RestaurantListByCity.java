@@ -39,8 +39,9 @@ public class RestaurantListByCity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
 
         Intent intent = getIntent();
+        String clickedRestaurantCity = intent.getStringExtra("Restaurant City");
 
-        sql = "select * from veganRes03 where RestaurantCity like '%" + "용산구" + "%'";
+        sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%'";
         cursor = db.rawQuery(sql, null);
 
         int count = cursor.getCount();   // db에 저장된 행 개수를 읽어온다
