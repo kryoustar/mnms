@@ -73,9 +73,14 @@
                 <ListView
                     android:id="@+id/mealListView"
                     android:layout_width="match_parent"
-                    android:layout_height="352dp" />
+                    android:layout_height="224dp" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/nutrientsToday"
+                android:layout_width="match_parent"
+                android:layout_height="271dp" />
 
         </LinearLayout>
     </ScrollView>
