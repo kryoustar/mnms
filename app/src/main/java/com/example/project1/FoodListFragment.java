@@ -157,57 +157,46 @@ public class FoodListFragment extends Fragment {
 
         //하루 먹은 양 누적
         SQLiteDatabase db = getActivity().openOrCreateDatabase("nutrients.db", android.content.Context.MODE_PRIVATE, null);
-        //String food_name = "";
-        int food_amount = 0;
-        float food_kcal = 0, food_carbs = 0, food_protein = 0, food_fat = 0, food_sugar = 0,
-                food_natrium = 0, food_cholesterol = 0, food_saturatedfat = 0, food_transfat = 0;
 
-
-        /*
         Handler delayHandler = new Handler();
         delayHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity(), result[0], Toast.LENGTH_SHORT).show();
+                int food_amount = 0;
+                float food_kcal = 0, food_carbs = 0, food_protein = 0, food_fat = 0, food_sugar = 0,
+                        food_natrium = 0, food_cholesterol = 0, food_saturatedfat = 0, food_transfat = 0;
+
+                Integer j = 0;
+                while (!TextUtils.isEmpty(result[j]))
+                {
+                    String sql = "select * from tb_nutrients where number = " + result[j];
+                    Cursor cursor = db.rawQuery(sql, null);
+                    cursor.moveToFirst();
+
+                    food_amount += cursor.getInt(3);
+                    food_kcal += cursor.getFloat(4);
+                    food_carbs += cursor.getFloat(5);
+                    food_protein += cursor.getFloat(6);
+                    food_fat += cursor.getFloat(7);
+                    food_sugar += cursor.getFloat(8);
+                    food_natrium += cursor.getFloat(9);
+                    food_cholesterol += cursor.getFloat(10);
+                    food_saturatedfat += cursor.getFloat(11);
+                    food_transfat += cursor.getFloat(12);
+                    j++;
+                }
+                nutrientsToday.setText("칼로리: " + String.valueOf(food_amount) +"\n탄수화물: " + Float.toString(food_carbs) +
+                        "\n단백질: " +  Float.toString(food_protein) + "\n지방: " +  Float.toString(food_fat) +
+                        "\n당류: " +  Float.toString(food_sugar) + "\n나트륨: " +  Float.toString(food_natrium) +
+                        "\n콜레스테롤: " +  Float.toString(food_cholesterol) + "\n포화지방산: " +  Float.toString(food_saturatedfat) + "" +
+                        "\n트랜스지방산: " +  Float.toString(food_transfat));
             }
-        }, 10000);
-         */
-
-
-
-        Integer j = 0;
-        while (!TextUtils.isEmpty(result[j]))
-        {
-            String sql = "select * from tb_nutrients where number = " + result[j];
-            Cursor cursor = db.rawQuery(sql, null);
-
-            //if (cursor !=null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            //Toast.makeText(getActivity(), result[0], Toast.LENGTH_SHORT).show();
-
-            food_amount += cursor.getInt(3);
-            food_kcal += cursor.getFloat(4);
-            food_carbs += cursor.getFloat(5);
-            food_protein += cursor.getFloat(6);
-            food_fat += cursor.getFloat(7);
-            food_sugar += cursor.getFloat(8);
-            food_natrium += cursor.getFloat(9);
-            food_cholesterol += cursor.getFloat(10);
-            food_saturatedfat += cursor.getFloat(11);
-            food_transfat += cursor.getFloat(12);
-            j++;
-        }
-
-        nutrientsToday.setText("칼로리: " + String.valueOf(food_amount) +"\n탄수화물: " + Float.toString(food_carbs) +
-                "\n단백질: " +  Float.toString(food_protein) + "\n지방: " +  Float.toString(food_fat) +
-                "\n당류: " +  Float.toString(food_sugar) + "\n나트륨: " +  Float.toString(food_natrium) +
-                "\n콜레스테롤: " +  Float.toString(food_cholesterol) + "\n포화지방산: " +  Float.toString(food_saturatedfat) + "" +
-                "\n트랜스지방산: " +  Float.toString(food_transfat));
-        //Toast.makeText(getActivity(), String.valueOf(j), Toast.LENGTH_SHORT).show();
-
+        }, 5500);
 
         return view;
     }
+
+
 
     public void gotoLogin() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
