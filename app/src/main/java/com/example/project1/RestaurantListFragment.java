@@ -21,7 +21,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class RestaurantListFragment extends Fragment {
@@ -48,52 +58,85 @@ public class RestaurantListFragment extends Fragment {
         searchText = view.findViewById(R.id.search_restaurant);
         searchBtn = (Button) view.findViewById(R.id.search_btn);
         citySearchBtn = (Button) view.findViewById(R.id.citysearch_btn);
+        TextView tvVeganismType = (TextView) view.findViewById(R.id.veganismType);
 
-        ArrayList<RestaurantItem> data = null;
-        data = new ArrayList<>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        DatabaseReference ConditionRef2 = dbRef.child("User").child(uid)
+                .child("Personal Info").child("Veganism Type");
 
-        db = getActivity().openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
-        listView = view.findViewById(R.id.listView);
-
-        sql = "select * from veganRes03";
-        cursor = db.rawQuery(sql, null);
-
-        int count = cursor.getCount();   // db에 저장된 행 개수를 읽어온다
-        result = new String[count];   // 저장된 행 개수만큼의 배열을 생성
-
-        for (int i = 0; i < count; i++) {
-            cursor.moveToNext();   // 첫번째에서 다음 레코드가 없을때까지 읽음
-            int Number = cursor.getInt(0);
-            String RestaurantName = cursor.getString(1);
-            String RestaurantAddress = cursor.getString(3);
-            String RestaurantPhoneNumber = cursor.getString(4);
-            String RestaurantOpeningHours = cursor.getString(5);
-            String RestaurantCity = cursor.getString(2);
-            String RestaurantVeganType = cursor.getString(6);
-            RestaurantItem restaurantItem = new RestaurantItem(Number, RestaurantName, RestaurantAddress, RestaurantPhoneNumber, RestaurantOpeningHours, RestaurantCity, RestaurantVeganType);
-            result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
-            data.add(restaurantItem);
-        }
-
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
-        listView.setAdapter(adapter);
-
-        //클릭 시 다음페이지
-        final ArrayList<RestaurantItem> finalData = data;
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ConditionRef2.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                Intent intent = new Intent(getActivity(), RestaurantDetail.class);
-                intent.putExtra("Restaurant Number", finalData.get(position).getNumber());
-                intent.putExtra("Restaurant Name", finalData.get(position).getRestaurantName());
-                intent.putExtra("Restaurant Address", finalData.get(position).getRestaurantAddress());
-                intent.putExtra("Restaurant Phone Number", finalData.get(position).getRestaurantPhoneNumber());
-                intent.putExtra("Restaurant Opening Hours", finalData.get(position).getRestaurantOpeningHours());
-                intent.putExtra("Restaurant City", finalData.get(position).getRestaurantCity());
-                intent.putExtra("Restaurant Vegan Type", finalData.get(position).getRestaurantVeganType());
-                startActivity(intent);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String veganType = dataSnapshot.getValue(String.class);
+                tvVeganismType.setText(veganType);
+
+                ArrayList<RestaurantItem> data = null;
+                data = new ArrayList<>();
+
+                db = getActivity().openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
+                listView = view.findViewById(R.id.listView);
+
+
+                if (veganType == "지향 없음" || veganType == "페스코")
+                    sql = "select * from veganRes03";
+                else if (veganType == "락토 오보")
+                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%' OR RestaurantVeganType like '%" + "오보" + "%' OR RestaurantVeganType like '%" + "락토 오보" + "%'";
+                else if (veganType== "락토")
+                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%'";
+                else if (veganType== "오보")
+                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "오보" + "%'";
+                else
+                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%'";
+
+                cursor = db.rawQuery(sql, null);
+
+                int count = cursor.getCount();   // db에 저장된 행 개수를 읽어온다
+                result = new String[count];   // 저장된 행 개수만큼의 배열을 생성
+
+                for (int i = 0; i < count; i++) {
+                    cursor.moveToNext();   // 첫번째에서 다음 레코드가 없을때까지 읽음
+                    int Number = cursor.getInt(0);
+                    String RestaurantName = cursor.getString(1);
+                    String RestaurantAddress = cursor.getString(3);
+                    String RestaurantPhoneNumber = cursor.getString(4);
+                    String RestaurantOpeningHours = cursor.getString(5);
+                    String RestaurantCity = cursor.getString(2);
+                    String RestaurantVeganType = cursor.getString(6);
+                    RestaurantItem restaurantItem = new RestaurantItem(Number, RestaurantName, RestaurantAddress, RestaurantPhoneNumber, RestaurantOpeningHours, RestaurantCity, RestaurantVeganType);
+
+                    result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
+                    data.add(restaurantItem);
+                }
+
+                ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
+                listView.setAdapter(adapter);
+
+                //클릭 시 다음페이지
+                final ArrayList<RestaurantItem> finalData = data;
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView parent, View v, int position, long id) {
+                        Intent intent = new Intent(getActivity(), RestaurantDetail.class);
+                        intent.putExtra("Restaurant Number", finalData.get(position).getNumber());
+                        intent.putExtra("Restaurant Name", finalData.get(position).getRestaurantName());
+                        intent.putExtra("Restaurant Address", finalData.get(position).getRestaurantAddress());
+                        intent.putExtra("Restaurant Phone Number", finalData.get(position).getRestaurantPhoneNumber());
+                        intent.putExtra("Restaurant Opening Hours", finalData.get(position).getRestaurantOpeningHours());
+                        intent.putExtra("Restaurant City", finalData.get(position).getRestaurantCity());
+                        intent.putExtra("Restaurant Vegan Type", finalData.get(position).getRestaurantVeganType());
+                        startActivity(intent);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
         citySearchBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
