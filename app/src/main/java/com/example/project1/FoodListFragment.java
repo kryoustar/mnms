@@ -163,7 +163,7 @@ public class FoodListFragment extends Fragment {
                 food_natrium = 0, food_cholesterol = 0, food_saturatedfat = 0, food_transfat = 0;
 
 
-
+        /*
         Handler delayHandler = new Handler();
         delayHandler.postDelayed(new Runnable() {
             @Override
@@ -171,6 +171,7 @@ public class FoodListFragment extends Fragment {
                 Toast.makeText(getActivity(), result[0], Toast.LENGTH_SHORT).show();
             }
         }, 10000);
+         */
 
 
 
@@ -180,9 +181,9 @@ public class FoodListFragment extends Fragment {
             String sql = "select * from tb_nutrients where number = " + result[j];
             Cursor cursor = db.rawQuery(sql, null);
 
-           //if (cursor !=null && cursor.getCount() > 0) {
+            //if (cursor !=null && cursor.getCount() > 0) {
             cursor.moveToFirst();
-            Toast.makeText(getActivity(), result[0], Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), result[0], Toast.LENGTH_SHORT).show();
 
             food_amount += cursor.getInt(3);
             food_kcal += cursor.getFloat(4);
