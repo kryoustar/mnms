@@ -1,28 +1,21 @@
 package com.example.project1;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.view.LayoutInflater;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,12 +37,19 @@ public class RestaurantListFragment extends Fragment {
     Button searchBtn;
     EditText searchText;
     Button citySearchBtn;
+    Button gpslocation;
 
     String sql;
     SQLiteDatabase db;   // db를 다루기 위한 SQLiteDatabase 객체 생성
     Cursor cursor;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
     ListView listView;   // ListView 객체 생성
     String[] result;   // ArrayAdapter에 넣을 배열 생성
+    private ArrayList permissionsToRequest;
+    private ArrayList permissionsRejected = new ArrayList();
+    private ArrayList permissions = new ArrayList();
+
+    private final static int ALL_PERMISSIONS_RESULT = 101;
+    LocationTrack locationTrack;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class RestaurantListFragment extends Fragment {
         View view = inflater.inflate(R.layout.restaurantlist_view, container, false);
         searchText = view.findViewById(R.id.search_restaurant);
         searchBtn = (Button) view.findViewById(R.id.search_btn);
+        gpslocation = (Button) view.findViewById(R.id.gps_location);
         citySearchBtn = (Button) view.findViewById(R.id.citysearch_btn);
         TextView tvVeganismType = (TextView) view.findViewById(R.id.veganismType);
 
@@ -81,15 +82,15 @@ public class RestaurantListFragment extends Fragment {
 
 
                 if (veganType == "지향 없음" || veganType == "페스코")
-                    sql = "select * from veganRes03";
+                    sql = "select * from veganRes03 where RestaurantCity like '%" + "용산구" + "%'";
                 else if (veganType == "락토 오보")
-                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%' OR RestaurantVeganType like '%" + "오보" + "%' OR RestaurantVeganType like '%" + "락토 오보" + "%'";
+                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%' OR RestaurantVeganType like '%" + "오보" + "%' OR RestaurantVeganType like '%" + "락토 오보" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
                 else if (veganType== "락토")
-                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%'";
+                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
                 else if (veganType== "오보")
-                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "오보" + "%'";
+                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "오보" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
                 else
-                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%'";
+                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
 
                 cursor = db.rawQuery(sql, null);
 
@@ -137,6 +138,7 @@ public class RestaurantListFragment extends Fragment {
             }
         });
 
+
         citySearchBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -145,6 +147,16 @@ public class RestaurantListFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        gpslocation.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), GetCurrentGPSLocation.class);
+                startActivity(intent);
+            }
+        });
+
         //검색기능
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
