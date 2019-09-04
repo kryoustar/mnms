@@ -81,13 +81,13 @@
                 android:id="@+id/nutrientsToday"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:paddingTop="10dp"
-                tools:text="로딩중입니다" />
+                android:paddingTop="10dp" />
 
             <TextView
                 android:id="@+id/nutrients_person"
                 android:layout_width="match_parent"
-                android:layout_height="80dp" />
+                android:layout_height="80dp"
+                tools:text="로딩 중..." />
 
             <TextView
                 android:id="@+id/perday"
