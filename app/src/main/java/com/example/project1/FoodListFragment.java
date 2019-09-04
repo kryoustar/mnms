@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,6 +35,7 @@ import java.util.Calendar;
 
 
 public class FoodListFragment extends Fragment {
+    private static FirebaseDatabase Database; //데이터베이스 연결을 위한 멤버 객체
 
 
     @Nullable
@@ -49,6 +51,7 @@ public class FoodListFragment extends Fragment {
         TextView nutrientsToday = view.findViewById(R.id.nutrientsToday);
         TextView nutrientsPerson = view.findViewById(R.id.nutrients_person);
         TextView percent = view.findViewById(R.id.perday);
+
 
         ListView mealListview = view.findViewById(R.id.mealListView); // listview  생성 및 adapter 지정
         ArrayList<String> mealItems = new ArrayList<String>(); // 빈 데이터 리스트 생성
@@ -86,6 +89,7 @@ public class FoodListFragment extends Fragment {
             selectDateButton.setText(date);
         }
 
+
         DatabaseReference Database = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -98,7 +102,6 @@ public class FoodListFragment extends Fragment {
                 new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mealItems);
 
 
-        //먹은 음식 띄우기
         DatabaseReference ConditionRef = Database.child("User")
                 .child(uid).child("Meal")
                 .child(date);
@@ -106,7 +109,10 @@ public class FoodListFragment extends Fragment {
         String[] result;
         result = new String[100];
         final String dateTemp = date;
+        String[] result2;
+        result2 = new String[2];
 
+        //먹은 음식 get
         ConditionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -120,6 +126,82 @@ public class FoodListFragment extends Fragment {
                         mealItems.add(mealItem.getFoodName());
                     }
                 }
+
+                //gender, age
+                DatabaseReference ConditionRef2 = Database.child("User").child(uid).child("Personal Info");
+                ConditionRef2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            String temp = snapshot.getValue(String.class); //value 받아옴
+                            String key = snapshot.getKey(); //key 받아옴
+
+                            if (key.equals("Gender")) {
+                                result2[0] = temp;
+                            } else if (key.equals("Age")) {
+                                result2[1] = temp;
+                            }
+                        }
+
+
+                        //띄움
+                        SQLiteDatabase db = getActivity().openOrCreateDatabase("nutrients.db", Context.MODE_PRIVATE, null);
+
+                        int food_amount = 0;
+                        float food_kcal = 0, food_carbs = 0, food_protein = 0, food_fat = 0, food_sugar = 0,
+                                food_natrium = 0, food_cholesterol = 0, food_saturatedfat = 0, food_transfat = 0;
+
+                        Integer j = 0;
+                        while (!TextUtils.isEmpty(result[j])) {
+                            FoodItem foodItem = FoodItem.FoodItemSearch(Integer.valueOf(result[j]), getActivity());
+
+
+                            food_kcal += foodItem.getFoodKcal();
+                            food_carbs += foodItem.getFoodCarbs();
+                            food_protein += foodItem.getFoodProtein();
+                            food_fat += foodItem.getFoodFat();
+                            food_natrium += foodItem.getFoodNatrium();
+                            //food_amount += foodItem.getFoodAmount();
+                            //food_sugar += foodItem.getFoodSugar();
+                            //food_cholesterol += foodItem.getFoodCholesterol();
+                            //food_saturatedfat += foodItem.getFoodSaturatedfat();
+                            //food_transfat += foodItem.getFoodTransfat();
+                            j++;
+                        }
+
+                        PersonalItem personalItem = PersonalItem.PersonalItemSearch(result2[0], result2[1], getActivity());
+                        Float kcal = personalItem.getPersonKcal();
+                        Float carbs = personalItem.getPersonCarbs();
+                        Float protein = personalItem.getPersonProtein();
+                        Float fat = personalItem.getPersonFat();
+                        Float natrium = personalItem.getPersonNatrium();
+
+                        nutrientsToday.setText("<오늘 섭취한 영양소>\n" + "칼로리: " +
+                                Float.toString(food_kcal) +
+                                "     탄수화물: " + Float.toString(food_carbs) +
+                                "     단백질: " + Float.toString(food_protein) +
+                                "\n지방: " + Float.toString(food_fat) +
+                                "     나트륨: " + Float.toString(food_natrium));
+
+                        nutrientsPerson.setText("<오늘 섭취해야 할 영양소>\n" +
+                                "칼로리: " + Math.round(kcal) +
+                                "     탄수화물: " + Math.round(carbs) +
+                                "     단백질: " + Math.round(protein) +
+                                "\n지방: " + Math.round(fat) +
+                                "     나트륨: " + Math.round(natrium));
+
+                        percent.setText("칼로리 섭취량: " + Math.round(food_kcal / kcal * 100) + "%\n" +
+                                "탄수화물 섭취량: " + Math.round(food_carbs / carbs * 100) + "%\n" +
+                                "단백질 섭취량: " + Math.round(food_protein / protein * 100) + "%\n" +
+                                "지방 섭취량: " + Math.round(food_fat / fat * 100) + "%\n" +
+                                "나트륨 섭취량 " + Math.round(food_natrium / natrium * 100) + "%");
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
                 adapter.notifyDataSetChanged();
             }
 
@@ -129,10 +211,9 @@ public class FoodListFragment extends Fragment {
         });
 
 
-
         //음식 리스트 클릭
         mealListview.setAdapter(adapter);
-        mealListview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        mealListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), FoodDetail.class);
@@ -161,99 +242,8 @@ public class FoodListFragment extends Fragment {
             }
         });
 
-
-
-        //사용자의 gender, age 받아오기
-        String[] result2;
-        result2 = new String[2]; //gender, sex 저장
-
-        DatabaseReference ConditionRef2 = Database.child("User").child(uid).child("Personal Info");
-        ConditionRef2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String temp = snapshot.getValue(String.class); //value 받아옴
-                    String key = snapshot.getKey(); //key 받아옴
-
-                    if (key.equals("Gender")) {
-                        result2[0] = temp;
-                    }
-                    else if (key.equals("Age")) {
-                        result2[1] = temp;
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-
-
-
-
-        //하루 먹은 양 누적 (5.5초 후 실행)
-        SQLiteDatabase db = getActivity().openOrCreateDatabase("nutrients.db", android.content.Context.MODE_PRIVATE, null);
-
-        Handler delayHandler = new Handler();
-        delayHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                int food_amount = 0;
-                float food_kcal = 0, food_carbs = 0, food_protein = 0, food_fat = 0, food_sugar = 0,
-                        food_natrium = 0, food_cholesterol = 0, food_saturatedfat = 0, food_transfat = 0;
-
-                Integer j = 0;
-                while (!TextUtils.isEmpty(result[j]))
-                {
-                    FoodItem foodItem = FoodItem.FoodItemSearch(Integer.valueOf(result[j]), getActivity());
-
-
-                    food_kcal += foodItem.getFoodKcal();
-                    food_carbs += foodItem.getFoodCarbs();
-                    food_protein += foodItem.getFoodProtein();
-                    food_fat += foodItem.getFoodFat();
-                    food_natrium += foodItem.getFoodNatrium();
-                    //food_amount += foodItem.getFoodAmount();
-                    //food_sugar += foodItem.getFoodSugar();
-                    //food_cholesterol += foodItem.getFoodCholesterol();
-                    //food_saturatedfat += foodItem.getFoodSaturatedfat();
-                    //food_transfat += foodItem.getFoodTransfat();
-                    j++;
-                }
-
-                PersonalItem personalItem = PersonalItem.PersonalItemSearch(result2[0], result2[1], getActivity());
-                Float kcal = personalItem.getPersonKcal();
-                Float carbs = personalItem.getPersonCarbs();
-                Float protein = personalItem.getPersonProtein();
-                Float fat = personalItem.getPersonFat();
-                Float natrium = personalItem.getPersonNatrium();
-
-                nutrientsToday.setText("<오늘 섭취한 영양소>\n" + "칼로리: " +
-                        Float.toString(food_kcal) +
-                        "     탄수화물: " + Float.toString(food_carbs) +
-                        "     단백질: " +  Float.toString(food_protein) +
-                        "\n지방: " +  Float.toString(food_fat) +
-                        "     나트륨: " +  Float.toString(food_natrium));
-
-
-                nutrientsPerson.setText("<오늘 섭취해야 할 영양소>\n" +
-                        "칼로리: "+  Math.round(kcal) +
-                        "     탄수화물: " +  Math.round(carbs) +
-                        "     단백질: " +  Math.round(protein) +
-                        "\n지방: " +  Math.round(fat) +
-                        "     나트륨: " +  Math.round(natrium));
-
-                percent.setText("칼로리 섭취량: "  + Math.round(food_kcal/kcal*100) + "%\n" +
-                        "탄수화물 섭취량: " + Math.round(food_carbs/carbs*100) + "%\n" +
-                        "단백질 섭취량: " + Math.round(food_protein/protein*100) + "%\n" +
-                        "지방 섭취량: " + Math.round(food_fat/fat*100) + "%\n" +
-                        "나트륨 섭취량 " + Math.round(food_natrium/natrium*100) + "%");
-            }
-        }, 5500);
-
         return view;
     }
-
 
 
     public void gotoLogin() {
