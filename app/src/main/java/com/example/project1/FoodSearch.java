@@ -93,4 +93,3 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
 
 
 }
-
