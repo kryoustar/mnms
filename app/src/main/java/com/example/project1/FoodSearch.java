@@ -1,6 +1,5 @@
 package com.example.project1;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -62,7 +61,8 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
             c.moveToNext();   // 첫번째에서 다음 레코드가 없을때까지 읽음
             int food_number = c.getInt(0);
             String str_name = c.getString(2);
-            result[i] = str_name;
+            Integer food_amount = c.getInt(3);
+            result[i] = str_name + " (" + Integer.toString(food_amount) + "g)" ;
             foodnumber[i] = food_number;
         }
 
@@ -70,7 +70,7 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(getApplicationContext(), ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), ((TextView) view).getText() +"을(를) 추가하였습니다.", Toast.LENGTH_SHORT).show();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
