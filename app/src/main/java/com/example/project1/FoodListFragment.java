@@ -1,25 +1,23 @@
 package com.example.project1;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -221,7 +219,8 @@ public class FoodListFragment extends Fragment {
                     j++;
                 }
 
-                PersonalItem personalItem = PersonalItem.PersonalItemSearch(result2[0], result2[1], getActivity());
+               PersonalItem personalItem = PersonalItem.PersonalItemSearch(result2[0], result2[1], getActivity());
+
                 Float kcal = personalItem.getPersonKcal();
                 Float carbs = personalItem.getPersonCarbs();
                 Float protein = personalItem.getPersonProtein();
@@ -248,6 +247,8 @@ public class FoodListFragment extends Fragment {
                         "단백질 섭취량: " + Math.round(food_protein/protein*100) + "%\n" +
                         "지방 섭취량: " + Math.round(food_fat/fat*100) + "%\n" +
                         "나트륨 섭취량 " + Math.round(food_natrium/natrium*100) + "%");
+
+
             }
         }, 5500);
 
@@ -264,4 +265,6 @@ public class FoodListFragment extends Fragment {
             startActivity(gotoLogin);
         }
     }
+
+
 }

@@ -3,7 +3,6 @@ package com.example.project1;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 public class PersonalItem {
     //gender age kcal carbs protein fat natrium
@@ -46,7 +45,7 @@ public class PersonalItem {
 
 
     public PersonalItem(String PersonGender, int PersonAge, float PersonKcal, float PersonCarbs,
-                    float PersonProtein, float PersonFat, float PersonNatrium) {
+                        float PersonProtein, float PersonFat, float PersonNatrium) {
         this.PersonGender = PersonGender;
         this.PersonAge = PersonAge;
         this.PersonKcal = PersonKcal;
