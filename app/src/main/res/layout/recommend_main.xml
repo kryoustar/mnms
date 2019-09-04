@@ -54,13 +54,11 @@
             </LinearLayout>
 
 
-
             <TextView
                 android:id="@+id/accumulated_kcal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="로딩 중..." />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/accumulated_carbs"
@@ -85,6 +83,42 @@
 
             <TextView
                 android:id="@+id/accumulated_natrium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="" />
+
+
+            <TextView
+                android:id="@+id/week_kcal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/week_carbs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/week_protein"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/week_fat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/week_natrium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
