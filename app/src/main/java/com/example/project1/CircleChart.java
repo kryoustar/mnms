@@ -50,14 +50,11 @@ public class CircleChart extends View {
 
         if(writing != null) {
             successPoint = (float) writing.get(0).getTotal_success() / (float) writing.get(0).getTot_stamp_cnt() * 100;
-            Log.i("쉬비", successPoint + "");
             successPoint = Math.round(successPoint * 10);
-            Log.i("쉬비", successPoint + "");
             successPoint = successPoint / (float) 10.0;
-            Log.i("쉬비", successPoint + "");
-            successPoint2 = (float) writing.get(1).getTotal_success() / (float) writing.get(1).getTot_stamp_cnt() * 100;
+            /*successPoint2 = (float) writing.get(1).getTotal_success() / (float) writing.get(1).getTot_stamp_cnt() * 100;
             successPoint2 = Math.round(successPoint2 * 10);
-            successPoint2 = successPoint2 / (float) 10.0;
+            successPoint2 = successPoint2 / (float) 10.0;*/
         }
 
         //획득한 점수 부분의 각 (획득한 점수의 퍼센트 * 1점당 각도)
@@ -84,12 +81,12 @@ public class CircleChart extends View {
         canvas.drawArc(rectF, START_POINT, -360 + angle, false, p);
 
         //페인트 객체 설정
-        p.setColor(Color.RED);
+
+        p.setColor(Color.rgb(255,187,0));
         p.setStrokeCap(Paint.Cap.BUTT);
 
         //원형 그래프의 빨간 부분 설정
         canvas.drawArc(rectF, START_POINT, angle, false, p);
-        Log.i("쉬비", angle + "");
 
         //페인트 객체를 다시 설정한 다음 캔버스에 글씨를 쓴다.
         p.reset();
