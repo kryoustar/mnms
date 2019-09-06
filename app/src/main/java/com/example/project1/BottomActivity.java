@@ -2,6 +2,11 @@ package com.example.project1;
 
 import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,6 +20,11 @@ public class BottomActivity extends AppCompatActivity {
     private RecommendMainFragment recommendMainFragment = new RecommendMainFragment();
     private RestaurantListFragment restaurantListFragment = new RestaurantListFragment();
     private MypageMainFragment mypageMainFragment = new MypageMainFragment();
+    private MainActivity mainActivity = new MainActivity();
+
+    DatabaseReference Database = FirebaseDatabase.getInstance().getReference();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -23,8 +33,13 @@ public class BottomActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frame_layout, foodListFragment).commitAllowingStateLoss();
+        if(Login.isLogin(user)) {
+            transaction.replace(R.id.frame_layout, foodListFragment).commitAllowingStateLoss();
+        }
+        else{
+            transaction.replace(R.id.frame_layout, mypageMainFragment).commitAllowingStateLoss();
 
+        }
         //(getApplicationContext(),foodList_main).commitAllowingStateLoss()
         bottomNavigationView.setOnNavigationItemSelectedListener((item)->{
             FragmentTransaction transaction2 = fragmentManager.beginTransaction();

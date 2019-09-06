@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Canvas;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,8 +17,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,9 +50,9 @@ public class FoodListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_list, container, false);
         Button selectDateButton = view.findViewById(R.id.btnDate);
-        TextView nutrientsToday = view.findViewById(R.id.nutrientsToday);
-        TextView nutrientsPerson = view.findViewById(R.id.nutrients_person);
-        TextView percent = view.findViewById(R.id.perday);
+        //TextView nutrientsToday = view.findViewById(R.id.nutrientsToday);
+        //TextView nutrientsPerson = view.findViewById(R.id.nutrients_person);
+        //TextView percent = view.findViewById(R.id.perday);
 
 
         ListView mealListview = view.findViewById(R.id.mealListView); // listview  생성 및 adapter 지정
@@ -174,7 +177,7 @@ public class FoodListFragment extends Fragment {
                         Float protein = personalItem.getPersonProtein();
                         Float fat = personalItem.getPersonFat();
                         Float natrium = personalItem.getPersonNatrium();
-
+/*
                         nutrientsToday.setText("<오늘 섭취한 영양소>\n" + "칼로리: " +
                                 Float.toString(food_kcal) +
                                 "     탄수화물: " + Float.toString(food_carbs) +
@@ -194,7 +197,61 @@ public class FoodListFragment extends Fragment {
                                 "단백질 섭취량: " + Math.round(food_protein / protein * 100) + "%\n" +
                                 "지방 섭취량: " + Math.round(food_fat / fat * 100) + "%\n" +
                                 "나트륨 섭취량 " + Math.round(food_natrium / natrium * 100) + "%");
+*/
 
+
+
+                      /*  LinearLayout pongField = (LinearLayout) view.findViewById(R.id.field1);
+                        ArrayList<WritingVO> writing = new ArrayList<WritingVO>();
+
+                        Canvas canvas = new Canvas();
+                        WritingVO wVO1 = new WritingVO((float) Math.round(food_kcal / kcal * 100) , (float) 100);
+                        WritingVO wVO2 = new WritingVO((float) 1, (float) 10);
+
+                        writing.add(wVO1);
+                        writing.add(wVO2);
+                        CircleChart circleChart = new CircleChart(getActivity(),null,writing,100,500);
+
+                        pongField.addView(circleChart);*/
+
+                        LinearLayout pongField = (LinearLayout) view.findViewById(R.id.field1);
+                        ArrayList<WritingVO> writing = new ArrayList<WritingVO>();
+
+                        Canvas canvas = new Canvas();
+                        WritingVO wVO1 = new WritingVO((float) Math.round(food_carbs / carbs * 100) , (float) 100);
+                       // WritingVO wVO2 = new WritingVO((float) 1, (float) 10);
+
+                        writing.add(wVO1);
+                        //writing.add(wVO2);
+                        CircleChart circleChart = new CircleChart(getActivity(),null,writing,60,300);
+
+                        pongField.addView(circleChart);
+
+
+                        LinearLayout pongField2 = (LinearLayout) view.findViewById(R.id.field2);
+                        ArrayList<WritingVO> writing2 = new ArrayList<WritingVO>();
+
+                        Canvas canvas2 = new Canvas();
+                        WritingVO wVO1_2 = new WritingVO((float) Math.round(food_protein / protein * 100) , (float) 100);
+                        //WritingVO wVO2_2 = new WritingVO((float) 1, (float) 10);
+
+                        writing2.add(wVO1_2);
+                        //writing2.add(wVO2_2);
+                        CircleChart circleChart2 = new CircleChart(getActivity(),null,writing2,60,300);
+
+                        pongField2.addView(circleChart2);
+
+
+                        LinearLayout pongField3 = (LinearLayout) view.findViewById(R.id.field3);
+                        ArrayList<WritingVO> writing3 = new ArrayList<WritingVO>();
+
+                        Canvas canvas3 = new Canvas();
+                        WritingVO wVO1_3 = new WritingVO((float) Math.round(food_fat / fat * 100) , (float) 100);
+
+                        writing3.add(wVO1_3);
+                        CircleChart circleChart3 = new CircleChart(getActivity(),null,writing3,60,300);
+
+                        pongField3.addView(circleChart3);
                     }
 
                     @Override
@@ -242,6 +299,14 @@ public class FoodListFragment extends Fragment {
         });
 
         return view;
+    }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view,savedInstanceState);
+
+    //    CircleChart realCircleChart = view.findViewById(R.id.circleChart);
+      //  realCircleChart.addView
+
     }
 
 
