@@ -80,7 +80,7 @@ public class FoodListFragment extends Fragment {
             String toDayofMonth = Integer.toString(todayCal.get(Calendar.DATE));
             date = toYear + "-" + toMonth + "-" + toDayofMonth;
             selectDateButton.setText(date);
-        } else {
+        } else if (bundle != null){
             int yearselect = bundle.getInt("Selected Year");
             selectedYear = Integer.toString(yearselect);
             int monthselect = bundle.getInt("Selected Month");
@@ -88,6 +88,14 @@ public class FoodListFragment extends Fragment {
             int dayselect = bundle.getInt("Selected Day");
             selectedDay = Integer.toString(dayselect);
             date = selectedYear + "-" + selectedMonth + "-" + selectedDay;
+            selectDateButton.setText(date);
+        }
+        else {
+            Calendar todayCal = Calendar.getInstance();
+            String toYear = Integer.toString(todayCal.get(Calendar.YEAR));
+            String toMonth = Integer.toString(todayCal.get(Calendar.MONTH) + 1);
+            String toDayofMonth = Integer.toString(todayCal.get(Calendar.DATE));
+            date = toYear + "-" + toMonth + "-" + toDayofMonth;
             selectDateButton.setText(date);
         }
 
@@ -115,7 +123,7 @@ public class FoodListFragment extends Fragment {
         result2 = new String[2];
 
         //먹은 음식 get
-        ConditionRef.addValueEventListener(new ValueEventListener() {
+        ConditionRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Integer i = 0;
@@ -131,7 +139,7 @@ public class FoodListFragment extends Fragment {
 
                 //gender, age
                 DatabaseReference ConditionRef2 = Database.child("User").child(uid).child("Personal Info");
-                ConditionRef2.addValueEventListener(new ValueEventListener() {
+                ConditionRef2.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -147,7 +155,8 @@ public class FoodListFragment extends Fragment {
 
 
                         //띄움
-                        SQLiteDatabase db = getActivity().openOrCreateDatabase("nutrients.db", Context.MODE_PRIVATE, null);
+                        //SQLiteDatabase db;
+                        //db = getActivity().openOrCreateDatabase("nutrients.db", Context.MODE_PRIVATE, null);
 
                         int food_amount = 0;
                         float food_kcal = 0, food_carbs = 0, food_protein = 0, food_fat = 0, food_sugar = 0,

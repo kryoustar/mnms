@@ -41,19 +41,19 @@ public class PersonalInfo extends AppCompatActivity {
         initializeUI();
 
         radioGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
+            @Override
 
-                    public void onCheckedChanged(RadioGroup group,
-                                                 int checkedId) {
+            public void onCheckedChanged(RadioGroup group,
+                                         int checkedId) {
 
-                        // Get the selected Radio Button
-                        RadioButton
-                                radioButton
-                                = (RadioButton) group
-                                .findViewById(checkedId);
+                // Get the selected Radio Button
+                RadioButton
+                        radioButton
+                        = (RadioButton) group
+                        .findViewById(checkedId);
 
-                    }
-                });
+            }
+        });
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,15 +83,16 @@ public class PersonalInfo extends AppCompatActivity {
                 Toast.makeText(PersonalInfo.this, "입력해주세요.", Toast.LENGTH_LONG).show();
             }
             else{
-                RadioButton radioButton
-                        = (RadioButton) radioGender
-                        .findViewById(selectedId);
+                //RadioButton radioButton
+                //        = (RadioButton) radioGender
+                 //       .findViewById(selectedId);
                 dbRef.child(uid).child("Personal Info").child("Nickname").setValue(nickname); //닉네임 저장
                 dbRef.child(uid).child("Personal Info").child("Age").setValue(age); //나이 저장
-                dbRef.child(uid).child("Personal Info").child("Gender").setValue(radioButton.getText().toString()); //나이 저장
+                //dbRef.child(uid).child("Personal Info").child("Gender").setValue(radioButton.getText().toString()); //나이 저장
 
                 Toast.makeText(PersonalInfo.this, "개인정보가 수정되었습니다.", Toast.LENGTH_LONG).show();
                 Intent gobackIntent = new Intent(PersonalInfo.this, BottomActivity.class);
+                gobackIntent.putExtra("key",1);
                 startActivity(gobackIntent);
                 //progressBar.setVisibility(View.GONE);
             }
