@@ -68,7 +68,7 @@ public class RestaurantListFragment extends Fragment {
         DatabaseReference ConditionRef2 = dbRef.child("User").child(uid)
                 .child("Personal Info").child("Veganism Type");
 
-        ConditionRef2.addValueEventListener(new ValueEventListener() {
+        ConditionRef2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String veganType = dataSnapshot.getValue(String.class);
@@ -76,6 +76,7 @@ public class RestaurantListFragment extends Fragment {
 
                 ArrayList<RestaurantItem> data = null;
                 data = new ArrayList<>();
+
 
                 db = getActivity().openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
                 listView = view.findViewById(R.id.listView);
