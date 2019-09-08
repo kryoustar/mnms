@@ -59,34 +59,34 @@ public class GetCurrentGPSLocation extends AppCompatActivity {
 
 
 
-                locationTrack = new LocationTrack(GetCurrentGPSLocation.this);
+        locationTrack = new LocationTrack(GetCurrentGPSLocation.this);
 
 
-                if (locationTrack.canGetLocation()) {
+        if (locationTrack.canGetLocation()) {
 
-                    try {
-                        List<Address> addresses;
-                        addresses = gcd.getFromLocation(locationTrack.getLatitude(), locationTrack
-                                .getLongitude(), 1);
-                        //System.out.println(addresses.get(0).getLocality());
-                        String cityName = (addresses.get(0).getAddressLine(0)).toString();
-                        btn.setText(cityName);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    double longitude = locationTrack.getLongitude();
-                    double latitude = locationTrack.getLatitude();
-
-                    Toast.makeText(getApplicationContext(), "Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude), Toast.LENGTH_SHORT).show();
-
-                } else {
-
-                    locationTrack.showSettingsAlert();
-                }
-
+            try {
+                List<Address> addresses;
+                addresses = gcd.getFromLocation(locationTrack.getLatitude(), locationTrack
+                        .getLongitude(), 1);
+                //System.out.println(addresses.get(0).getLocality());
+                String cityName = (addresses.get(0).getAddressLine(0)).toString();
+                btn.setText(cityName);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+
+            double longitude = locationTrack.getLongitude();
+            double latitude = locationTrack.getLatitude();
+
+            Toast.makeText(getApplicationContext(), "Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude), Toast.LENGTH_SHORT).show();
+
+        } else {
+
+            locationTrack.showSettingsAlert();
+        }
+
+    }
 
 
 
