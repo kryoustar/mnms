@@ -1,4 +1,5 @@
 package com.example.project1;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,6 +46,8 @@ public class RestaurantListFragment extends Fragment {
     Cursor cursor;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
     ListView listView;   // ListView 객체 생성
     String[] result;   // ArrayAdapter에 넣을 배열 생성
+    String[] textString;
+    ImageView[] drawableIds;
     private ArrayList permissionsToRequest;
     private ArrayList permissionsRejected = new ArrayList();
     private ArrayList permissions = new ArrayList();
@@ -75,12 +79,10 @@ public class RestaurantListFragment extends Fragment {
 
                 ArrayList<RestaurantItem> data = null;
                 data = new ArrayList<>();
-
+               // ArrayList<SubjectData> arrayList = new ArrayList<SubjectData>();
 
                 db = getActivity().openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
                 listView = view.findViewById(R.id.listView);
-
-
                 if (veganType == "지향 없음" || veganType == "페스코")
                     sql = "select * from veganRes03 where RestaurantCity like '%" + "용산구" + "%'";
                 else if (veganType == "락토 오보")
@@ -110,10 +112,22 @@ public class RestaurantListFragment extends Fragment {
 
                     result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
                     data.add(restaurantItem);
+
+
+                    CustomAdapter adapter = new CustomAdapter(getActivity(), result);
+                   // listView = view.findViewById(R.id.listView);
+                    listView.setAdapter(adapter);
+
+                    //arrayList.add(new SubjectData(result[i], "https://www.tutorialspoint.com/android/images/android-mini-logo.jpg"));
+
+
                 }
 
-                ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
-                listView.setAdapter(adapter);
+                //CustomAdapter customAdapter = new CustomAdapter(this, arrayList);
+                //listView.setAdapter(customAdapter);
+
+                //ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
+                //listView.setAdapter(adapter);
 
                 //클릭 시 다음페이지
                 final ArrayList<RestaurantItem> finalData = data;
@@ -131,6 +145,8 @@ public class RestaurantListFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
+
+
             }
 
             @Override
