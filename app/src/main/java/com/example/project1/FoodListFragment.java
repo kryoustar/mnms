@@ -1,23 +1,28 @@
-
 package com.example.project1;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
-import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -148,11 +153,6 @@ public class FoodListFragment extends Fragment {
                             }
                         }
 
-
-                        //띄움
-                        //SQLiteDatabase db;
-                        //db = getActivity().openOrCreateDatabase("nutrients.db", Context.MODE_PRIVATE, null);
-
                         int food_amount = 0;
                         float food_kcal = 0, food_carbs = 0, food_protein = 0, food_fat = 0, food_sugar = 0,
                                 food_natrium = 0, food_cholesterol = 0, food_saturatedfat = 0, food_transfat = 0;
@@ -202,26 +202,13 @@ public class FoodListFragment extends Fragment {
 */
 
 
-
-                      /*  LinearLayout pongField = (LinearLayout) view.findViewById(R.id.field1);
-                        ArrayList<WritingVO> writing = new ArrayList<WritingVO>();
-                        Canvas canvas = new Canvas();
-                        WritingVO wVO1 = new WritingVO((float) Math.round(food_kcal / kcal * 100) , (float) 100);
-                        WritingVO wVO2 = new WritingVO((float) 1, (float) 10);
-                        writing.add(wVO1);
-                        writing.add(wVO2);
-                        CircleChart circleChart = new CircleChart(getActivity(),null,writing,100,500);
-                        pongField.addView(circleChart);*/
-
                         LinearLayout pongField = (LinearLayout) view.findViewById(R.id.field1);
                         ArrayList<WritingVO> writing = new ArrayList<WritingVO>();
 
                         Canvas canvas = new Canvas();
                         WritingVO wVO1 = new WritingVO((float) Math.round(food_carbs / carbs * 100) , (float) 100);
-                        // WritingVO wVO2 = new WritingVO((float) 1, (float) 10);
 
                         writing.add(wVO1);
-                        //writing.add(wVO2);
                         CircleChart circleChart = new CircleChart(getActivity(),null,writing,60,300);
 
                         pongField.addView(circleChart);
@@ -232,10 +219,8 @@ public class FoodListFragment extends Fragment {
 
                         Canvas canvas2 = new Canvas();
                         WritingVO wVO1_2 = new WritingVO((float) Math.round(food_protein / protein * 100) , (float) 100);
-                        //WritingVO wVO2_2 = new WritingVO((float) 1, (float) 10);
 
                         writing2.add(wVO1_2);
-                        //writing2.add(wVO2_2);
                         CircleChart circleChart2 = new CircleChart(getActivity(),null,writing2,60,300);
 
                         pongField2.addView(circleChart2);
@@ -257,6 +242,7 @@ public class FoodListFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
+                Utility.setListViewHeightBasedOnChildren(mealListview);
                 adapter.notifyDataSetChanged();
             }
 
@@ -268,6 +254,8 @@ public class FoodListFragment extends Fragment {
 
         //음식 리스트 클릭
         mealListview.setAdapter(adapter);
+        //adapter.notifyAll();
+        //mealListview.n
         mealListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -277,6 +265,7 @@ public class FoodListFragment extends Fragment {
                 intent.putExtra("Date", dateTemp);
                 startActivity(intent);
             }
+
         });
 
 
