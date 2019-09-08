@@ -1,5 +1,6 @@
 package com.example.project1;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,18 +30,34 @@ public class RecommendMainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recommend_main, container, false);
+        TextView mLowLabel, mMidLabel, mHighLabel;
+        BarView mLowBar, mMidBar, mHighBar;
+
+        //Some sample percentage values
+        int low;
+        int mid;
+        int high;
+        mLowBar = view.findViewById(R.id.low_bar);
+        mMidBar = view.findViewById(R.id.mid_bar);
+        mHighBar = view.findViewById(R.id.high_bar);
+
+        mLowLabel = view.findViewById(R.id.low_text);
+        mMidLabel = view.findViewById(R.id.mid_text);
+        mHighLabel = view.findViewById(R.id.high_text);
+
+        /*
         TextView accumulatedKcalTV = view.findViewById(R.id.accumulated_kcal);
         TextView accumulatedCarbsTV = view.findViewById(R.id.accumulated_carbs);
         TextView accumulatedProteinTV = view.findViewById(R.id.accumulated_protein);
         TextView accumulatedFatTV = view.findViewById(R.id.accumulated_fat);
         TextView accumulatedNatriumTV = view.findViewById(R.id.accumulated_natrium);
-        TextView todayTextView = view.findViewById(R.id.dateTV);
         TextView weekKCalTV = view.findViewById(R.id.week_kcal);
         TextView weekCarbsTV = view.findViewById(R.id.week_carbs);
         TextView weekProteinTV = view.findViewById(R.id.week_protein);
         TextView weekFatTV = view.findViewById(R.id.week_fat);
         TextView weekNatriumTV = view.findViewById(R.id.week_natrium);
-
+*/
+        TextView todayTextView = view.findViewById(R.id.dateTV);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
         String date = formatter.format(today);
@@ -67,7 +84,7 @@ public class RecommendMainFragment extends Fragment {
 
         ArrayList<Integer> weekMeal = new ArrayList<Integer>(); // 빈 데이터 리스트 생성
         for (int i = 0; i < 7; i++) {
-            ConditionRef.child(weekArray[i]).addValueEventListener(new ValueEventListener() {
+            ConditionRef.child(weekArray[i]).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -80,7 +97,7 @@ public class RecommendMainFragment extends Fragment {
                     result = new String[2]; //gender, sex 저장
 
                     DatabaseReference ConditionRef2 = Database.child("User").child(uid).child("Personal Info");
-                    ConditionRef2.addValueEventListener(new ValueEventListener() {
+                    ConditionRef2.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -109,12 +126,13 @@ public class RecommendMainFragment extends Fragment {
 
 
                             }
+                            /*
                             accumulatedKcalTV.setText("열량 : " + Float.toString(food_kcal));
                             accumulatedCarbsTV.setText("탄수화물 : " + Float.toString(food_carbs));
                             accumulatedProteinTV.setText("단백질 : " + Float.toString(food_protein));
                             accumulatedFatTV.setText("지방 : " + Float.toString(food_fat));
                             accumulatedNatriumTV.setText("나트륨 : " + Float.toString(food_natrium));
-
+*/
                             PersonalItem personalItem = PersonalItem.PersonalItemSearch(result[0], result[1], getActivity());
                             Float kcal = personalItem.getPersonKcal() * 7;
                             Float carbs = personalItem.getPersonCarbs() * 7;
@@ -122,12 +140,59 @@ public class RecommendMainFragment extends Fragment {
                             Float fat = personalItem.getPersonFat() * 7;
                             Float natrium = personalItem.getPersonNatrium() * 7;
 
-
+/*
                             weekKCalTV.setText("\n열량: " + Math.round(food_kcal / kcal * 100) + "%");
                             weekCarbsTV.setText("탄수화물 " + Math.round(food_carbs / carbs * 100) + "%");
                             weekProteinTV.setText("단백질 " + Math.round(food_protein / protein * 100) + "%");
                             weekFatTV.setText("지방 " + Math.round(food_fat / fat * 100) + "%");
                             weekNatriumTV.setText("나트륨 " + Math.round(food_natrium / natrium * 100) + "%");
+                            */
+
+                            int low = Math.round(food_carbs / carbs * 100);
+                            int mid = Math.round(food_protein / protein * 100);
+                            int high = Math.round(food_fat / fat * 100);
+
+                            if (low < 30) {
+                                mLowBar.set(Color.RED, low);
+                            }
+                            if (low >= 30 && low < 70) {
+                                mLowBar.set(Color.GREEN, low);
+                            }
+                            if (low >= 70) {
+                                mLowBar.set(Color.BLUE, low);
+                            }
+                            if (mid < 30) {
+                                mMidBar.set(Color.RED, mid);
+
+                            }
+                            if (mid >= 30 && low < 70) {
+                                mMidBar.set(Color.GREEN, mid);
+
+                            }
+                            if (mid >= 70) {
+                                mMidBar.set(Color.BLUE, mid);
+
+                            }
+                            if (high < 30) {
+                                mHighBar.set(Color.RED, high);
+
+                            }
+                            if (high >= 30 && low < 70) {
+                                mHighBar.set(Color.GREEN, high);
+
+                            }
+                            if (high >= 70) {
+                                mHighBar.set(Color.BLUE, high);
+
+                            }
+
+                            // mLowBar.set(Color.BLUE, low);
+                            // mMidBar.set(Color.RED, mid);
+                           // mHighBar.set(Color.GREEN, high);
+
+                            mLowLabel.setText(String.valueOf(low) + "%");
+                            mMidLabel.setText(String.valueOf(mid) + "%");
+                            mHighLabel.setText(String.valueOf(high) + "%");
                         }
 
                         @Override
@@ -136,12 +201,15 @@ public class RecommendMainFragment extends Fragment {
                     });
 
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
             });
         }
+
+
         return view;
     }
 }

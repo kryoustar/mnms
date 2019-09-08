@@ -52,77 +52,115 @@
                     android:gravity="center"
                     android:text="(어제부터 일주일입니다!)" />
             </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/accumulated_kcal"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp" />
+                android:orientation="vertical"
+                android:layout_centerInParent="true">
 
-            <TextView
-                android:id="@+id/accumulated_carbs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/accumulated_protein"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="탄수화물"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:minEms="3"
+                        android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/accumulated_fat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="" />
+                    <com.example.project1.BarView
+                        android:id="@+id/low_bar"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp" />
 
-            <TextView
-                android:id="@+id/accumulated_natrium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="" />
+                    <TextView
+                        android:id="@+id/low_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp" />
 
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/week_kcal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/week_carbs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="단백질"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:minEms="3"
+                        android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/week_protein"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="" />
+                    <com.example.project1.BarView
+                        android:id="@+id/mid_bar"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp" />
 
-            <TextView
-                android:id="@+id/week_fat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="" />
+                    <TextView
+                        android:id="@+id/mid_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp" />
 
-            <TextView
-                android:id="@+id/week_natrium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="지방"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:minEms="3"
+                        android:textStyle="bold"/>
+
+                    <com.example.project1.BarView
+                        android:id="@+id/high_bar"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:id="@+id/high_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
