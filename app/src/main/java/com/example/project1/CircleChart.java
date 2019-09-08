@@ -1,22 +1,14 @@
 package com.example.project1;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import java.util.ArrayList;
 
-import android.content.Context;
+import java.util.ArrayList;
 
 public class CircleChart extends View {
 
@@ -43,32 +35,22 @@ public class CircleChart extends View {
 
         //이 그래프에서 만점이 100점이기 때문에 100등분을 해야 한다. 그래서 360도를 100으로 나누었다. 만약 5등분을 하고싶다면 360/5를 하면 된다.
         final float ANGLE_PER_SCORE = (float) 360 / 100;
-        Log.i("쉬비", ANGLE_PER_SCORE + "");
         //획득한 점수를 퍼센트로 나타냄
         float successPoint = 0;
-        float successPoint2 = 0;
 
         if(writing != null) {
             successPoint = (float) writing.get(0).getTotal_success() / (float) writing.get(0).getTot_stamp_cnt() * 100;
-            Log.i("쉬비", successPoint + "");
             successPoint = Math.round(successPoint * 10);
-            Log.i("쉬비", successPoint + "");
             successPoint = successPoint / (float) 10.0;
-            Log.i("쉬비", successPoint + "");
-            successPoint2 = (float) writing.get(1).getTotal_success() / (float) writing.get(1).getTot_stamp_cnt() * 100;
-            successPoint2 = Math.round(successPoint2 * 10);
-            successPoint2 = successPoint2 / (float) 10.0;
         }
 
         //획득한 점수 부분의 각 (획득한 점수의 퍼센트 * 1점당 각도)
         float angle = successPoint * ANGLE_PER_SCORE;
-        float angle2 = successPoint2 * ANGLE_PER_SCORE;
         int x2 = x + 500;
         int y2 = y + 500;
 
         //사각형 객체 RectF를 생성, 원형 그래프의 크기를 사각형이라 보고 좌,상,우,하 좌표 설정, 좌상이 기준이 된다.
         RectF rectF = new RectF(x, x, y, y);
-        RectF rectF2 = new RectF(x2, x2, y2, y2);
 
         //페인트 객체 생성
         Paint p = new Paint();
@@ -84,12 +66,12 @@ public class CircleChart extends View {
         canvas.drawArc(rectF, START_POINT, -360 + angle, false, p);
 
         //페인트 객체 설정
-        p.setColor(Color.RED);
+
+        p.setColor(Color.rgb(255,187,0));
         p.setStrokeCap(Paint.Cap.BUTT);
 
         //원형 그래프의 빨간 부분 설정
         canvas.drawArc(rectF, START_POINT, angle, false, p);
-        Log.i("쉬비", angle + "");
 
         //페인트 객체를 다시 설정한 다음 캔버스에 글씨를 쓴다.
         p.reset();
