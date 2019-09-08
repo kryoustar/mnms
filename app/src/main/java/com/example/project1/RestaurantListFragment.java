@@ -49,7 +49,6 @@ public class RestaurantListFragment extends Fragment {
     private ArrayList permissions = new ArrayList();
 
     private final static int ALL_PERMISSIONS_RESULT = 101;
-    LocationTrack locationTrack;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
