@@ -50,6 +50,7 @@ public class FoodListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_list, container, false);
         Button selectDateButton = view.findViewById(R.id.btnDate);
+        TextView todaykcal = view.findViewById(R.id.todaykcal);
         //TextView nutrientsToday = view.findViewById(R.id.nutrientsToday);
         //TextView nutrientsPerson = view.findViewById(R.id.nutrients_person);
         //TextView percent = view.findViewById(R.id.perday);
@@ -73,6 +74,26 @@ public class FoodListFragment extends Fragment {
         String date = "";
 
         Bundle bundle = getActivity().getIntent().getExtras();
+        Calendar todayCal = Calendar.getInstance();
+        String toYear = Integer.toString(todayCal.get(Calendar.YEAR));
+        String toMonth = Integer.toString(todayCal.get(Calendar.MONTH) + 1);
+        String toDayofMonth = Integer.toString(todayCal.get(Calendar.DATE));
+        date = toYear + "-" + toMonth + "-" + toDayofMonth;
+        selectDateButton.setText(date);
+
+        if (bundle != null){
+            int yearselect = bundle.getInt("Selected Year");
+            selectedYear = Integer.toString(yearselect);
+            int monthselect = bundle.getInt("Selected Month");
+            selectedMonth = Integer.toString(monthselect);
+            int dayselect = bundle.getInt("Selected Day");
+            selectedDay = Integer.toString(dayselect);
+            date = selectedYear + "-" + selectedMonth + "-" + selectedDay;
+            selectDateButton.setText(date);
+        }
+
+
+        /*
         if (bundle == null) {
             Calendar todayCal = Calendar.getInstance();
             String toYear = Integer.toString(todayCal.get(Calendar.YEAR));
@@ -98,6 +119,8 @@ public class FoodListFragment extends Fragment {
             date = toYear + "-" + toMonth + "-" + toDayofMonth;
             selectDateButton.setText(date);
         }
+
+         */
 
 
         DatabaseReference Database = FirebaseDatabase.getInstance().getReference();
@@ -181,6 +204,9 @@ public class FoodListFragment extends Fragment {
                         Float protein = personalItem.getPersonProtein();
                         Float fat = personalItem.getPersonFat();
                         Float natrium = personalItem.getPersonNatrium();
+
+                        todaykcal.setText("[오늘 섭취해야 할 칼로리 "+ Math.round(kcal) +
+                                "kcal 중 " + Float.toString(food_kcal) + "kcal를 먹었습니다.]" );
 /*
                         nutrientsToday.setText("<오늘 섭취한 영양소>\n" + "칼로리: " +
                                 Float.toString(food_kcal) +

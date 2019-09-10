@@ -31,6 +31,7 @@ public class RecommendMainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recommend_main, container, false);
         TextView mLowLabel, mMidLabel, mHighLabel;
+        TextView lacknutrients, lacknutrients2;
         BarView mLowBar, mMidBar, mHighBar;
 
         //Some sample percentage values
@@ -44,6 +45,11 @@ public class RecommendMainFragment extends Fragment {
         mLowLabel = view.findViewById(R.id.low_text);
         mMidLabel = view.findViewById(R.id.mid_text);
         mHighLabel = view.findViewById(R.id.high_text);
+
+        lacknutrients = view.findViewById(R.id.lacknutrients);
+        lacknutrients2 = view.findViewById(R.id.lacknutrients2);
+
+
 
         /*
         TextView accumulatedKcalTV = view.findViewById(R.id.accumulated_kcal);
@@ -193,6 +199,28 @@ public class RecommendMainFragment extends Fragment {
                             mLowLabel.setText(String.valueOf(low) + "%");
                             mMidLabel.setText(String.valueOf(mid) + "%");
                             mHighLabel.setText(String.valueOf(high) + "%");
+
+                            if (low<mid) {
+                                if (low<high) {
+                                    lacknutrients.setText("'탄수화물'이 가장 부족합니다.");
+                                    lacknutrients2.setText("'탄수화물'이 부족할 땐 감자튀김, 쿠키 등을 먹는 것이 좋습니다.");
+                                } else {
+                                    lacknutrients.setText("'지방'이 가장 부족합니다.");
+                                    lacknutrients2.setText("'지방'이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
+
+                                }
+                            }
+                            else {
+                                if (mid<high) {
+                                    lacknutrients.setText("'단백질'이 가장 부족합니다.");
+                                    lacknutrients2.setText("'단백질'이 부족할 땐 브로콜리, 검정콩, 두부 등을 먹는 것이 좋습니다.");
+
+                                } else {
+                                    lacknutrients.setText("'지방'이 가장 부족합니다.");
+                                    lacknutrients2.setText("'지방'이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
+
+                                }
+                            }
                         }
 
                         @Override
