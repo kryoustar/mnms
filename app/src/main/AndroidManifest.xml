@@ -7,14 +7,14 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Vegan Friendly"
-
+        android:theme="@style/AppTheme"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:supportsRtl="true">
         <activity android:name=".FoodSearch"></activity>
         <activity android:name=".RestaurantDetail"></activity>
         <activity
-            android:name=".BottomActivity">
+            android:name=".BottomActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
