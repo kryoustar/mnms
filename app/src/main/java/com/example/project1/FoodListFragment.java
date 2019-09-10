@@ -32,8 +32,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class FoodListFragment extends Fragment {
@@ -73,14 +75,19 @@ public class FoodListFragment extends Fragment {
         String selectedYear, selectedMonth, selectedDay;
         String date = "";
 
-        Bundle bundle = getActivity().getIntent().getExtras();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date();
+        date = formatter.format(today);
+        selectDateButton.setText(date);
+/*
         Calendar todayCal = Calendar.getInstance();
         String toYear = Integer.toString(todayCal.get(Calendar.YEAR));
         String toMonth = Integer.toString(todayCal.get(Calendar.MONTH) + 1);
         String toDayofMonth = Integer.toString(todayCal.get(Calendar.DATE));
         date = toYear + "-" + toMonth + "-" + toDayofMonth;
         selectDateButton.setText(date);
-
+*/
+        Bundle bundle = getActivity().getIntent().getExtras();
         if (bundle != null){
             int yearselect = bundle.getInt("Selected Year");
             selectedYear = Integer.toString(yearselect);
@@ -90,6 +97,15 @@ public class FoodListFragment extends Fragment {
             selectedDay = Integer.toString(dayselect);
             date = selectedYear + "-" + selectedMonth + "-" + selectedDay;
             selectDateButton.setText(date);
+        }
+
+        String nullcheck = selectDateButton.getText().toString();
+        if(nullcheck.equals("0-0-0")){
+            SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+            Date today2 = new Date();
+            String date2 = formatter.format(today2);
+            selectDateButton.setText(date2);
+
         }
 
 

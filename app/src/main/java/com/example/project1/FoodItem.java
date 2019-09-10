@@ -129,7 +129,7 @@ public class FoodItem {
         Cursor c;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
 
         db = myContext.openOrCreateDatabase("nutrients.db", android.content.Context.MODE_PRIVATE, null);
-        sql = "select * from tb_nutrients where name like '%" + search + "%'";
+        sql = "select * from tb_nutrients where name = '" + search + "'";
         c = db.rawQuery(sql, null);   // select 사용시 사용(sql문, where조건 줬을 때 넣는 값)
         c.moveToNext();   // 첫번째에서 다음 레코드가 없을때까지 읽음
         int number = c.getInt(0);
