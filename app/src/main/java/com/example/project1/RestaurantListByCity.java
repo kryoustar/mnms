@@ -6,11 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,8 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
-import static android.R.layout.simple_list_item_1;
 
 public class RestaurantListByCity extends AppCompatActivity {
 
@@ -44,7 +40,7 @@ public class RestaurantListByCity extends AppCompatActivity {
         setContentView(R.layout.restaurantlist_bycity);
         searchText = findViewById(R.id.search_restaurant);
         searchBtn = (Button) findViewById(R.id.search_btn);
-        TextView tvVeganismType = (TextView) findViewById(R.id.veganismType2);
+        Button tvVeganismType = (Button) findViewById(R.id.veganismType2);
 
         ArrayList<RestaurantItem> data = null;
         data = new ArrayList<>();
@@ -107,10 +103,13 @@ public class RestaurantListByCity extends AppCompatActivity {
 
                     result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
                     data.add(restaurantItem);
+
+                    CustomAdapter adapter = new CustomAdapter(RestaurantListByCity.this, result);
+                    listView.setAdapter(adapter);
                 }
 
-                ArrayAdapter adapter = new ArrayAdapter(RestaurantListByCity.this, android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
-                listView.setAdapter(adapter);
+                //ArrayAdapter adapter = new ArrayAdapter(RestaurantListByCity.this, android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
+                //listView.setAdapter(adapter);
 
                 //클릭 시 다음페이지
                 final ArrayList<RestaurantItem> finalData = data;
@@ -165,9 +164,12 @@ public class RestaurantListByCity extends AppCompatActivity {
 
                     result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
                     data2.add(restaurantItem);
-
-                    ArrayAdapter adapter = new ArrayAdapter(RestaurantListByCity.this, simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
+                    CustomAdapter adapter = new CustomAdapter(RestaurantListByCity.this, result);
                     listView.setAdapter(adapter);
+
+                    //ArrayAdapter adapter = new ArrayAdapter(RestaurantListByCity.this, simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
+                    //listView.setAdapter(adapter);
+
                     final ArrayList<RestaurantItem> finalData2 = data2;
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override

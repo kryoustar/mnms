@@ -8,12 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,13 +43,6 @@ public class RestaurantListFragment extends Fragment {
     Cursor cursor;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
     ListView listView;   // ListView 객체 생성
     String[] result;   // ArrayAdapter에 넣을 배열 생성
-    String[] textString;
-    ImageView[] drawableIds;
-    private ArrayList permissionsToRequest;
-    private ArrayList permissionsRejected = new ArrayList();
-    private ArrayList permissions = new ArrayList();
-
-    private final static int ALL_PERMISSIONS_RESULT = 101;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +52,7 @@ public class RestaurantListFragment extends Fragment {
         searchBtn = (Button) view.findViewById(R.id.search_btn);
         gpslocation = (Button) view.findViewById(R.id.gps_location);
         citySearchBtn = (Button) view.findViewById(R.id.citysearch_btn);
-        TextView tvVeganismType = (TextView) view.findViewById(R.id.veganismType);
+        Button tvVeganismType = (Button) view.findViewById(R.id.veganismType);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
@@ -79,7 +69,6 @@ public class RestaurantListFragment extends Fragment {
 
                 ArrayList<RestaurantItem> data = null;
                 data = new ArrayList<>();
-               // ArrayList<SubjectData> arrayList = new ArrayList<SubjectData>();
 
                 db = getActivity().openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
                 listView = view.findViewById(R.id.listView);
@@ -115,16 +104,8 @@ public class RestaurantListFragment extends Fragment {
 
 
                     CustomAdapter adapter = new CustomAdapter(getActivity(), result);
-                   // listView = view.findViewById(R.id.listView);
                     listView.setAdapter(adapter);
-
-                    //arrayList.add(new SubjectData(result[i], "https://www.tutorialspoint.com/android/images/android-mini-logo.jpg"));
-
-
                 }
-
-                //CustomAdapter customAdapter = new CustomAdapter(this, arrayList);
-                //listView.setAdapter(customAdapter);
 
                 //ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
                 //listView.setAdapter(adapter);
@@ -201,9 +182,12 @@ public class RestaurantListFragment extends Fragment {
 
                     result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
                     data2.add(restaurantItem);
-
-                    ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
+                    CustomAdapter adapter = new CustomAdapter(getActivity(), result);
                     listView.setAdapter(adapter);
+
+                    //ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
+                    //listView.setAdapter(adapter);
+
                     final ArrayList<RestaurantItem> finalData2 = data2;
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override

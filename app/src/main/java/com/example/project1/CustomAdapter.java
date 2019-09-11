@@ -29,7 +29,6 @@ public class CustomAdapter extends BaseAdapter {
     public CustomAdapter(Context context, String[] text1) {
         mContext = context;
         Title = text1;
-
     }
 
     public int getCount() {
@@ -58,28 +57,12 @@ public class CustomAdapter extends BaseAdapter {
 
         title = (TextView) row.findViewById(R.id.txtTitle);
         title.setText(Title[position]);
-        //InputStream in =null;
-        //Bitmap bmp=null;
 
-        int responseCode = -1;
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_10.jpg");
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_10.png");
         try {
-           /* URL url = new URL("https://i.pinimg.com/originals/96/0a/be/960abef4528685a8daffe3c4221594f2.png");
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-            con.setDoInput(true);
-            con.connect();
-            responseCode = con.getResponseCode();
-            if(responseCode == HttpURLConnection.HTTP_OK)
-            {
-                //download
-                in = con.getInputStream();
-                bmp = BitmapFactory.decodeStream(in);
-                in.close();
-                i1.setImageBitmap(bmp);
-            }*/
 
-            final File localFile = File.createTempFile("images", "jpg");
+            final File localFile = File.createTempFile("images", "png");
             storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
