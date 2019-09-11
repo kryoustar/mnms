@@ -12,14 +12,18 @@
         android:supportsRtl="true">
         <activity android:name=".FoodSearch"></activity>
         <activity android:name=".RestaurantDetail"></activity>
-        <activity
-            android:name=".BottomActivity"
-            >
+        <activity android:name=".SplashActivity"
+            android:theme ="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".BottomActivity">
         </activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".RegistrationActivity"></activity>

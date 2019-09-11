@@ -343,7 +343,7 @@ public class FoodListFragment extends Fragment {
     public void gotoLogin() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
-            Toast.makeText(getActivity(), "로그인 이후 사용하실 수 있습니다.", Toast.LENGTH_SHORT).show();
+
             Intent gotoLogin = new Intent(getActivity(), LoginActivity.class);
             startActivity(gotoLogin);
         }
