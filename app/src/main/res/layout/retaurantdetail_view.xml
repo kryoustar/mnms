@@ -7,98 +7,93 @@
     android:orientation="vertical">
 
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/resName"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:gravity="center|center_horizontal"
+                android:text="TextView"
+                android:textSize="25dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/resName"
-                    android:layout_width="300dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center|center_horizontal"
-                    android:text="TextView"
-                    android:textSize="25dp" />
-
-                <LinearLayout
+                <com.like.LikeButton
+                    android:id="@+id/heartButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <com.like.LikeButton
-                        android:id="@+id/heartButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:icon_size="10dp"
-                        app:icon_type="heart" />
-
-                </LinearLayout>
+                    app:icon_size="10dp"
+                    app:icon_type="heart" />
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="248dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                tools:srcCompat="@tools:sample/avatars[3]" />
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="18dp"
-                android:shadowColor="#00251F1F"
-                android:text="식당정보"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/resAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="18dp"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/resOpeningHours"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="18dp"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/resPhoneNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="18dp"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="18dp"
-                android:paddingTop="20dp"
-                android:shadowColor="#00251F1F"
-                android:text="메뉴정보"
-                android:textSize="15sp" />
-
-            <ListView
-                android:id="@+id/menulist"
-                android:layout_width="match_parent"
-                android:layout_height="310dp" />
         </LinearLayout>
-    </ScrollView>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="248dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            tools:srcCompat="@tools:sample/avatars[3]" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="18dp"
+            android:shadowColor="#00251F1F"
+            android:text="식당정보"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/resAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="18dp"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/resOpeningHours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="18dp"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/resPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="18dp"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="18dp"
+            android:paddingTop="20dp"
+            android:shadowColor="#00251F1F"
+            android:text="메뉴정보"
+            android:textSize="15sp" />
+
+        <ListView
+            android:id="@+id/menulist"
+            android:layout_width="match_parent"
+            android:layout_height="234dp" />
+    </LinearLayout>
 
 
 </LinearLayout>

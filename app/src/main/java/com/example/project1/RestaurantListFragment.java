@@ -183,6 +183,8 @@ public class RestaurantListFragment extends Fragment {
                     result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
                     data2.add(restaurantItem);
                     CustomAdapter adapter = new CustomAdapter(getActivity(), result);
+                    //Utility.setListViewHeightBasedOnChildren(listview);
+
                     listView.setAdapter(adapter);
 
                     //ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
