@@ -41,5 +41,44 @@ public class DatabaseManager extends AppCompatActivity {
 
 
     }
+    public static void ScrapDataAdd(Integer index ){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = database.getReference("/User");  //FromUrl("https://project1-cecd8.firebaseio.com/");
+        DatabaseReference tempRef = dbRef.child(uid).child("Scrap");
+        if (tempRef == null) {
+            tempRef.setValue(index);
+        } else {
+            tempRef.push().setValue(index);
+        }
+
+    }
+
+    public static void ScrapDataDelete(Integer index){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = database.getReference("/User");  //FromUrl("https://project1-cecd8.firebaseio.com/");
+        DatabaseReference tempRef = dbRef.child(uid).child("Scrap");
+        tempRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Integer savedIndex = snapshot.getValue(Integer.class);
+                    String deleteKey = snapshot.getKey();
+                    if(savedIndex == index){
+                        tempRef.child(deleteKey).removeValue();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }
