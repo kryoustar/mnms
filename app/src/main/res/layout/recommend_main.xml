@@ -30,9 +30,9 @@
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="63dp"
-                    android:layout_height="wrap_content"
-                    android:text="  날짜  "
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:text="  분석 날짜  "
                     android:textSize="24sp" />
 
                 <TextView
@@ -46,12 +46,11 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/weekdate"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="(어제부터 일주일입니다!)" />
+                    android:gravity="center" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -166,18 +165,20 @@
             <TextView
                 android:id="@+id/lacknutrients"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp" />
 
             <TextView
                 android:id="@+id/lacknutrients2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="30dp" />
+                android:paddingBottom="20dp" />
 
             <TextView
                 android:id="@+id/recommendMenu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center" />
 
             <LinearLayout
                 android:layout_width="match_parent"

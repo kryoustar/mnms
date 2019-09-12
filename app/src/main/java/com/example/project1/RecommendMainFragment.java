@@ -1,5 +1,6 @@
 package com.example.project1;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -102,11 +104,21 @@ public class RecommendMainFragment extends Fragment {
             String tempDate;
             String toYear = Integer.toString(todayCalendar.get(Calendar.YEAR));
             String toMonth = Integer.toString(todayCalendar.get(Calendar.MONTH) + 1);
+            if ((todayCalendar.get(Calendar.MONTH) + 1)<10) {
+                toMonth = "0" + toMonth;
+            }
             String toDayofMonth = Integer.toString(todayCalendar.get(Calendar.DATE));
+            if (todayCalendar.get(Calendar.DATE) < 10) {
+                toDayofMonth = "0" + toDayofMonth;
+            }
             tempDate = toYear + "-" + toMonth + "-" + toDayofMonth;
             weekArray[i - 1] = tempDate;
             // 일주일 치 날 짜 배열 생성
         }
+
+        TextView week = view.findViewById(R.id.weekdate);
+        String weekdate = weekArray[6] + " ~ " + weekArray[0];
+        week.setText(weekdate);
 
         ArrayList<Integer> weekMeal = new ArrayList<Integer>(); // 빈 데이터 리스트 생성
         for (int i = 0; i < 7; i++) {
@@ -229,12 +241,12 @@ public class RecommendMainFragment extends Fragment {
                                 if (low<high) {
                                     lacknutrients.setText("지난 일주일 간 [탄수화물]이 가장 부족합니다.");
                                     lacknutrients2.setText("[탄수화물]이 부족할 땐 감자튀김, 쿠키 등을 먹는 것이 좋습니다.");
-                                    recommendMenu.setText("[탄수화물]을 섭취할 수 있는 추천 메뉴");
+                                    recommendMenu.setText("[탄수화물] 섭취를 위한 내 주변 추천 메뉴");
                                     minNut = 1;
                                 } else {
                                     lacknutrients.setText("지난 일주일 간 [지방]이 가장 부족합니다.");
                                     lacknutrients2.setText("[지방]이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
-                                    recommendMenu.setText("[지방]을 섭취할 수 있는 추천 메뉴");
+                                    recommendMenu.setText("[지방] 섭취를 위한 내 주변 추천 메뉴");
                                     minNut = 3;
 
                                 }
@@ -243,14 +255,14 @@ public class RecommendMainFragment extends Fragment {
                                 if (mid<high) {
                                     lacknutrients.setText("지난 일주일 간 [단백질]이 가장 부족합니다.");
                                     lacknutrients2.setText("[단백질]이 부족할 땐 브로콜리, 검정콩, 두부 등을 먹는 것이 좋습니다.");
-                                    recommendMenu.setText("[단백질]을 섭취할 수 있는 추천 메뉴");
+                                    recommendMenu.setText("[단백질] 섭취를 위한 내 주변 추천 메뉴");
 
                                     minNut = 2;
 
                                 } else {
                                     lacknutrients.setText("지난 일주일 간 [지방]이 가장 부족합니다.");
                                     lacknutrients2.setText("[지방]이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
-                                    recommendMenu.setText("[지방]을 섭취할 수 있는 추천 메뉴");
+                                    recommendMenu.setText("[지방] 섭취를 위한 내 주변 추천 메뉴");
                                     minNut = 3;
 
                                 }
@@ -275,6 +287,9 @@ public class RecommendMainFragment extends Fragment {
 
                             int ranNum1 = new Random().nextInt(10);
                             int ranNum2 = new Random().nextInt(10);
+                            while (ranNum1 == ranNum2) {
+                                ranNum2 = new Random().nextInt(10);
+                            }
 
                             MenuItem menuItem1 = MenuItem.menuItemSearch(temp[ranNum1], getActivity());
                             MenuItem menuItem2 = MenuItem.menuItemSearch(temp[ranNum2], getActivity());
@@ -335,6 +350,42 @@ public class RecommendMainFragment extends Fragment {
                                 });
                             } catch (IOException e) {
                             }
+
+                            //첫 번째 추천메뉴 사진 클릭했을 때
+                            recommendImage1.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getActivity(), RestaurantDetail.class);
+
+                                    intent.putExtra("Restaurant Number", restaurantItem1.getNumber());
+                                    intent.putExtra("Restaurant Name", restaurantItem1.getRestaurantName());
+                                    intent.putExtra("Restaurant Address", restaurantItem1.getRestaurantAddress());
+                                    intent.putExtra("Restaurant Phone Number", restaurantItem1.getRestaurantPhoneNumber());
+                                    intent.putExtra("Restaurant Opening Hours", restaurantItem1.getRestaurantOpeningHours());
+                                    intent.putExtra("Restaurant City", restaurantItem1.getRestaurantCity());
+                                    intent.putExtra("Restaurant Vegan Type", restaurantItem1.getRestaurantVeganType());
+                                    startActivity(intent);
+                                }
+                            });
+
+
+                            //두 번째 추천메뉴 사진 클릭했을 때
+                            recommendImage2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getActivity(), RestaurantDetail.class);
+
+                                    intent.putExtra("Restaurant Number", restaurantItem2.getNumber());
+                                    intent.putExtra("Restaurant Name", restaurantItem2.getRestaurantName());
+                                    intent.putExtra("Restaurant Address", restaurantItem2.getRestaurantAddress());
+                                    intent.putExtra("Restaurant Phone Number", restaurantItem2.getRestaurantPhoneNumber());
+                                    intent.putExtra("Restaurant Opening Hours", restaurantItem2.getRestaurantOpeningHours());
+                                    intent.putExtra("Restaurant City", restaurantItem2.getRestaurantCity());
+                                    intent.putExtra("Restaurant Vegan Type", restaurantItem2.getRestaurantVeganType());
+                                    startActivity(intent);
+                                }
+                            });
+
 
 
                         }
