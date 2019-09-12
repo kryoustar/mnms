@@ -12,6 +12,7 @@ import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -19,6 +20,10 @@ import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.like.OnLikeListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
@@ -35,6 +40,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+//import com.example.project1.com.like.LikeButton;
+import com.like.LikeButton;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.Toast;
 
@@ -48,7 +55,6 @@ public class RestaurantDetail extends AppCompatActivity {
 
         String sql;
         SQLiteDatabase db;   // db를 다루기 위한 SQLiteDatabase 객체 생성
-        Cursor cursor;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
         ListView listView;   // ListView 객체 생성
         String[] result;   // ArrayAdapter에 넣을 배열 생성
 
@@ -58,6 +64,7 @@ public class RestaurantDetail extends AppCompatActivity {
         TextView tvResOpen = (TextView) findViewById(R.id.resOpeningHours);
 
         Intent intent = getIntent();
+        int restaurantIndex = intent.getIntExtra("Restaurant Number", 1);
         tvResName.setText(intent.getStringExtra("Restaurant Name"));
         tvResAdd.setText(intent.getStringExtra("Restaurant Address"));
         if (intent.getStringExtra(("Restaurant Phone Number")) != null) {
@@ -87,6 +94,55 @@ public class RestaurantDetail extends AppCompatActivity {
             });
         } catch (IOException e) {
         }
+
+        //하트 버튼
+        RestaurantItem restaurantItem = RestaurantItem.restaurantItemSearch(restaurantIndex,getApplicationContext());
+
+        LikeButton likeButton = findViewById(R.id.heartButton);
+        //likeButton.setLiked(true);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference ConditionRef = ref.child("User").child(uid).child("Scrap");
+        Integer [] scraps = new Integer[1000];
+        ConditionRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Integer temp = snapshot.getValue(Integer.class);
+                    if (restaurantIndex == temp){
+                        likeButton.setLiked(true);
+                        break;
+                    }
+                    else{
+                        likeButton.setLiked(false);
+                    }
+                    i++;
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        likeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                DatabaseManager.ScrapDataAdd(restaurantIndex);
+                Toast.makeText(getApplicationContext(), restaurantItem.getRestaurantName()+"을/를 스크랩하였습니다.", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                DatabaseManager.ScrapDataDelete(restaurantIndex);
+                Toast.makeText(getApplicationContext(), restaurantItem.getRestaurantName()+"을/를 지웠습니다.", Toast.LENGTH_LONG).show();
+
+            }
+        });
         /*
         final long ONE_MEGABYTE = 1024 * 1024;
         storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -99,6 +155,7 @@ public class RestaurantDetail extends AppCompatActivity {
         });*/
 
 
+
         //메뉴정보
         ArrayList<MenuItem> data = null;
         data = new ArrayList<>();
@@ -108,6 +165,7 @@ public class RestaurantDetail extends AppCompatActivity {
         db = openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
         listView = findViewById(R.id.menulist);
         Integer resNubmer = intent.getIntExtra("Restaurant Number", 0);
+        Cursor cursor;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
 
         sql = "select * from veganRes02 where 번호 = " + resNubmer;
         cursor = db.rawQuery(sql, null);
@@ -144,7 +202,7 @@ public class RestaurantDetail extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    number = finalData.get(i).getFoodNumber();
+                number = finalData.get(i).getFoodNumber();
                 return false;
             }
         });
@@ -163,7 +221,7 @@ public class RestaurantDetail extends AppCompatActivity {
             String toMonth = Integer.toString(todayCal.get(Calendar.MONTH) + 1);
             String toDayofMonth = Integer.toString(todayCal.get(Calendar.DATE));
             String date = toYear + "-" + toMonth + "-" + toDayofMonth;
-            Toast.makeText(getApplicationContext(), FoodItem.FoodItemSearch(number,getApplicationContext()).getFoodName()+"을(를) 추가하였습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), FoodItem.FoodItemSearch(number, getApplicationContext()).getFoodName() + "을(를) 추가하였습니다.", Toast.LENGTH_SHORT).show();
 
             DatabaseManager.MealDataAdd(date, number);
 
