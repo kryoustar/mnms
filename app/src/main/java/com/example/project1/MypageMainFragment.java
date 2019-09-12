@@ -69,6 +69,7 @@ public class MypageMainFragment extends Fragment {
             items.add("");
             items.add("");
             items.add("");
+            items.add("");
 
             //array adapter 생성 아이템 뷰를 선택 가능하도록 만듦
             ArrayAdapter<String> adapter =
@@ -85,9 +86,9 @@ public class MypageMainFragment extends Fragment {
                     String Nickname = dataSnapshot.getValue(String.class);
                     //Toast.makeText(getActivity(), Nickname + "", Toast.LENGTH_SHORT).show();
                     if (Nickname != null) {
-                        items.set(0, "Nickname: " + Nickname);
+                        items.set(0, "닉네임: " + Nickname);
                     } else {
-                        items.set(0, "Nickname ");
+                        items.set(0, "닉네임 ");
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -106,9 +107,9 @@ public class MypageMainFragment extends Fragment {
                     String veganType = dataSnapshot.getValue(String.class);
                     //Toast.makeText(getActivity(), veganType + "", Toast.LENGTH_SHORT).show();
                     if (veganType != null) {
-                        items.set(1, "Types of Veganism: " + veganType);
+                        items.set(1, "채식타입: " + veganType);
                     } else {
-                        items.set(1, "Types of Veganism ");
+                        items.set(1, "채식타입 ");
 
                     }
                     adapter.notifyDataSetChanged();
@@ -120,8 +121,9 @@ public class MypageMainFragment extends Fragment {
             });
 
 
-            items.set(2, "Personal Information");
-            items.set(3, "Logout");
+            items.set(2, "개인정보");
+            items.set(3, "스크랩");
+            items.set(4, "로그아웃");
 
 
             ListView listview = view.findViewById(R.id.list); // listview  생성 및 adapter 지정
@@ -149,7 +151,9 @@ public class MypageMainFragment extends Fragment {
                             startActivity(Intent);
                             break;
 
-                        case 3: //로그아웃
+                        case 3:
+
+                        case 4: //로그아웃
                             FirebaseAuth.getInstance().signOut();
                             Toast.makeText(getContext(), "로그아웃 되었습니다." + "", Toast.LENGTH_SHORT).show();
                             Intent intent2 = new Intent(getActivity(), BottomActivity.class);

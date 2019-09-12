@@ -1,21 +1,23 @@
 package com.example.project1;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SelectVeganism extends AppCompatActivity {
     public RadioGroup radioGroup;
@@ -24,14 +26,54 @@ public class SelectVeganism extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_veganism);
-        SharedPreferences pref = getSharedPreferences("preferencesName", MODE_PRIVATE);
-        final SharedPreferences.Editor prefEdit = pref.edit();
         Button submit = (Button) findViewById(R.id.submit);
-        //clear = (Button) findViewById(R.id.clear);
         radioGroup = (RadioGroup) findViewById(R.id.groupradio);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        DatabaseReference ConditionRef1 = dbRef.child("User").child(uid)
+                .child("Personal Info").child("Veganism Type");
 
-        // Uncheck or reset the radio buttons initially
-        radioGroup.clearCheck();
+        ConditionRef1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String veganType = dataSnapshot.getValue(String.class);
+
+                    if (veganType.matches("비건")) {
+                        RadioButton vegan = findViewById(R.id.vegan);
+                        vegan.setChecked(true);
+
+                    } else if (veganType.matches("오보")) {
+                        RadioButton ovo = findViewById(R.id.ovo);
+                        ovo.setChecked(true);
+
+                    } else if (veganType.matches("락토")) {
+                        RadioButton lacto = findViewById(R.id.lacto);
+                        lacto.setChecked(true);
+
+                    } else if (veganType.matches("락토 오보")) {
+                        RadioButton ovolacto = findViewById(R.id.ovolacto);
+                        ovolacto.setChecked(true);
+
+                    } else if (veganType.matches("페스코")) {
+                        RadioButton pesco = findViewById(R.id.pesco);
+                        pesco.setChecked(true);
+
+                    } else {
+                        RadioButton none = findViewById(R.id.none);
+                        none.setChecked(true);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         // Add the Listener to the RadioGroup
         radioGroup.setOnCheckedChangeListener(
@@ -73,17 +115,6 @@ public class SelectVeganism extends AppCompatActivity {
                         RadioButton radioButton
                                 = (RadioButton) radioGroup
                                 .findViewById(selectedId);
-                        radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                if (isChecked) {
-                                    radioButton.setChecked(true);
-                                } else {
-                                    radioButton.setChecked(false);
-                                }
-                                //prefEdit.putBoolean("booleanValue", true).commit();
-                            }
-                        });
 
                         Toast.makeText(SelectVeganism.this,
                                 radioButton.getText(),
@@ -91,21 +122,11 @@ public class SelectVeganism extends AppCompatActivity {
                                 .show();
                         dbRef.child(uid).child("Personal Info").child("Veganism Type").setValue(radioButton.getText().toString());
                         Intent gobackIntent = new Intent(SelectVeganism.this, BottomActivity.class);
-                        //gobackIntent.putExtra("key",1);
+
                         startActivity(gobackIntent);
-
-
                     }
                 }
             }
         });
-/*
-        clear.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                radioGroup.clearCheck();
-            }
-        });*/
     }
 }
