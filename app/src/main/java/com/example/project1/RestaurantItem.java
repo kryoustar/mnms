@@ -1,5 +1,9 @@
 package com.example.project1;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 public class RestaurantItem {
     private int Number;
     private String RestaurantName;
@@ -65,6 +69,29 @@ public class RestaurantItem {
     public void setRestaurantVeganType(String restaurantVeganType) {
         RestaurantVeganType = restaurantVeganType;
     }
+
+
+    public static RestaurantItem restaurantItemSearch(Integer keyIndex, Context context) {
+        Context myContext = context;
+        String sql;
+        SQLiteDatabase db;   // db를 다루기 위한 SQLiteDatabase 객체 생성
+        Cursor c;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
+        db = myContext.openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
+        sql = "select * from veganRes03 where Number = " + keyIndex;
+        c = db.rawQuery(sql, null);
+        c.moveToNext();
+        int number = c.getInt(0); //식당 넘버
+        String name = c.getString(1); //식당 이름
+        String city = c.getString(2); //식당 지역구
+        String address = c.getString(3); //식당 주소
+        String pheonnumber = c.getString(4); //식당번호
+        String openinghours = c.getString(5); //영업시간
+        String vegantype = c.getString(6); //비건타입
+
+        RestaurantItem restaurantItem = new RestaurantItem(number, name, city, address, pheonnumber, openinghours, vegantype);
+        return restaurantItem;
+    }
+
 
     public RestaurantItem(int Number, String RestaurantName, String RestaurantAddress, String RestaurantPhoneNumber, String RestaurantOpeningHours, String RestaurantCity, String RestaurantVeganType){
         this.Number = Number;

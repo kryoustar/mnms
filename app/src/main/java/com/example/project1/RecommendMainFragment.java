@@ -1,16 +1,22 @@
 package com.example.project1;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,12 +24,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Random;
 
 public class RecommendMainFragment extends Fragment {
     @Nullable
@@ -33,11 +45,10 @@ public class RecommendMainFragment extends Fragment {
         TextView mLowLabel, mMidLabel, mHighLabel;
         TextView lacknutrients, lacknutrients2;
         BarView mLowBar, mMidBar, mHighBar;
+        ImageView recommendImage1, recommendImage2;
+        TextView recommendTitle1, recommendTitle2, recommendMenu, recommendMenu1, recommendMenu2;
 
-        //Some sample percentage values
-        int low;
-        int mid;
-        int high;
+        int low, mid, high;
         mLowBar = view.findViewById(R.id.low_bar);
         mMidBar = view.findViewById(R.id.mid_bar);
         mHighBar = view.findViewById(R.id.high_bar);
@@ -49,7 +60,15 @@ public class RecommendMainFragment extends Fragment {
         lacknutrients = view.findViewById(R.id.lacknutrients);
         lacknutrients2 = view.findViewById(R.id.lacknutrients2);
 
+        recommendImage1 = view.findViewById(R.id.recommendImage1);
+        recommendImage2 = view.findViewById(R.id.recommendImage2);
 
+        recommendTitle1 = view.findViewById(R.id.recommendTitle1);
+        recommendTitle2 = view.findViewById(R.id.recommendTitle2);
+
+        recommendMenu = view.findViewById(R.id.recommendMenu);
+        recommendMenu1 = view.findViewById(R.id.recommendMenu1);
+        recommendMenu2 = view.findViewById(R.id.recommendMenu2);
 
         /*
         TextView accumulatedKcalTV = view.findViewById(R.id.accumulated_kcal);
@@ -63,6 +82,7 @@ public class RecommendMainFragment extends Fragment {
         TextView weekFatTV = view.findViewById(R.id.week_fat);
         TextView weekNatriumTV = view.findViewById(R.id.week_natrium);
 */
+
         TextView todayTextView = view.findViewById(R.id.dateTV);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
@@ -138,7 +158,8 @@ public class RecommendMainFragment extends Fragment {
                             accumulatedProteinTV.setText("단백질 : " + Float.toString(food_protein));
                             accumulatedFatTV.setText("지방 : " + Float.toString(food_fat));
                             accumulatedNatriumTV.setText("나트륨 : " + Float.toString(food_natrium));
-*/
+                            */
+
                             PersonalItem personalItem = PersonalItem.PersonalItemSearch(result[0], result[1], getActivity());
                             Float kcal = personalItem.getPersonKcal() * 7;
                             Float carbs = personalItem.getPersonCarbs() * 7;
@@ -146,7 +167,7 @@ public class RecommendMainFragment extends Fragment {
                             Float fat = personalItem.getPersonFat() * 7;
                             Float natrium = personalItem.getPersonNatrium() * 7;
 
-/*
+                            /*
                             weekKCalTV.setText("\n열량: " + Math.round(food_kcal / kcal * 100) + "%");
                             weekCarbsTV.setText("탄수화물 " + Math.round(food_carbs / carbs * 100) + "%");
                             weekProteinTV.setText("단백질 " + Math.round(food_protein / protein * 100) + "%");
@@ -162,21 +183,21 @@ public class RecommendMainFragment extends Fragment {
                                 mLowBar.set(Color.RED, low);
                             }
                             if (low >= 30 && low < 70) {
-                                mLowBar.set(Color.GREEN, low);
+                                mLowBar.set(Color.rgb(255, 187, 0), low);
                             }
                             if (low >= 70) {
-                                mLowBar.set(Color.BLUE, low);
+                                mLowBar.set(Color.rgb(1, 160, 26), low);
                             }
                             if (mid < 30) {
                                 mMidBar.set(Color.RED, mid);
 
                             }
                             if (mid >= 30 && low < 70) {
-                                mMidBar.set(Color.GREEN, mid);
+                                mMidBar.set(Color.rgb(255, 187, 0), mid);
 
                             }
                             if (mid >= 70) {
-                                mMidBar.set(Color.BLUE, mid);
+                                mMidBar.set(Color.rgb(1, 160, 26), mid);
 
                             }
                             if (high < 30) {
@@ -184,43 +205,138 @@ public class RecommendMainFragment extends Fragment {
 
                             }
                             if (high >= 30 && low < 70) {
-                                mHighBar.set(Color.GREEN, high);
+                                mHighBar.set(Color.rgb(255, 187, 0), high);
+
 
                             }
                             if (high >= 70) {
-                                mHighBar.set(Color.BLUE, high);
+                                mHighBar.set(Color.rgb(1, 160, 26), high);
 
                             }
 
                             // mLowBar.set(Color.BLUE, low);
                             // mMidBar.set(Color.RED, mid);
-                           // mHighBar.set(Color.GREEN, high);
+                            // mHighBar.set(Color.GREEN, high);
 
                             mLowLabel.setText(String.valueOf(low) + "%");
                             mMidLabel.setText(String.valueOf(mid) + "%");
                             mHighLabel.setText(String.valueOf(high) + "%");
 
+
+                            int minNut = 0; //가장 적은 영양소: 탄수화물_1, 단백질_2, 지방_3
+
                             if (low<mid) {
                                 if (low<high) {
-                                    lacknutrients.setText("'탄수화물'이 가장 부족합니다.");
-                                    lacknutrients2.setText("'탄수화물'이 부족할 땐 감자튀김, 쿠키 등을 먹는 것이 좋습니다.");
+                                    lacknutrients.setText("지난 일주일 간 [탄수화물]이 가장 부족합니다.");
+                                    lacknutrients2.setText("[탄수화물]이 부족할 땐 감자튀김, 쿠키 등을 먹는 것이 좋습니다.");
+                                    recommendMenu.setText("[탄수화물]을 섭취할 수 있는 추천 메뉴");
+                                    minNut = 1;
                                 } else {
-                                    lacknutrients.setText("'지방'이 가장 부족합니다.");
-                                    lacknutrients2.setText("'지방'이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
+                                    lacknutrients.setText("지난 일주일 간 [지방]이 가장 부족합니다.");
+                                    lacknutrients2.setText("[지방]이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
+                                    recommendMenu.setText("[지방]을 섭취할 수 있는 추천 메뉴");
+                                    minNut = 3;
 
                                 }
                             }
                             else {
                                 if (mid<high) {
-                                    lacknutrients.setText("'단백질'이 가장 부족합니다.");
-                                    lacknutrients2.setText("'단백질'이 부족할 땐 브로콜리, 검정콩, 두부 등을 먹는 것이 좋습니다.");
+                                    lacknutrients.setText("지난 일주일 간 [단백질]이 가장 부족합니다.");
+                                    lacknutrients2.setText("[단백질]이 부족할 땐 브로콜리, 검정콩, 두부 등을 먹는 것이 좋습니다.");
+                                    recommendMenu.setText("[단백질]을 섭취할 수 있는 추천 메뉴");
+
+                                    minNut = 2;
 
                                 } else {
-                                    lacknutrients.setText("'지방'이 가장 부족합니다.");
-                                    lacknutrients2.setText("'지방'이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
+                                    lacknutrients.setText("지난 일주일 간 [지방]이 가장 부족합니다.");
+                                    lacknutrients2.setText("[지방]이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
+                                    recommendMenu.setText("[지방]을 섭취할 수 있는 추천 메뉴");
+                                    minNut = 3;
 
                                 }
                             }
+
+
+                            //부족한 영양소에 따른 메뉴 추천(용산구 내 식당 메뉴 임의로 10개씩 선택)
+                            Integer [] temp;
+                            Integer [] carbsRec = {233, 236, 241, 257, 268, 272, 320, 365, 384, 400};
+                            Integer [] proteinRec = {206, 217, 273, 321, 325, 392, 417, 423, 436, 444};
+                            Integer [] fatRec = {194, 195, 201, 212, 244, 306, 357, 426, 333, 364};
+
+                            if (minNut == 1) {
+                                temp = carbsRec;
+                            }
+                            else if (minNut == 2) {
+                                temp = proteinRec;
+                            }
+                            else {
+                                temp = fatRec;
+                            }
+
+                            int ranNum1 = new Random().nextInt(10);
+                            int ranNum2 = new Random().nextInt(10);
+
+                            MenuItem menuItem1 = MenuItem.menuItemSearch(temp[ranNum1], getActivity());
+                            MenuItem menuItem2 = MenuItem.menuItemSearch(temp[ranNum2], getActivity());
+                            String Menu1 = menuItem1.getMenuName();
+                            String Menu2 = menuItem2.getMenuName();
+
+                            int ResNum1 = menuItem1.getNumber(); //레스토랑 넘버
+                            int ResNum2 = menuItem2.getNumber();
+
+                            RestaurantItem restaurantItem1 = RestaurantItem.restaurantItemSearch(ResNum1, getActivity());
+                            RestaurantItem restaurantItem2 = RestaurantItem.restaurantItemSearch(ResNum2, getActivity());
+                            String resName1 = restaurantItem1.getRestaurantName();
+                            String resName2 = restaurantItem2.getRestaurantName();
+
+                            recommendMenu1.setText(Menu1);
+                            recommendMenu2.setText(Menu2);
+                            recommendTitle1.setText(resName1);
+                            recommendTitle2.setText(resName2);
+
+
+                            FirebaseStorage storage = FirebaseStorage.getInstance();
+                            StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + 1 + ".jpg");
+                            //StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + resNum1 + ".jpg");
+
+                            try {
+                                final File localFile = File.createTempFile("images", "jpg");
+                                storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                        recommendImage1.setImageBitmap(bitmap);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                    }
+                                });
+                            } catch (IOException e) {
+                            }
+
+
+
+                            StorageReference storageRef2 = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + 1 + ".jpg");
+                            //StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + resNum2 + ".jpg");
+
+                            try {
+                                final File localFile = File.createTempFile("images", "jpg");
+                                storageRef2.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                        recommendImage2.setImageBitmap(bitmap);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                    }
+                                });
+                            } catch (IOException e) {
+                            }
+
+
                         }
 
                         @Override
@@ -236,7 +352,6 @@ public class RecommendMainFragment extends Fragment {
                 }
             });
         }
-
 
         return view;
     }

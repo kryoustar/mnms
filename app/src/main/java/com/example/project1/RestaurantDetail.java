@@ -122,7 +122,8 @@ public class RestaurantDetail extends AppCompatActivity {
             String MenuPrice = cursor.getString(2);
             String MenuType = cursor.getString(3);
             String MenuNutrients = cursor.getString(4);
-            MenuItem menuItem = new MenuItem(MenuNumber, MenuName, MenuPrice, MenuType, MenuNutrients);
+            int MenuNumber2 = cursor.getInt(5);
+            MenuItem menuItem = new MenuItem(MenuNumber, MenuName, MenuPrice, MenuType, MenuNutrients, MenuNumber2);
             result[i] = MenuName + " " + MenuPrice + "원 "
                     + "(" + MenuType + ") (" + MenuNutrients + ")"; // 각각의 속성값들을 해당 배열의 i번째에 저장
             data.add(menuItem);
