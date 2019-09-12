@@ -152,6 +152,7 @@ public class MypageMainFragment extends Fragment {
                             break;
 
                         case 3:
+                            break;
 
                         case 4: //로그아웃
                             FirebaseAuth.getInstance().signOut();

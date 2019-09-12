@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 
+import com.like.LikeButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 //import com.example.project1.com.like.LikeButton;
-import com.like.LikeButton;
+//import com.like.LikeButton;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.Toast;
 
@@ -219,9 +220,16 @@ public class RestaurantDetail extends AppCompatActivity {
             Calendar todayCal = Calendar.getInstance();
             String toYear = Integer.toString(todayCal.get(Calendar.YEAR));
             String toMonth = Integer.toString(todayCal.get(Calendar.MONTH) + 1);
+            if ((todayCal.get(Calendar.MONTH) + 1)<10) {
+                toMonth = "0" + toMonth;
+            }
             String toDayofMonth = Integer.toString(todayCal.get(Calendar.DATE));
+            if (todayCal.get(Calendar.DATE) < 10) {
+                toDayofMonth = "0" + toDayofMonth;
+            }
             String date = toYear + "-" + toMonth + "-" + toDayofMonth;
             Toast.makeText(getApplicationContext(), FoodItem.FoodItemSearch(number, getApplicationContext()).getFoodName() + "을(를) 추가하였습니다.", Toast.LENGTH_SHORT).show();
+
 
             DatabaseManager.MealDataAdd(date, number);
 
