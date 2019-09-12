@@ -73,7 +73,7 @@ public class CircleChart extends View {
 
         }
         if (successPoint >=70){
-            p.setColor(Color.GREEN);
+            p.setColor(Color.rgb(1, 160, 26));
 
         }
         //p.setColor(Color.rgb(255, 187, 0));

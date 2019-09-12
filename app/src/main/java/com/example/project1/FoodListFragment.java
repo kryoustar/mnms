@@ -221,8 +221,21 @@ public class FoodListFragment extends Fragment {
                         Float fat = personalItem.getPersonFat();
                         Float natrium = personalItem.getPersonNatrium();
 
-                        todaykcal.setText("[오늘 섭취해야 할 칼로리 "+ Math.round(kcal) +
-                                "kcal 중 " + Float.toString(food_kcal) + "kcal를 먹었습니다.]" );
+
+                        if (kcal <= food_kcal) {
+                            todaykcal.setText("[오늘 섭취해야 할 칼로리 "+ Math.round(kcal) +
+                                    "kcal를 모두 섭취하였습니다.]");
+                        }
+
+                        else if (food_kcal == 0) {
+                            todaykcal.setText("[오늘 먹은 음식이 없습니다.]");
+                        }
+
+                        else {
+                            todaykcal.setText("[오늘 섭취해야 할 칼로리 "+ Math.round(kcal) +
+                                    "kcal 중 " + Float.toString(food_kcal) + "kcal를 먹었습니다.]" );
+                        }
+
 /*
                         nutrientsToday.setText("<오늘 섭취한 영양소>\n" + "칼로리: " +
                                 Float.toString(food_kcal) +
@@ -343,7 +356,7 @@ public class FoodListFragment extends Fragment {
     public void gotoLogin() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
-
+            Toast.makeText(getActivity(), "로그인 이후 사용하실 수 있습니다.", Toast.LENGTH_SHORT).show();
             Intent gotoLogin = new Intent(getActivity(), LoginActivity.class);
             startActivity(gotoLogin);
         }
