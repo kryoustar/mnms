@@ -79,22 +79,21 @@ public class FoodListFragment extends Fragment {
         Date today = new Date();
         date = formatter.format(today);
         selectDateButton.setText(date);
-/*
-        Calendar todayCal = Calendar.getInstance();
-        String toYear = Integer.toString(todayCal.get(Calendar.YEAR));
-        String toMonth = Integer.toString(todayCal.get(Calendar.MONTH) + 1);
-        String toDayofMonth = Integer.toString(todayCal.get(Calendar.DATE));
-        date = toYear + "-" + toMonth + "-" + toDayofMonth;
-        selectDateButton.setText(date);
-*/
+
         Bundle bundle = getActivity().getIntent().getExtras();
         if (bundle != null){
             int yearselect = bundle.getInt("Selected Year");
             selectedYear = Integer.toString(yearselect);
             int monthselect = bundle.getInt("Selected Month");
             selectedMonth = Integer.toString(monthselect);
+            if (monthselect<10) {
+                selectedMonth = "0" + Integer.toString(monthselect);
+            }
             int dayselect = bundle.getInt("Selected Day");
             selectedDay = Integer.toString(dayselect);
+            if (dayselect<10) {
+                selectedDay = "0" + Integer.toString(dayselect);
+            }
             date = selectedYear + "-" + selectedMonth + "-" + selectedDay;
             selectDateButton.setText(date);
         }
@@ -107,6 +106,7 @@ public class FoodListFragment extends Fragment {
             selectDateButton.setText(date2);
 
         }
+
 
 
         /*

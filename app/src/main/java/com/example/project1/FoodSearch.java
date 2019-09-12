@@ -83,6 +83,19 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
 
                 Intent gobackIntent = new Intent(FoodSearch.this, BottomActivity.class);
                 //onBackPressed();
+                Bundle bundle = new Bundle();
+
+                // FragmentTransaction transaction = fragmentManager.beginTransaction();
+                String year = date.substring(0, 4);
+                String month = date.substring(5, 7);
+                String day = date.substring(8, 10);
+
+                intent.putExtra("Selected Year", Integer.parseInt(year));
+                intent.putExtra("Selected Month", Integer.parseInt(month));
+                intent.putExtra("Selected Day", Integer.parseInt(day));
+
+                //Toast.makeText(getApplicationContext(), year + "-" + month + "-" + day, Toast.LENGTH_SHORT).show();
+                intent.putExtras(bundle);
                 startActivity(gobackIntent);
 
             }
