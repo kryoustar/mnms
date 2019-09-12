@@ -43,20 +43,15 @@
             android:id="@+id/gender_female"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:text="여성" />
 
         <RadioButton
             android:id="@+id/gender_male"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:text="남성" />
-
-        <RadioButton
-            android:id="@+id/gender_non"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:text="선택안함" />
-
 
     </RadioGroup>
 
