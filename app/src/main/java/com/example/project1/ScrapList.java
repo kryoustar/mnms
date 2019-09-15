@@ -58,6 +58,7 @@ public class ScrapList extends AppCompatActivity {
 
                 }
                 adapter.notifyDataSetChanged();
+                Utility.setListViewHeightBasedOnChildren(scrapListview);
 
 
             }
@@ -65,6 +66,9 @@ public class ScrapList extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
+        Utility.setListViewHeightBasedOnChildren(scrapListview);
+
         final ArrayList<String> finalData = restaurantNames;
 
         scrapListview.setAdapter(adapter);
