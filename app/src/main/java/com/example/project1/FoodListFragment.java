@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -324,7 +325,7 @@ public class FoodListFragment extends Fragment {
         });
 
 
-        Button meal_add;
+        ImageButton meal_add;
         meal_add = view.findViewById(R.id.meal_add);
 
         Intent intent = new Intent(getActivity(), FoodSearch.class);

@@ -63,11 +63,11 @@ public class FoodDetail extends AppCompatActivity {
         kcal.setText(Float.toString(foodItem.getFoodKcal())+" (g)");
         protein.setText(Float.toString(foodItem.getFoodProtein())+" (g)");
         fat.setText(Float.toString(foodItem.getFoodFat())+" (g)");
-        natrium.setText("나트륨 :          "+Float.toString(foodItem.getFoodNatrium())+" (mg)");
-        sugar.setText("당류 :             "+Float.toString(foodItem.getFoodSugar())+" (g)");
-        cholesterol.setText("콜레스테롤 :            "+Float.toString(foodItem.getFoodCholesterol())+" (mg)");
-        saturatedFat.setText("포화지방산 :           "+Float.toString(foodItem.getFoodSaturatedfat())+" (g)");
-        transFat.setText("트랜스지방산 :              "+Float.toString(foodItem.getFoodTransfat())+" (g)");
+        natrium.setText("나트륨:\t"+Float.toString(foodItem.getFoodNatrium())+" (mg)");
+        sugar.setText("당류:\t"+Float.toString(foodItem.getFoodSugar())+" (g)");
+        cholesterol.setText("콜레스테롤:\t"+Float.toString(foodItem.getFoodCholesterol())+" (mg)");
+        saturatedFat.setText("포화지방산:\t"+Float.toString(foodItem.getFoodSaturatedfat())+" (g)");
+        transFat.setText("트랜스지방산:\t"+Float.toString(foodItem.getFoodTransfat())+" (g)");
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         DatabaseReference ConditionRef = ref.child("User").child(uid).child("Meal").child(date);

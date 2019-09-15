@@ -50,7 +50,6 @@ public class RecommendMainFragment extends Fragment {
         ImageView recommendImage1, recommendImage2;
         TextView recommendTitle1, recommendTitle2, recommendMenu, recommendMenu1, recommendMenu2;
 
-        int low, mid, high;
         mLowBar = view.findViewById(R.id.low_bar);
         mMidBar = view.findViewById(R.id.mid_bar);
         mHighBar = view.findViewById(R.id.high_bar);
@@ -72,12 +71,9 @@ public class RecommendMainFragment extends Fragment {
         recommendMenu1 = view.findViewById(R.id.recommendMenu1);
         recommendMenu2 = view.findViewById(R.id.recommendMenu2);
 
-
-        TextView todayTextView = view.findViewById(R.id.dateTV);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
         String date = formatter.format(today);
-        todayTextView.setText(date);  // textview 에 오늘 날짜 설정
 
         DatabaseReference Database = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -165,6 +161,13 @@ public class RecommendMainFragment extends Fragment {
                             int low = Math.round(food_carbs / carbs * 100);
                             int mid = Math.round(food_protein / protein * 100);
                             int high = Math.round(food_fat / fat * 100);
+
+                            if (low>100)
+                                low = 100;
+                            if (mid>100)
+                                mid = 100;
+                            if (high>100)
+                                high=100;
 
                             if (low < 30) {
                                 mLowBar.set(Color.RED, low);
