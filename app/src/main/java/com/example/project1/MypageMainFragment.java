@@ -151,7 +151,9 @@ public class MypageMainFragment extends Fragment {
                             startActivity(Intent);
                             break;
 
-                        case 3:
+                        case 3://스크랩
+                            Intent intent = new Intent(getActivity(),ScrapList.class);
+                            startActivity(intent);
                             break;
 
                         case 4: //로그아웃
