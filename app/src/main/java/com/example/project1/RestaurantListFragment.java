@@ -68,9 +68,7 @@ public class RestaurantListFragment extends Fragment {
                 tvVeganismType.setText(veganType);
 
                 ArrayList<RestaurantItem> data = null;
-                data = new ArrayList<>();
 
-                db = getActivity().openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
                 listView = view.findViewById(R.id.listView);
                 if (veganType == "지향 없음" || veganType == "페스코")
                     sql = "select * from veganRes03 where RestaurantCity like '%" + "용산구" + "%'";
@@ -83,30 +81,14 @@ public class RestaurantListFragment extends Fragment {
                 else
                     sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
 
-                cursor = db.rawQuery(sql, null);
 
-                int count = cursor.getCount();   // db에 저장된 행 개수를 읽어온다
-                result = new String[count];   // 저장된 행 개수만큼의 배열을 생성
+                result = new String[1000];   // 저장된 행 개수만큼의 배열을 생성
 
-                for (int i = 0; i < count; i++) {
-                    cursor.moveToNext();   // 첫번째에서 다음 레코드가 없을때까지 읽음
-                    int Number = cursor.getInt(0);
-                    String RestaurantName = cursor.getString(1);
-                    String RestaurantAddress = cursor.getString(3);
-                    String RestaurantPhoneNumber = cursor.getString(4);
-                    String RestaurantOpeningHours = cursor.getString(5);
-                    String RestaurantCity = cursor.getString(2);
-                    String RestaurantVeganType = cursor.getString(6);
-                    RestaurantItem restaurantItem = new RestaurantItem(Number, RestaurantName, RestaurantAddress, RestaurantPhoneNumber, RestaurantOpeningHours, RestaurantCity, RestaurantVeganType);
+                result = RestaurantItem.returnResult(getActivity(),sql);
+                data = RestaurantItem.restaurantItemSQLSearch(getActivity(),sql);
 
-                    result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
-                    data.add(restaurantItem);
-
-
-                    CustomAdapter adapter = new CustomAdapter(getActivity(), result);
-                    listView.setAdapter(adapter);
-                }
-
+                CustomAdapter adapter = new CustomAdapter(getActivity(), result);
+                listView.setAdapter(adapter);
 
                 //클릭 시 다음페이지
                 final ArrayList<RestaurantItem> finalData = data;
@@ -115,12 +97,6 @@ public class RestaurantListFragment extends Fragment {
                     public void onItemClick(AdapterView parent, View v, int position, long id) {
                         Intent intent = new Intent(getActivity(), RestaurantDetail.class);
                         intent.putExtra("Restaurant Number", finalData.get(position).getNumber());
-                        intent.putExtra("Restaurant Name", finalData.get(position).getRestaurantName());
-                        intent.putExtra("Restaurant Address", finalData.get(position).getRestaurantAddress());
-                        intent.putExtra("Restaurant Phone Number", finalData.get(position).getRestaurantPhoneNumber());
-                        intent.putExtra("Restaurant Opening Hours", finalData.get(position).getRestaurantOpeningHours());
-                        intent.putExtra("Restaurant City", finalData.get(position).getRestaurantCity());
-                        intent.putExtra("Restaurant Vegan Type", finalData.get(position).getRestaurantVeganType());
                         startActivity(intent);
                     }
                 });
@@ -162,40 +138,22 @@ public class RestaurantListFragment extends Fragment {
                 data2 = new ArrayList<>();
 
                 sql = "select * from veganRes03 where RestaurantName like '%" + search + "%'";
-                cursor = db.rawQuery(sql, null);   // select 사용시 사용(sql문, where조건 줬을 때 넣는 값)
 
-                int count = cursor.getCount();   // db에 저장된 행 개수를 읽어온다
-                result = new String[count];   // 저장된 행 개수만큼의 배열을 생성
+                result = new String[1000];   // 저장된 행 개수만큼의 배열을 생성
 
-                for (int i = 0; i < count; i++) {
-                    cursor.moveToNext();   // 첫번째에서 다음 레코드가 없을때까지 읽음
-                    int Number = cursor.getInt(0);
-                    String RestaurantName = cursor.getString(1);
-                    String RestaurantAddress = cursor.getString(3);
-                    String RestaurantPhoneNumber = cursor.getString(4);
-                    String RestaurantOpeningHours = cursor.getString(5);
-                    String RestaurantCity = cursor.getString(2);
-                    String RestaurantVeganType = cursor.getString(6);
-                    RestaurantItem restaurantItem = new RestaurantItem(Number, RestaurantName, RestaurantAddress, RestaurantPhoneNumber, RestaurantOpeningHours, RestaurantCity, RestaurantVeganType);
+                result = RestaurantItem.returnResult(getActivity(),sql);
+                data2 = RestaurantItem.restaurantItemSQLSearch(getActivity(),sql);
+                CustomAdapter adapter = new CustomAdapter(getActivity(), result);
+                final ArrayList<RestaurantItem> finalData2 = data2;
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView parent, View v, int position, long id) {
+                        Intent intent = new Intent(getActivity(), RestaurantDetail.class);
+                        intent.putExtra("Restaurant Number", finalData2.get(position).getNumber());
+                        startActivity(intent);
+                    }
+                });
 
-                    result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
-                    data2.add(restaurantItem);
-                    CustomAdapter adapter = new CustomAdapter(getActivity(), result);
-                    //Utility.setListViewHeightBasedOnChildren(listview);
-
-                    listView.setAdapter(adapter);
-
-
-                    final ArrayList<RestaurantItem> finalData2 = data2;
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView parent, View v, int position, long id) {
-                            Intent intent = new Intent(getActivity(), RestaurantDetail.class);
-                            intent.putExtra("Restaurant Number", finalData2.get(position).getNumber());
-                            startActivity(intent);
-                        }
-                    });
-                }
             }
 
         });

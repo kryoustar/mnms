@@ -145,7 +145,27 @@ public class RestaurantItem {
         }
         return result;
     }
+    public static RestaurantItem RestaurantItemStringSearch(String search, Context context){
+        Context myContext = context;
+        String sql;
+        SQLiteDatabase db;
+        Cursor c;
+        db = myContext.openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
+        //sql = "select * from veganRes03 where name = '" + search + "'" ;
+        sql = "select * from veganRes03 where RestaurantName = '" + search + "'";
+        c = db.rawQuery(sql,null);
+        c.moveToNext();
+        int number = c.getInt(0); //식당 넘버
+        String name = c.getString(1); //식당 이름
+        String city = c.getString(2); //식당 지역구
+        String address = c.getString(3); //식당 주소
+        String pheonnumber = c.getString(4); //식당번호
+        String openinghours = c.getString(5); //영업시간
+        String vegantype = c.getString(6); //비건타입
+        RestaurantItem restaurantItem = new RestaurantItem(number, name, address, pheonnumber, openinghours, city, vegantype);
 
+        return restaurantItem;
+    }
     public RestaurantItem(int Number, String RestaurantName, String RestaurantAddress, String RestaurantPhoneNumber, String RestaurantOpeningHours, String RestaurantCity, String RestaurantVeganType){
         this.Number = Number;
         this.RestaurantName = RestaurantName;
