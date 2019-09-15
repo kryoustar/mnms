@@ -59,10 +59,10 @@ public class CustomAdapter extends BaseAdapter {
         title.setText(Title[position]);
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_10.png");
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + (position+1) + ".jpg");
         try {
 
-            final File localFile = File.createTempFile("images", "png");
+            final File localFile = File.createTempFile("images", "jpg");
             storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
