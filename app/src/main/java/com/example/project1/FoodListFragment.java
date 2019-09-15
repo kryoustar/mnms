@@ -148,7 +148,7 @@ public class FoodListFragment extends Fragment {
 
         String uid = user.getUid();
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mealItems);
+                new ArrayAdapter<String>(getActivity(),R.layout.simpleitem , mealItems);
 
 
         DatabaseReference ConditionRef = Database.child("User")
