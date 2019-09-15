@@ -107,8 +107,6 @@ public class RestaurantListFragment extends Fragment {
                     listView.setAdapter(adapter);
                 }
 
-                //ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
-                //listView.setAdapter(adapter);
 
                 //클릭 시 다음페이지
                 final ArrayList<RestaurantItem> finalData = data;
@@ -187,8 +185,6 @@ public class RestaurantListFragment extends Fragment {
 
                     listView.setAdapter(adapter);
 
-                    //ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
-                    //listView.setAdapter(adapter);
 
                     final ArrayList<RestaurantItem> finalData2 = data2;
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -196,12 +192,6 @@ public class RestaurantListFragment extends Fragment {
                         public void onItemClick(AdapterView parent, View v, int position, long id) {
                             Intent intent = new Intent(getActivity(), RestaurantDetail.class);
                             intent.putExtra("Restaurant Number", finalData2.get(position).getNumber());
-                            intent.putExtra("Restaurant Name", finalData2.get(position).getRestaurantName());
-                            intent.putExtra("Restaurant Address", finalData2.get(position).getRestaurantAddress());
-                            intent.putExtra("Restaurant Phone Number", finalData2.get(position).getRestaurantPhoneNumber());
-                            intent.putExtra("Restaurant Opening Hours", finalData2.get(position).getRestaurantOpeningHours());
-                            intent.putExtra("Restaurant City", finalData2.get(position).getRestaurantCity());
-                            intent.putExtra("Restaurant Vegan Type", finalData2.get(position).getRestaurantVeganType());
                             startActivity(intent);
                         }
                     });

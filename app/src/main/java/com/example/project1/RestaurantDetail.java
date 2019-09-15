@@ -66,18 +66,19 @@ public class RestaurantDetail extends AppCompatActivity {
 
         Intent intent = getIntent();
         int restaurantIndex = intent.getIntExtra("Restaurant Number", 1);
-        tvResName.setText(intent.getStringExtra("Restaurant Name"));
-        tvResAdd.setText(intent.getStringExtra("Restaurant Address"));
-        if (intent.getStringExtra(("Restaurant Phone Number")) != null) {
-            tvResPhone.setText("전화번호: " + intent.getStringExtra("Restaurant Phone Number"));
+        RestaurantItem thisItem = RestaurantItem.restaurantItemSearch(restaurantIndex,getApplication());
+        tvResName.setText(thisItem.getRestaurantName());
+        tvResAdd.setText(thisItem.getRestaurantAddress());
+        if (thisItem.getRestaurantPhoneNumber() != null) {
+            tvResPhone.setText("전화번호: " +thisItem.getRestaurantPhoneNumber());
         }
-        if (intent.getStringExtra("Restaurant Opening Hours") != null) {
-            tvResOpen.setText("영업시간: " + intent.getStringExtra("Restaurant Opening Hours"));
+        if (thisItem.getRestaurantOpeningHours() != null) {
+            tvResOpen.setText("영업시간: " + thisItem.getRestaurantOpeningHours());
         }
 
         FirebaseApp.initializeApp(this);
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + getIntent().getIntExtra("Restaurant Number", 0) + ".jpg");
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + restaurantIndex + ".jpg");
         try { //레스토랑 사진 불러오기
             final File localFile = File.createTempFile("images", "jpg");
             storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -144,16 +145,7 @@ public class RestaurantDetail extends AppCompatActivity {
 
             }
         });
-        /*
-        final long ONE_MEGABYTE = 1024 * 1024;
-        storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                ImageView myImage = (ImageView) findViewById(R.id.image);
-                myImage.setImageBitmap(bitmap);
-            }
-        });*/
+
 
 
 
@@ -165,7 +157,7 @@ public class RestaurantDetail extends AppCompatActivity {
 
         db = openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
         listView = findViewById(R.id.menulist);
-        Integer resNubmer = intent.getIntExtra("Restaurant Number", 0);
+        Integer resNubmer = restaurantIndex;
         Cursor cursor;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
 
         sql = "select * from veganRes02 where 번호 = " + resNubmer;
@@ -193,13 +185,7 @@ public class RestaurantDetail extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter(RestaurantDetail.this, android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
         listView.setAdapter(adapter);
         registerForContextMenu(listView);
-      /*  listView.setOnItemLongClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, android.view.View view, int position, long l) {
-                number = finalData.get(position).getFoodNumber();
-            }
 
-        });*/
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {

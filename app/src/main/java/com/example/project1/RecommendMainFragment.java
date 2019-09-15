@@ -72,18 +72,6 @@ public class RecommendMainFragment extends Fragment {
         recommendMenu1 = view.findViewById(R.id.recommendMenu1);
         recommendMenu2 = view.findViewById(R.id.recommendMenu2);
 
-        /*
-        TextView accumulatedKcalTV = view.findViewById(R.id.accumulated_kcal);
-        TextView accumulatedCarbsTV = view.findViewById(R.id.accumulated_carbs);
-        TextView accumulatedProteinTV = view.findViewById(R.id.accumulated_protein);
-        TextView accumulatedFatTV = view.findViewById(R.id.accumulated_fat);
-        TextView accumulatedNatriumTV = view.findViewById(R.id.accumulated_natrium);
-        TextView weekKCalTV = view.findViewById(R.id.week_kcal);
-        TextView weekCarbsTV = view.findViewById(R.id.week_carbs);
-        TextView weekProteinTV = view.findViewById(R.id.week_protein);
-        TextView weekFatTV = view.findViewById(R.id.week_fat);
-        TextView weekNatriumTV = view.findViewById(R.id.week_natrium);
-*/
 
         TextView todayTextView = view.findViewById(R.id.dateTV);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -164,13 +152,7 @@ public class RecommendMainFragment extends Fragment {
 
 
                             }
-                            /*
-                            accumulatedKcalTV.setText("열량 : " + Float.toString(food_kcal));
-                            accumulatedCarbsTV.setText("탄수화물 : " + Float.toString(food_carbs));
-                            accumulatedProteinTV.setText("단백질 : " + Float.toString(food_protein));
-                            accumulatedFatTV.setText("지방 : " + Float.toString(food_fat));
-                            accumulatedNatriumTV.setText("나트륨 : " + Float.toString(food_natrium));
-                            */
+
 
                             PersonalItem personalItem = PersonalItem.PersonalItemSearch(result[0], result[1], getActivity());
                             Float kcal = personalItem.getPersonKcal() * 7;
@@ -179,13 +161,6 @@ public class RecommendMainFragment extends Fragment {
                             Float fat = personalItem.getPersonFat() * 7;
                             Float natrium = personalItem.getPersonNatrium() * 7;
 
-                            /*
-                            weekKCalTV.setText("\n열량: " + Math.round(food_kcal / kcal * 100) + "%");
-                            weekCarbsTV.setText("탄수화물 " + Math.round(food_carbs / carbs * 100) + "%");
-                            weekProteinTV.setText("단백질 " + Math.round(food_protein / protein * 100) + "%");
-                            weekFatTV.setText("지방 " + Math.round(food_fat / fat * 100) + "%");
-                            weekNatriumTV.setText("나트륨 " + Math.round(food_natrium / natrium * 100) + "%");
-                            */
 
                             int low = Math.round(food_carbs / carbs * 100);
                             int mid = Math.round(food_protein / protein * 100);
@@ -225,10 +200,6 @@ public class RecommendMainFragment extends Fragment {
                                 mHighBar.set(Color.rgb(1, 160, 26), high);
 
                             }
-
-                            // mLowBar.set(Color.BLUE, low);
-                            // mMidBar.set(Color.RED, mid);
-                            // mHighBar.set(Color.GREEN, high);
 
                             mLowLabel.setText(String.valueOf(low) + "%");
                             mMidLabel.setText(String.valueOf(mid) + "%");
@@ -358,12 +329,6 @@ public class RecommendMainFragment extends Fragment {
                                     Intent intent = new Intent(getActivity(), RestaurantDetail.class);
 
                                     intent.putExtra("Restaurant Number", restaurantItem1.getNumber());
-                                    intent.putExtra("Restaurant Name", restaurantItem1.getRestaurantName());
-                                    intent.putExtra("Restaurant Address", restaurantItem1.getRestaurantAddress());
-                                    intent.putExtra("Restaurant Phone Number", restaurantItem1.getRestaurantPhoneNumber());
-                                    intent.putExtra("Restaurant Opening Hours", restaurantItem1.getRestaurantOpeningHours());
-                                    intent.putExtra("Restaurant City", restaurantItem1.getRestaurantCity());
-                                    intent.putExtra("Restaurant Vegan Type", restaurantItem1.getRestaurantVeganType());
                                     startActivity(intent);
                                 }
                             });
@@ -376,12 +341,6 @@ public class RecommendMainFragment extends Fragment {
                                     Intent intent = new Intent(getActivity(), RestaurantDetail.class);
 
                                     intent.putExtra("Restaurant Number", restaurantItem2.getNumber());
-                                    intent.putExtra("Restaurant Name", restaurantItem2.getRestaurantName());
-                                    intent.putExtra("Restaurant Address", restaurantItem2.getRestaurantAddress());
-                                    intent.putExtra("Restaurant Phone Number", restaurantItem2.getRestaurantPhoneNumber());
-                                    intent.putExtra("Restaurant Opening Hours", restaurantItem2.getRestaurantOpeningHours());
-                                    intent.putExtra("Restaurant City", restaurantItem2.getRestaurantCity());
-                                    intent.putExtra("Restaurant Vegan Type", restaurantItem2.getRestaurantVeganType());
                                     startActivity(intent);
                                 }
                             });

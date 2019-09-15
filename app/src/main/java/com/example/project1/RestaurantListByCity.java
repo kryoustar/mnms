@@ -45,11 +45,11 @@ public class RestaurantListByCity extends AppCompatActivity {
         ArrayList<RestaurantItem> data = null;
         data = new ArrayList<>();
 
-        db = openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
+
         listView = findViewById(R.id.listView);
 
         Intent intent = getIntent();
-        String clickedRestaurantCity = intent.getStringExtra("Restaurant City");
+        String clickedRestaurantCity = intent.getStringExtra("Restaurant City"); // 이건 어쩔 수 없이 받아오는 코드
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
@@ -67,7 +67,6 @@ public class RestaurantListByCity extends AppCompatActivity {
                 ArrayList<RestaurantItem> data = null;
                 data = new ArrayList<>();
 
-                db = openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
                 listView = findViewById(R.id.listView);
 
                 Intent intent = getIntent();
@@ -77,39 +76,18 @@ public class RestaurantListByCity extends AppCompatActivity {
                     sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%'";
                 else if (veganType == "락토 오보")
                     sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%' AND (RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%' OR RestaurantVeganType like '%" + "오보" + "%' OR RestaurantVeganType like '%" + "락토 오보" + "%')";
-                else if (veganType== "락토")
+                else if (veganType == "락토")
                     sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%' AND (RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%')";
-                else if (veganType== "오보")
+                else if (veganType == "오보")
                     sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%' AND (RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "오보" + "%')";
                 else
                     sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%' AND RestaurantVeganType like '%" + "비건" + "%'";
 
-                //sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%'";
-                cursor = db.rawQuery(sql, null);
 
-                int count = cursor.getCount();   // db에 저장된 행 개수를 읽어온다
-                result = new String[count];   // 저장된 행 개수만큼의 배열을 생성
-
-                for (int i = 0; i < count; i++) {
-                    cursor.moveToNext();   // 첫번째에서 다음 레코드가 없을때까지 읽음
-                    int Number = cursor.getInt(0);
-                    String RestaurantName = cursor.getString(1);
-                    String RestaurantAddress = cursor.getString(3);
-                    String RestaurantPhoneNumber = cursor.getString(4);
-                    String RestaurantOpeningHours = cursor.getString(5);
-                    String RestaurantCity = cursor.getString(2);
-                    String RestaurantVeganType = cursor.getString(6);
-                    RestaurantItem restaurantItem = new RestaurantItem(Number, RestaurantName, RestaurantAddress, RestaurantPhoneNumber, RestaurantOpeningHours, RestaurantCity, RestaurantVeganType);
-
-                    result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
-                    data.add(restaurantItem);
-
-                    CustomAdapter adapter = new CustomAdapter(RestaurantListByCity.this, result);
-                    listView.setAdapter(adapter);
-                }
-
-                //ArrayAdapter adapter = new ArrayAdapter(RestaurantListByCity.this, android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
-                //listView.setAdapter(adapter);
+                data = RestaurantItem.restaurantItemSQLSearch(getApplication(), sql);
+                result = RestaurantItem.returnResult(getApplication(), sql);
+                CustomAdapter adapter = new CustomAdapter(RestaurantListByCity.this, result);
+                listView.setAdapter(adapter);
 
                 //클릭 시 다음페이지
                 final ArrayList<RestaurantItem> finalData = data;
@@ -118,12 +96,6 @@ public class RestaurantListByCity extends AppCompatActivity {
                     public void onItemClick(AdapterView parent, View v, int position, long id) {
                         Intent intent = new Intent(RestaurantListByCity.this, RestaurantDetail.class);
                         intent.putExtra("Restaurant Number", finalData.get(position).getNumber());
-                        intent.putExtra("Restaurant Name", finalData.get(position).getRestaurantName());
-                        intent.putExtra("Restaurant Address", finalData.get(position).getRestaurantAddress());
-                        intent.putExtra("Restaurant Phone Number", finalData.get(position).getRestaurantPhoneNumber());
-                        intent.putExtra("Restaurant Opening Hours", finalData.get(position).getRestaurantOpeningHours());
-                        intent.putExtra("Restaurant City", finalData.get(position).getRestaurantCity());
-                        intent.putExtra("Restaurant Vegan Type", finalData.get(position).getRestaurantVeganType());
                         startActivity(intent);
                     }
                 });
@@ -135,7 +107,6 @@ public class RestaurantListByCity extends AppCompatActivity {
         });
 
 
-
         //검색기능
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,49 +114,26 @@ public class RestaurantListByCity extends AppCompatActivity {
                 String search = searchText.getText().toString(); //검색 받아옴
 
                 ArrayList<RestaurantItem> data2 = null;
-                data2 = new ArrayList<>();
-
                 sql = "select * from veganRes03 where RestaurantName like '%" + search
-                        + "%' AND RestaurantCity like '%" + clickedRestaurantCity + "%'";cursor = db.rawQuery(sql, null);   // select 사용시 사용(sql문, where조건 줬을 때 넣는 값)
+                        + "%' AND RestaurantCity like '%" + clickedRestaurantCity + "%'";
 
-                int count = cursor.getCount();   // db에 저장된 행 개수를 읽어온다
-                result = new String[count];   // 저장된 행 개수만큼의 배열을 생성
+                result = RestaurantItem.returnResult(getApplication(), sql);
+                data2 = RestaurantItem.restaurantItemSQLSearch(getApplication(), sql);
 
-                for (int i = 0; i < count; i++) {
-                    cursor.moveToNext();   // 첫번째에서 다음 레코드가 없을때까지 읽음
-                    int Number = cursor.getInt(0);
-                    String RestaurantName = cursor.getString(1);
-                    String RestaurantAddress = cursor.getString(3);
-                    String RestaurantPhoneNumber = cursor.getString(4);
-                    String RestaurantOpeningHours = cursor.getString(5);
-                    String RestaurantCity = cursor.getString(2);
-                    String RestaurantVeganType = cursor.getString(6);
-                    RestaurantItem restaurantItem = new RestaurantItem(Number, RestaurantName, RestaurantAddress, RestaurantPhoneNumber, RestaurantOpeningHours, RestaurantCity, RestaurantVeganType);
+                CustomAdapter adapter = new CustomAdapter(RestaurantListByCity.this, result);
+                listView.setAdapter(adapter);
 
-                    result[i] = RestaurantName; // 각각의 속성값들을 해당 배열의 i번째에 저장
-                    data2.add(restaurantItem);
-                    CustomAdapter adapter = new CustomAdapter(RestaurantListByCity.this, result);
-                    listView.setAdapter(adapter);
 
-                    //ArrayAdapter adapter = new ArrayAdapter(RestaurantListByCity.this, simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
-                    //listView.setAdapter(adapter);
+                final ArrayList<RestaurantItem> finalData2 = data2;
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView parent, View v, int position, long id) {
+                        Intent intent = new Intent(RestaurantListByCity.this, RestaurantDetail.class);
+                        intent.putExtra("Restaurant Number", finalData2.get(position).getNumber());
+                        startActivity(intent);
+                    }
+                });
 
-                    final ArrayList<RestaurantItem> finalData2 = data2;
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView parent, View v, int position, long id) {
-                            Intent intent = new Intent(RestaurantListByCity.this, RestaurantDetail.class);
-                            intent.putExtra("Restaurant Number", finalData2.get(position).getNumber());
-                            intent.putExtra("Restaurant Name", finalData2.get(position).getRestaurantName());
-                            intent.putExtra("Restaurant Address", finalData2.get(position).getRestaurantAddress());
-                            intent.putExtra("Restaurant Phone Number", finalData2.get(position).getRestaurantPhoneNumber());
-                            intent.putExtra("Restaurant Opening Hours", finalData2.get(position).getRestaurantOpeningHours());
-                            intent.putExtra("Restaurant City", finalData2.get(position).getRestaurantCity());
-                            intent.putExtra("Restaurant Vegan Type", finalData2.get(position).getRestaurantVeganType());
-                            startActivity(intent);
-                        }
-                    });
-                }
             }
 
         });
