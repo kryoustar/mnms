@@ -6,9 +6,10 @@
 
     android:layout_height="match_parent"
 
-    android:orientation="vertical"
+    android:gravity="center"
 
-    >
+    android:orientation="vertical">
+
 
     <DatePicker
 
@@ -21,7 +22,6 @@
         android:calendarViewShown="false"
 
         />
-
 
     <Button
 

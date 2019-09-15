@@ -58,7 +58,6 @@ public class ScrapList extends AppCompatActivity {
 
                 }
                 adapter.notifyDataSetChanged();
-                Utility.setListViewHeightBasedOnChildren(scrapListview);
 
 
             }

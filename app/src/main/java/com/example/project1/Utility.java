@@ -22,7 +22,7 @@ public class Utility {
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight -65*(listAdapter.getCount());//+ (listView.getDividerHeight() * (listAdapter.getCount() - 1))-40;
         listView.setLayoutParams(params);
         listView.requestLayout();
     }

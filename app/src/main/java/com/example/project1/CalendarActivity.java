@@ -15,12 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.io.Serializable;
 import java.util.Date;
-/*
- * https://gakari.tistory.com/entry/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-DatePicker-%EC%9C%84%EC%A0%AF%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%82%A0%EC%A7%9C-%EC%9E%85%EB%A0%A5-%EB%B0%9B%EA%B8%B0
- * calendar activity 여기서 고대로 갖고왔고, 바뀐것은 Calendar Activity / calendar_activity.xml
- *
- *
- * */
+
 
 public class CalendarActivity extends AppCompatActivity {
 
