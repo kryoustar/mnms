@@ -62,15 +62,16 @@ public class RestaurantDetail extends AppCompatActivity {
         TextView tvResOpen = (TextView) findViewById(R.id.resOpeningHours);
 
         Intent intent = getIntent();
-        int restaurantIndex = intent.getIntExtra("Restaurant Number", 1);
+        int restaurantIndex = intent.getIntExtra("Restaurant Number", 0);
         RestaurantItem thisItem = RestaurantItem.restaurantItemSearch(restaurantIndex,getApplication());
         tvResName.setText(thisItem.getRestaurantName());
-        tvResAdd.setText(thisItem.getRestaurantAddress());
-        if (thisItem.getRestaurantPhoneNumber() != null) {
-            tvResPhone.setText("전화번호: " +thisItem.getRestaurantPhoneNumber());
-        }
+
+        tvResAdd.setText(thisItem.getRestaurantPhoneNumber());
         if (thisItem.getRestaurantOpeningHours() != null) {
-            tvResOpen.setText("영업시간: " + thisItem.getRestaurantOpeningHours());
+            tvResPhone.setText(thisItem.getRestaurantOpeningHours());
+        }
+        if (thisItem.getRestaurantCity() != null) {
+            tvResOpen.setText( thisItem.getRestaurantCity());
         }
 
         FirebaseApp.initializeApp(this);
@@ -179,7 +180,7 @@ public class RestaurantDetail extends AppCompatActivity {
             //Toast.makeText(getApplicationContext(), Integer.toString(i), Toast.LENGTH_LONG).show();
         }
         final ArrayList<FoodItem> finalData = foodData;
-        ArrayAdapter adapter = new ArrayAdapter(RestaurantDetail.this, android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
+        ArrayAdapter adapter = new ArrayAdapter(RestaurantDetail.this, R.layout.simpleitemtwo, result);   // ArrayAdapter(this, 출력모양, 배열)
         listView.setAdapter(adapter);
         registerForContextMenu(listView);
 
