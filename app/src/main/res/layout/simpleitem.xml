@@ -8,5 +8,5 @@
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingLeft="6dip"
     android:fontFamily="@font/eleven"
-    android:textSize="20dp"
+    android:textSize="15sp"
     android:textAppearance="?android:attr/textAppearanceLarge" />
