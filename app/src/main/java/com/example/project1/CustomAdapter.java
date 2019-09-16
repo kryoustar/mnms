@@ -3,6 +3,7 @@ package com.example.project1;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,11 +26,14 @@ import java.io.IOException;
 public class CustomAdapter extends BaseAdapter {
 
     private Context mContext;
-    private String[]  Title;
+    private String[] Title;
+    private Integer[] integers;
     ImageView i1;
-    public CustomAdapter(Context context, String[] text1) {
+
+    public CustomAdapter(Context context, String[] text1,Integer[] int1) {
         mContext = context;
         Title = text1;
+        integers = int1;
     }
 
     public int getCount() {
@@ -55,11 +60,18 @@ public class CustomAdapter extends BaseAdapter {
         TextView title;
 
 
-        title = (TextView) row.findViewById(R.id.txtTitle);
+        title = row.findViewById(R.id.txtTitle);
         title.setText(Title[position]);
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + (position+1) + ".jpg");
+
+        //FirebaseStorage storage = FirebaseStorage.getInstance();
+        //StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + (position+1) + ".jpg");
+
+        int drawable = mContext.getResources().
+                getIdentifier("image_" + integers[position],"drawable",mContext.getPackageName());
+        i1 = row.findViewById(R.id.imgIcon);
+        i1.setImageResource(drawable);
+        /*
         try {
 
             final File localFile = File.createTempFile("images", "jpg");
@@ -79,7 +91,7 @@ public class CustomAdapter extends BaseAdapter {
         }
 
         catch (IOException e ) {}
-
+*/
         return (row);
     }
 }

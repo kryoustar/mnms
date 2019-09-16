@@ -33,13 +33,13 @@ public class RestaurantListByCity extends AppCompatActivity {
     Cursor cursor;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
     ListView listView;   // ListView 객체 생성
     String[] result;   // ArrayAdapter에 넣을 배열 생성
-
+    Integer[] intResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restaurantlist_bycity);
         searchText = findViewById(R.id.search_restaurant);
-        searchBtn = (ImageButton) findViewById(R.id.search_btn);
+        searchBtn = findViewById(R.id.search_btn);
 
 
         ArrayList<RestaurantItem> data = null;
@@ -85,7 +85,8 @@ public class RestaurantListByCity extends AppCompatActivity {
 
                 data = RestaurantItem.restaurantItemSQLSearch(getApplication(), sql);
                 result = RestaurantItem.returnResult(getApplication(), sql);
-                CustomAdapter adapter = new CustomAdapter(RestaurantListByCity.this, result);
+                intResult = RestaurantItem.returnIntegerResult(getApplication(),sql);
+                CustomAdapter adapter = new CustomAdapter(RestaurantListByCity.this, result,intResult);
                 listView.setAdapter(adapter);
 
                 //클릭 시 다음페이지
@@ -118,8 +119,8 @@ public class RestaurantListByCity extends AppCompatActivity {
 
                 result = RestaurantItem.returnResult(getApplication(), sql);
                 data2 = RestaurantItem.restaurantItemSQLSearch(getApplication(), sql);
-
-                CustomAdapter adapter = new CustomAdapter(RestaurantListByCity.this, result);
+                intResult = RestaurantItem.returnIntegerResult(getApplication(),sql);
+                CustomAdapter adapter = new CustomAdapter(RestaurantListByCity.this, result,intResult);
                 listView.setAdapter(adapter);
 
 

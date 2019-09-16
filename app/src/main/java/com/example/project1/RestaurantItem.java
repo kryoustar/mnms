@@ -145,6 +145,32 @@ public class RestaurantItem {
         }
         return result;
     }
+
+    public static Integer[] returnIntegerResult(Context context,String search) {
+        Context myContext = context;
+        String sql;
+        SQLiteDatabase db;   // db를 다루기 위한 SQLiteDatabase 객체 생성
+        Cursor c;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
+        db = myContext.openOrCreateDatabase("vRes.db", android.content.Context.MODE_PRIVATE, null);
+        sql = search;
+        c = db.rawQuery(sql, null);
+        int count = c.getCount();
+        Integer[] result = new Integer[count];
+        for (int i = 0; i<count ; i++){
+            c.moveToNext();
+            int number = c.getInt(0); //식당 넘버
+            String name = c.getString(1); //식당 이름
+            String city = c.getString(2); //식당 지역구
+            String address = c.getString(3); //식당 주소
+            String pheonnumber = c.getString(4); //식당번호
+            String openinghours = c.getString(5); //영업시간
+            String vegantype = c.getString(6); //비건타입
+            RestaurantItem restaurantItem = new RestaurantItem(number, name, address, pheonnumber, openinghours, city, vegantype);
+            result[i] = number;
+        }
+        return result;
+    }
+
     public static RestaurantItem RestaurantItemStringSearch(String search, Context context){
         Context myContext = context;
         String sql;
