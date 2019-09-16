@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class RestaurantListByCity extends AppCompatActivity {
 
-    Button searchBtn;
+    ImageButton searchBtn;
     EditText searchText;
 
     String sql;
@@ -39,8 +39,8 @@ public class RestaurantListByCity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restaurantlist_bycity);
         searchText = findViewById(R.id.search_restaurant);
-        searchBtn = (Button) findViewById(R.id.search_btn);
-        Button tvVeganismType = (Button) findViewById(R.id.veganismType2);
+        searchBtn = (ImageButton) findViewById(R.id.search_btn);
+
 
         ArrayList<RestaurantItem> data = null;
         data = new ArrayList<>();
@@ -62,7 +62,6 @@ public class RestaurantListByCity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String veganType = dataSnapshot.getValue(String.class);
-                tvVeganismType.setText(veganType);
 
                 ArrayList<RestaurantItem> data = null;
                 data = new ArrayList<>();

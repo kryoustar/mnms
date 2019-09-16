@@ -1,8 +1,6 @@
 package com.example.project1;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -104,7 +102,7 @@ public class CityList extends AppCompatActivity {
         listView = findViewById(R.id.listView);
 
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);   // ArrayAdapter(this, 출력모양, 배열)
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.simpleitemtwo, data);   // ArrayAdapter(this, 출력모양, 배열)
         listView.setAdapter(adapter);
 
         //클릭 시 다음페이지
