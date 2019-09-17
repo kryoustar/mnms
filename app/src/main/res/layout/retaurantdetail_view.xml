@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="360dp"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -31,7 +31,7 @@
                 android:gravity="center|center_horizontal"
                 android:text="TextView"
                 android:textColor="#000000"
-                android:textSize="28dp" />
+                android:textSize="30dp" />
 
             <LinearLayout
                 android:layout_width="80dp"
@@ -61,12 +61,13 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/jua"
             android:paddingLeft="18dp"
             android:shadowColor="#00251F1F"
             android:text="식당정보"
             android:textColor="#000000"
-            android:textSize="22sp" />
+            android:textSize="25sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,8 +75,9 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
                 android:background="#0000"
                 android:paddingLeft="18dp"
                 android:tint="#5aa139"
@@ -84,7 +86,8 @@
             <TextView
                 android:id="@+id/resAddress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
                 android:fontFamily="@font/jua"
                 android:paddingLeft="15dp"
                 android:textSize="18sp" />
@@ -96,8 +99,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
                 android:background="#0000"
                 android:paddingLeft="18dp"
                 android:tint="#5aa139"
@@ -106,7 +109,7 @@
             <TextView
                 android:id="@+id/resOpeningHours"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:fontFamily="@font/jua"
                 android:paddingLeft="15dp"
                 android:textSize="18sp" />
@@ -117,8 +120,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
                 android:background="#0000"
                 android:paddingLeft="18dp"
                 android:tint="#5aa139"
@@ -127,7 +130,7 @@
             <TextView
                 android:id="@+id/resPhoneNumber"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:fontFamily="@font/jua"
                 android:paddingLeft="15dp"
                 android:textSize="18sp" />
@@ -142,14 +145,17 @@
             android:paddingTop="20dp"
             android:text="메뉴정보"
             android:textColor="#000000"
-            android:textSize="22sp" />
+            android:textSize="25sp" />
 
         <ListView
             android:id="@+id/menulist"
             android:layout_width="match_parent"
             android:layout_height="234dp"
-            android:divider="#00000000"
-            android:dividerHeight="1dp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:divider="#5aa139"
+            android:dividerHeight="1dp" />
     </LinearLayout>
 
 

@@ -33,7 +33,7 @@ public class ScrapList extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(ScrapList.this, android.R.layout.simple_list_item_1, restaurantNames);
+                new ArrayAdapter<String>(ScrapList.this, R.layout.simpleitemtwo, restaurantNames);
 
 
         DatabaseReference ConditionRef = Database.child("User")

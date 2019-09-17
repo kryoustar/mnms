@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="360dp"
     android:layout_height="match_parent">
 
     <ScrollView
@@ -13,30 +13,41 @@
             android:orientation="vertical" >
 
             <TextView
-                android:fontFamily="@font/jua"
                 android:id="@+id/foodname"
                 android:layout_width="match_parent"
                 android:layout_height="69dp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/jua"
+                android:gravity="center"
                 android:text="TextView"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
+                android:textColor="#000000"
+                android:textSize="30dp" />
+        <LinearLayout
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:background="@drawable/my_border3">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="204dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="170dp"
+                    android:layout_height="160dp"
+                    android:background="@drawable/my_border2"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textView3"
                         android:layout_width="match_parent"
-                        android:layout_height="51dp"
+                        android:layout_height="50dp"
+                        android:fontFamily="@font/jua"
                         android:gravity="center"
                         android:text="열량"
+                        android:textColor="#000000"
+                        android:textSize="25sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -47,21 +58,25 @@
                         android:gravity="center_horizontal|center_vertical"
                         android:text="TextView"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textSize="24sp" />
+                        android:textColor="#000000"
+                        android:textSize="23sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="204dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="170dp"
+                    android:layout_height="160dp"
+                    android:background="@drawable/my_border2"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textView4"
                         android:layout_width="match_parent"
-                        android:layout_height="51dp"
+                        android:layout_height="50dp"
                         android:fontFamily="@font/jua"
                         android:gravity="center"
                         android:text="탄수화물"
+                        android:textColor="#000000"
+                        android:textSize="25sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -71,7 +86,8 @@
                         android:fontFamily="@font/jua"
                         android:gravity="center"
                         android:text="TextView"
-                        android:textSize="24sp" />
+                        android:textColor="#000000"
+                        android:textSize="23sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -81,17 +97,20 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="204dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="170dp"
+                    android:layout_height="160dp"
+                    android:background="@drawable/my_border2"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textView6"
                         android:layout_width="match_parent"
-                        android:layout_height="51dp"
+                        android:layout_height="50dp"
                         android:fontFamily="@font/jua"
                         android:gravity="center"
                         android:text="단백질"
+                        android:textColor="#000000"
+                        android:textSize="25sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -101,21 +120,25 @@
                         android:fontFamily="@font/jua"
                         android:gravity="center"
                         android:text="TextView"
-                        android:textSize="24sp" />
+                        android:textColor="#000000"
+                        android:textSize="23sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="204dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="170dp"
+                    android:layout_height="160dp"
+                    android:background="@drawable/my_border2"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textView8"
                         android:layout_width="match_parent"
-                        android:layout_height="51dp"
+                        android:layout_height="50dp"
                         android:fontFamily="@font/jua"
                         android:gravity="center"
                         android:text="지방"
+                        android:textColor="#000000"
+                        android:textSize="25sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -125,63 +148,89 @@
                         android:fontFamily="@font/jua"
                         android:gravity="center"
                         android:text="TextView"
-                        android:textSize="24sp" />
+                        android:textColor="#000000"
+                        android:textSize="23sp" />
                 </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="250dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:fontFamily="@font/jua"
                     android:id="@+id/food_sugar"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/jua"
+                    android:gravity="center"
                     android:text="TextView"
+                    android:textColor="#000000"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:fontFamily="@font/jua"
                     android:id="@+id/food_natrium"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/jua"
+                    android:gravity="center"
                     android:text="TextView"
+                    android:textColor="#000000"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:fontFamily="@font/jua"
                     android:id="@+id/food_cholesterol"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/jua"
+                    android:gravity="center"
                     android:text="TextView"
+                    android:textColor="#000000"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:fontFamily="@font/jua"
                     android:id="@+id/food_saturatedfat"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/jua"
+                    android:gravity="center"
                     android:text="TextView"
+                    android:textColor="#000000"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:fontFamily="@font/jua"
                     android:id="@+id/food_transfat"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/jua"
+                    android:gravity="center"
                     android:text="TextView"
+                    android:textColor="#000000"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <Button
-                android:fontFamily="@font/jua"
                 android:id="@+id/deletefood"
-                android:layout_width="match_parent"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:background="#F44336"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/border_1"
+                android:fontFamily="@font/jua"
                 android:text="삭제하기" />
+
         </LinearLayout>
     </ScrollView>
 

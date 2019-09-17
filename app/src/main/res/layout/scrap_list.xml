@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="360dp"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="match_parent"
-        android:layout_height="53dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/jua"
         android:gravity="center"
-        android:text="스크랩"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:text="좋아요"
+        android:textColor="#5aa139"
+        android:textSize="50sp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:tint="#5AA139"
+        app:srcCompat="@drawable/heart_off" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +31,12 @@
         <ListView
             android:id="@+id/restaurantListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="35dp"
+            android:divider="#5aa139"
+            android:dividerHeight="2dp"/>
 
     </LinearLayout>
 </LinearLayout>

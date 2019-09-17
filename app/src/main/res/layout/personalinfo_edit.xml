@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="360dp"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="vertical"
@@ -13,7 +13,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회원정보입력" />
+        android:text="개인 정보 수정"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#5aa139"
+        android:textSize="23dp"
+        android:fontFamily="@font/jua" />
 
     <EditText
         android:id="@+id/nickname"
@@ -21,7 +26,10 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="닉네임"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:fontFamily="@font/jua"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/age"
@@ -29,14 +37,19 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
-        android:hint="나이" />
+        android:hint="나이"
+        android:fontFamily="@font/jua"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
     ///android:digits="0123456789"
 
 
     <RadioGroup
         android:id="@+id/gender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp">
 
 
         <RadioButton
@@ -44,27 +57,98 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:text="여성" />
+            android:text="여성"
+            android:fontFamily="@font/jua"/>
 
         <RadioButton
             android:id="@+id/gender_male"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:text="남성" />
+            android:text="남성"
+            android:fontFamily="@font/jua"/>
+
+    </RadioGroup>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="40dp"
+        android:text="채식 지향 타입 선택"
+        android:textColor="#5aa139"
+        android:textSize="23dp"
+        android:fontFamily="@font/jua"/>
+
+    <RadioGroup
+        android:id="@+id/groupradio"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp">
+
+        <!-- In RadioGroup create the 1 Radio Button-->
+        <!-- like this we will add some more Radio Button-->
+        <RadioButton
+            android:id="@+id/vegan"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jua"
+            android:text="비건"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:id="@+id/ovo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jua"
+            android:text="오보"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:id="@+id/lacto"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jua"
+            android:text="락토"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:id="@+id/ovolacto"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jua"
+            android:text="락토 오보"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:id="@+id/pesco"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jua"
+            android:text="페스코"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:id="@+id/none"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jua"
+            android:text="지향 없음"
+            android:textColor="#000000" />
 
     </RadioGroup>
 
     <Button
         android:id="@+id/inforegister"
-        android:layout_width="match_parent"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/border_1"
+        android:fontFamily="@font/jua"
         android:text="등록" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
 
 </LinearLayout>

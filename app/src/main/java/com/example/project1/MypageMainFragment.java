@@ -1,34 +1,19 @@
 package com.example.project1;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.text.TextUtils;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,12 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import android.os.Bundle;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -63,17 +42,19 @@ public class MypageMainFragment extends Fragment {
             View view = inflater.inflate(R.layout.activity_mypage, container, false);
             String email = user.getEmail(); //get user email
             String uid = user.getUid();
-
+            TextView nickname = view.findViewById(R.id.textView13);
+            TextView vegan = view.findViewById(R.id.textView16);
             ArrayList<String> items = new ArrayList<String>(); // 빈 데이터 리스트 생성
             items.add("");
             items.add("");
             items.add("");
-            items.add("");
-            items.add("");
-
+            items.set(0, "개인 정보 수정");
+            items.set(1, "스크랩");
+            items.set(2, "로그아웃");
             //array adapter 생성 아이템 뷰를 선택 가능하도록 만듦
-            ArrayAdapter<String> adapter =
-                    new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, items);
+            /*ArrayAdapter<String> adapter =
+                    new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, items);*/
+            CustomAdapterTwo adapter = new CustomAdapterTwo(getActivity(), items);
 
             //items.set(0, "User Email: " + email);
 
@@ -86,9 +67,9 @@ public class MypageMainFragment extends Fragment {
                     String Nickname = dataSnapshot.getValue(String.class);
                     //Toast.makeText(getActivity(), Nickname + "", Toast.LENGTH_SHORT).show();
                     if (Nickname != null) {
-                        items.set(0, "닉네임: " + Nickname);
+                        nickname.setText("닉네임: " + Nickname);
                     } else {
-                        items.set(0, "닉네임 ");
+                        nickname.setText("닉네임");
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -107,9 +88,9 @@ public class MypageMainFragment extends Fragment {
                     String veganType = dataSnapshot.getValue(String.class);
                     //Toast.makeText(getActivity(), veganType + "", Toast.LENGTH_SHORT).show();
                     if (veganType != null) {
-                        items.set(1, "채식타입: " + veganType);
+                        vegan.setText("채식타입: " + veganType);
                     } else {
-                        items.set(1, "채식타입 ");
+                        vegan.setText("채식타입 ");
 
                     }
                     adapter.notifyDataSetChanged();
@@ -120,12 +101,6 @@ public class MypageMainFragment extends Fragment {
                 }
             });
 
-
-            items.set(2, "개인정보");
-            items.set(3, "스크랩");
-            items.set(4, "로그아웃");
-
-
             ListView listview = view.findViewById(R.id.list); // listview  생성 및 adapter 지정
             listview.setAdapter(adapter);
 
@@ -134,29 +109,19 @@ public class MypageMainFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     switch (position) {
-                        case 0: //user email
-                            //Toast.makeText(getContext(), items.get(position) + "", Toast.LENGTH_SHORT).show();
-                            break;
 
-                        case 1: //채식타입
-                            //Toast.makeText(getContext(), items.get(position) + "", Toast.LENGTH_SHORT).show();
-
-                            Intent intent1 = new Intent(getActivity(), SelectVeganism.class);
-                            startActivity(intent1);
-                            break;
-
-                        case 2: //개인정보
+                        case 0: //개인정보
                             //Toast.makeText(getContext(), items.get(position) + "", Toast.LENGTH_SHORT).show();
                             Intent Intent = new Intent(getActivity(), PersonalInfo.class);
                             startActivity(Intent);
                             break;
 
-                        case 3://스크랩
+                        case 1://스크랩
                             Intent intent = new Intent(getActivity(),ScrapList.class);
                             startActivity(intent);
                             break;
 
-                        case 4: //로그아웃
+                        case 2: //로그아웃
                             FirebaseAuth.getInstance().signOut();
                             Toast.makeText(getContext(), "로그아웃 되었습니다." + "", Toast.LENGTH_SHORT).show();
                             Intent intent2 = new Intent(getActivity(), BottomActivity.class);
