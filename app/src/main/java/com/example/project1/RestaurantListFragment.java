@@ -78,13 +78,13 @@ public class RestaurantListFragment extends Fragment {
                 if (veganType.equals("지향 없음") || veganType.equals( "페스코"))
                     sql = "select * from veganRes03 where RestaurantCity = '용산구'";
                 else if (veganType.equals("락토 오보"))
-                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%' OR RestaurantVeganType like '%" + "오보" + "%' OR RestaurantVeganType like '%" + "락토 오보" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
+                    sql = "select * from veganRes03 where (RestaurantVeganType = '비건' OR RestaurantVeganType = '락토' OR RestaurantVeganType = '오보' OR RestaurantVeganType = '락토 오보') AND RestaurantCity = '용산구'";
                 else if (veganType.equals("락토"))
-                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
+                    sql = "select * from veganRes03 where (RestaurantVeganType = '비건' OR RestaurantVeganType like = '락토') AND RestaurantCity = '용산구'";
                 else if (veganType.equals("오보"))
-                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "오보" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
+                    sql = "select * from veganRes03 where (RestaurantVeganType  = '비건' OR RestaurantVeganType = '오보') AND RestaurantCity like = '용산구'";
                 else
-                    sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
+                    sql = "select * from veganRes03 where RestaurantVeganType  = '비건' AND RestaurantCity = '용산구'";
 
 
                 result = new String[1000];   // 저장된 행 개수만큼의 배열을 생성
