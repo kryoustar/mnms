@@ -82,12 +82,12 @@ public class FoodListFragment extends Fragment {
             int monthselect = bundle.getInt("Selected Month");
             selectedMonth = Integer.toString(monthselect);
             if (monthselect<10) {
-                selectedMonth = "0" + Integer.toString(monthselect);
+                selectedMonth = "0" + monthselect;
             }
             int dayselect = bundle.getInt("Selected Day");
             selectedDay = Integer.toString(dayselect);
             if (dayselect<10) {
-                selectedDay = "0" + Integer.toString(dayselect);
+                selectedDay = "0" + dayselect;
             }
             date = selectedYear + "-" + selectedMonth + "-" + selectedDay;
             selectDateButton.setText(date);
@@ -218,17 +218,17 @@ public class FoodListFragment extends Fragment {
 
 
                         if (kcal <= food_kcal) {
-                            todaykcal.setText("[오늘 섭취해야 할 칼로리 "+ Math.round(kcal) +
-                                    "kcal를 모두 섭취하였습니다.]");
+                            todaykcal.setText("오늘 섭취해야 할 칼로리 "+ Math.round(kcal) +
+                                    "kcal를 모두 섭취하였습니다.");
                         }
 
                         else if (food_kcal == 0) {
-                            todaykcal.setText("[오늘 먹은 음식이 없습니다.]");
+                            todaykcal.setText("오늘 먹은 음식이 없습니다.");
                         }
 
                         else {
-                            todaykcal.setText("[오늘 섭취해야 할 칼로리 "+ Math.round(kcal) +
-                                    "kcal 중 " + Float.toString(food_kcal) + "kcal를 먹었습니다.]" );
+                            todaykcal.setText("오늘 섭취해야 할 칼로리 "+ Math.round(kcal) +
+                                    "kcal 중 " + food_kcal + "kcal를 먹었습니다." );
                         }
 
 /*
@@ -252,7 +252,7 @@ public class FoodListFragment extends Fragment {
 */
 
 
-                        LinearLayout pongField = (LinearLayout) view.findViewById(R.id.field1);
+                        LinearLayout pongField = view.findViewById(R.id.field1);
                         ArrayList<WritingVO> writing = new ArrayList<WritingVO>();
 
                         Canvas canvas = new Canvas();
@@ -264,7 +264,7 @@ public class FoodListFragment extends Fragment {
                         pongField.addView(circleChart);
 
 
-                        LinearLayout pongField2 = (LinearLayout) view.findViewById(R.id.field2);
+                        LinearLayout pongField2 = view.findViewById(R.id.field2);
                         ArrayList<WritingVO> writing2 = new ArrayList<WritingVO>();
 
                         Canvas canvas2 = new Canvas();
@@ -276,7 +276,7 @@ public class FoodListFragment extends Fragment {
                         pongField2.addView(circleChart2);
 
 
-                        LinearLayout pongField3 = (LinearLayout) view.findViewById(R.id.field3);
+                        LinearLayout pongField3 = view.findViewById(R.id.field3);
                         ArrayList<WritingVO> writing3 = new ArrayList<WritingVO>();
 
                         Canvas canvas3 = new Canvas();

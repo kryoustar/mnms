@@ -3,9 +3,6 @@
     android:orientation="vertical" android:layout_width="360dp"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,7 +15,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="69dp"
                 android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/jua"
+                android:fontFamily="@font/kbizm"
                 android:gravity="center"
                 android:text="TextView"
                 android:textColor="#000000"
@@ -47,7 +44,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginTop="15dp"
-                            android:fontFamily="@font/jua"
+                            android:fontFamily="@font/kbizr"
                             android:gravity="center"
                             android:text="열량"
                             android:textColor="#A9000000"
@@ -58,7 +55,7 @@
                             android:id="@+id/food_amount"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/jua"
+                            android:fontFamily="@font/kbizr"
                             android:gravity="center_horizontal|center_vertical"
                             android:text="TextView"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -76,7 +73,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginTop="15dp"
-                            android:fontFamily="@font/jua"
+                            android:fontFamily="@font/kbizr"
                             android:gravity="center"
                             android:text="탄수화물"
                             android:textColor="#A9000000"
@@ -87,7 +84,7 @@
                             android:id="@+id/food_kcal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/jua"
+                            android:fontFamily="@font/kbizr"
                             android:gravity="center"
                             android:text="TextView"
                             android:textColor="#8A000000"
@@ -110,7 +107,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginTop="15dp"
-                            android:fontFamily="@font/jua"
+                            android:fontFamily="@font/kbizr"
                             android:gravity="center"
                             android:text="단백질"
                             android:textColor="#A9000000"
@@ -121,7 +118,7 @@
                             android:id="@+id/food_protein"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/jua"
+                            android:fontFamily="@font/kbizr"
                             android:gravity="center"
                             android:text="TextView"
                             android:textColor="#8A000000"
@@ -138,7 +135,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginTop="15dp"
-                            android:fontFamily="@font/jua"
+                            android:fontFamily="@font/kbizr"
                             android:gravity="center"
                             android:text="지방"
                             android:textColor="#A9000000"
@@ -149,7 +146,7 @@
                             android:id="@+id/food_fat"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/jua"
+                            android:fontFamily="@font/kbizr"
                             android:gravity="center"
                             android:text="TextView"
                             android:textColor="#8A000000"
@@ -160,7 +157,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="220dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -170,7 +167,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
-                    android:fontFamily="@font/jua"
+                    android:fontFamily="@font/kbizr"
                     android:text="TextView"
                     android:textColor="#8A000000"
                     android:textSize="18sp" />
@@ -181,7 +178,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:fontFamily="@font/jua"
+                    android:fontFamily="@font/kbizr"
                     android:text="TextView"
                     android:textColor="#8A000000"
                     android:textSize="18sp" />
@@ -192,7 +189,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:fontFamily="@font/jua"
+                    android:fontFamily="@font/kbizr"
                     android:text="TextView"
                     android:textColor="#8A000000"
                     android:textSize="18sp" />
@@ -203,7 +200,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:fontFamily="@font/jua"
+                    android:fontFamily="@font/kbizr"
                     android:text="TextView"
                     android:textColor="#8A000000"
                     android:textSize="18sp" />
@@ -214,7 +211,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:fontFamily="@font/jua"
+                    android:fontFamily="@font/kbizr"
                     android:text="TextView"
                     android:textColor="#8A000000"
                     android:textSize="18sp" />
@@ -223,15 +220,14 @@
             <Button
                 android:id="@+id/deletefood"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_1"
-                android:fontFamily="@font/jua"
+                android:fontFamily="@font/kbizr"
                 android:text="삭제하기"
                 android:textColor="#000000" />
 
         </LinearLayout>
-    </ScrollView>
 
 </LinearLayout>

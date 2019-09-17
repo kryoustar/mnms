@@ -8,7 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="calendar_activity">
-        <item name="android:fontFamily">@font/jua</item>
+        <item name="android:fontFamily">@font/kbizh</item>
+
     </style>
     <style name = "SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
         <item name="android:windowBackground">@drawable/starting_page</item>
