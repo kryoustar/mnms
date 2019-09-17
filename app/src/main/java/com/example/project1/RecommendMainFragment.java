@@ -81,7 +81,7 @@ public class RecommendMainFragment extends Fragment {
         DatabaseReference ConditionRef = Database.child("User")
                 .child(uid).child("Meal");
 
-        String weekArray[] = new String[7];
+        String[] weekArray = new String[7];
         for (int i = 1; i < 8; i++) {
             Calendar todayCalendar = new GregorianCalendar();
             todayCalendar.add(Calendar.DATE, -i);
@@ -204,9 +204,9 @@ public class RecommendMainFragment extends Fragment {
 
                             }
 
-                            mLowLabel.setText(String.valueOf(low) + "%");
-                            mMidLabel.setText(String.valueOf(mid) + "%");
-                            mHighLabel.setText(String.valueOf(high) + "%");
+                            mLowLabel.setText(low + "%");
+                            mMidLabel.setText(mid + "%");
+                            mHighLabel.setText(high + "%");
 
 
                             int minNut = 0; //가장 적은 영양소: 탄수화물_1, 단백질_2, 지방_3
@@ -215,12 +215,12 @@ public class RecommendMainFragment extends Fragment {
                                 if (low<high) {
                                     lacknutrients.setText("지난 일주일 간 [탄수화물]이 가장 부족합니다.");
                                     lacknutrients2.setText("[탄수화물]이 부족할 땐 감자튀김, 쿠키 등을 먹는 것이 좋습니다.");
-                                    recommendMenu.setText("[탄수화물] 섭취를 위한 내 주변 추천 메뉴");
+                                    //recommendMenu.setText("[탄수화물] 섭취를 위한 내 주변 추천 메뉴");
                                     minNut = 1;
                                 } else {
                                     lacknutrients.setText("지난 일주일 간 [지방]이 가장 부족합니다.");
                                     lacknutrients2.setText("[지방]이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
-                                    recommendMenu.setText("[지방] 섭취를 위한 내 주변 추천 메뉴");
+                                    //recommendMenu.setText("[지방] 섭취를 위한 내 주변 추천 메뉴");
                                     minNut = 3;
 
                                 }
@@ -229,20 +229,20 @@ public class RecommendMainFragment extends Fragment {
                                 if (mid<high) {
                                     lacknutrients.setText("지난 일주일 간 [단백질]이 가장 부족합니다.");
                                     lacknutrients2.setText("[단백질]이 부족할 땐 브로콜리, 검정콩, 두부 등을 먹는 것이 좋습니다.");
-                                    recommendMenu.setText("[단백질] 섭취를 위한 내 주변 추천 메뉴");
+                                   // recommendMenu.setText("[단백질] 섭취를 위한 내 주변 추천 메뉴");
 
                                     minNut = 2;
 
                                 } else {
                                     lacknutrients.setText("지난 일주일 간 [지방]이 가장 부족합니다.");
                                     lacknutrients2.setText("[지방]이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
-                                    recommendMenu.setText("[지방] 섭취를 위한 내 주변 추천 메뉴");
+                                    //recommendMenu.setText("[지방] 섭취를 위한 내 주변 추천 메뉴");
                                     minNut = 3;
 
                                 }
                             }
 
-
+                            /*
                             //부족한 영양소에 따른 메뉴 추천(용산구 내 식당 메뉴 임의로 10개씩 선택)
                             Integer [] temp;
                             Integer [] carbsRec = {233, 236, 241, 257, 268, 272, 320, 365, 384, 400};
@@ -258,7 +258,8 @@ public class RecommendMainFragment extends Fragment {
                             else {
                                 temp = fatRec;
                             }
-
+*/
+                            /*
                             int ranNum1 = new Random().nextInt(10);
                             int ranNum2 = new Random().nextInt(10);
                             while (ranNum1 == ranNum2) {
@@ -282,8 +283,8 @@ public class RecommendMainFragment extends Fragment {
                             recommendMenu2.setText(Menu2);
                             recommendTitle1.setText(resName1);
                             recommendTitle2.setText(resName2);
-
-
+*/
+/*
                             FirebaseStorage storage = FirebaseStorage.getInstance();
                             StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + 1 + ".jpg");
                             //StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + resNum1 + ".jpg");
@@ -303,7 +304,8 @@ public class RecommendMainFragment extends Fragment {
                                 });
                             } catch (IOException e) {
                             }
-
+*/
+/*
 
 
                             StorageReference storageRef2 = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + 1 + ".jpg");
@@ -324,7 +326,8 @@ public class RecommendMainFragment extends Fragment {
                                 });
                             } catch (IOException e) {
                             }
-
+*/
+/*
                             //첫 번째 추천메뉴 사진 클릭했을 때
                             recommendImage1.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -335,7 +338,8 @@ public class RecommendMainFragment extends Fragment {
                                     startActivity(intent);
                                 }
                             });
-
+*/
+/*
 
                             //두 번째 추천메뉴 사진 클릭했을 때
                             recommendImage2.setOnClickListener(new View.OnClickListener() {
@@ -347,7 +351,7 @@ public class RecommendMainFragment extends Fragment {
                                     startActivity(intent);
                                 }
                             });
-
+*/
 
 
                         }
