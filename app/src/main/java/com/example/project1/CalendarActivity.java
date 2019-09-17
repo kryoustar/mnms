@@ -61,19 +61,7 @@ public class CalendarActivity extends AppCompatActivity {
                 intent.putExtras(bundle);
 
                 startActivity(intent);
-                // FoodListFragment foodListFragment= new FoodListFragment();
-                //foodListFragment.setArguments(bundle);
-                // Intent intent = new Intent(getApplicationContext(),BottomActivity.class);
-                //startActivity(intent);
-                //  transaction.replace(R.id.frame_layout, foodListFragment).commitAllowingStateLoss();
 
-                //replaceFragment()
-                // TODO Auto-generated method stub
-                //Intent intent = onNewIntent(getApplicationContext(),FoodListFragment.class);
-                //Bundle bundle = onNewIntent(getApplicationContext(),FoodListFragment.class);
-                //String result = String.format("%d년 %d월 %d일", mDate.getYear(),
-                //       mDate.getMonth() + 1, mDate.getDayOfMonth());
-                //Toast.makeText(CalendarActivity.this, result, Toast.LENGTH_SHORT).show();
             }
         });
     }

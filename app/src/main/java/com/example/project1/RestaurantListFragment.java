@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,20 +41,24 @@ public class RestaurantListFragment extends Fragment {
     Button gpslocation;
 
     String sql;
+    String sql2;
     SQLiteDatabase db;   // db를 다루기 위한 SQLiteDatabase 객체 생성
     Cursor cursor;   // select 문 출력위해 사용하는 Cursor 형태 객체 생성
     ListView listView;   // ListView 객체 생성
     String[] result;   // ArrayAdapter에 넣을 배열 생성
-
+    String[] result2;   // ArrayAdapter에 넣을 배열 생성
+    Integer[] intResult;
+    Integer[] intResult2;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.restaurantlist_view, container, false);
         searchText = view.findViewById(R.id.search_restaurant);
-        searchBtn = (ImageButton) view.findViewById(R.id.search_btn);
+        searchBtn = view.findViewById(R.id.search_btn);
         //gpslocation = (Button) view.findViewById(R.id.gps_location);
-        citySearchBtn = (Button) view.findViewById(R.id.citysearch_btn);
+        citySearchBtn = view.findViewById(R.id.citysearch_btn);
         //Button tvVeganismType = (Button) view.findViewById(R.id.veganismType);
+        TextView vType = view.findViewById(R.id.typeTextView);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
@@ -66,29 +71,28 @@ public class RestaurantListFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String veganType = dataSnapshot.getValue(String.class);
-                //tvVeganismType.setText(veganType);
-
+                vType.setText(" ["+veganType+"] 식당");
                 ArrayList<RestaurantItem> data = null;
 
                 listView = view.findViewById(R.id.listView);
-                if (veganType == "지향 없음" || veganType == "페스코")
-                    sql = "select * from veganRes03 where RestaurantCity like '%" + "용산구" + "%'";
-                else if (veganType == "락토 오보")
+                if (veganType.equals("지향 없음") || veganType.equals( "페스코"))
+                    sql = "select * from veganRes03 where RestaurantCity = '용산구'";
+                else if (veganType.equals("락토 오보"))
                     sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%' OR RestaurantVeganType like '%" + "오보" + "%' OR RestaurantVeganType like '%" + "락토 오보" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
-                else if (veganType== "락토")
+                else if (veganType.equals("락토"))
                     sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
-                else if (veganType== "오보")
+                else if (veganType.equals("오보"))
                     sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "오보" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
                 else
                     sql = "select * from veganRes03 where RestaurantVeganType like '%" + "비건" + "%' AND RestaurantCity like '%" + "용산구" + "%'";
 
 
                 result = new String[1000];   // 저장된 행 개수만큼의 배열을 생성
-
+                intResult = new Integer[1000];
                 result = RestaurantItem.returnResult(getActivity(),sql);
                 data = RestaurantItem.restaurantItemSQLSearch(getActivity(),sql);
-
-                CustomAdapter adapter = new CustomAdapter(getActivity(), result);
+                intResult = RestaurantItem.returnIntegerResult(getActivity(),sql);
+                CustomAdapter adapter = new CustomAdapter(getActivity(), result,intResult);
                 listView.setAdapter(adapter);
 
                 //클릭 시 다음페이지
@@ -138,14 +142,15 @@ public class RestaurantListFragment extends Fragment {
                 ArrayList<RestaurantItem> data2 = null;
                 data2 = new ArrayList<>();
 
-                sql = "select * from veganRes03 where RestaurantName like '%" + search + "%'";
-
-                result = new String[1000];   // 저장된 행 개수만큼의 배열을 생성
-
-                result = RestaurantItem.returnResult(getActivity(),sql);
-                data2 = RestaurantItem.restaurantItemSQLSearch(getActivity(),sql);
-                CustomAdapter adapter = new CustomAdapter(getActivity(), result);
+                sql2 = "select * from veganRes03 where RestaurantName like '%" + search + "%'";
+                intResult2 = new Integer[1000];
+                result2 = new String[1000];   // 저장된 행 개수만큼의 배열을 생성
+                result2 = RestaurantItem.returnResult(getActivity(),sql2);
+                intResult2 = RestaurantItem.returnIntegerResult(getActivity(),sql2);
+                data2 = RestaurantItem.restaurantItemSQLSearch(getActivity(),sql2);
+                CustomAdapter adapter2 = new CustomAdapter(getActivity(), result2,intResult2);
                 final ArrayList<RestaurantItem> finalData2 = data2;
+                listView.setAdapter(adapter2);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView parent, View v, int position, long id) {

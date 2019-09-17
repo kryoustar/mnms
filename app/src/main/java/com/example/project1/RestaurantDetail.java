@@ -1,5 +1,6 @@
 package com.example.project1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -45,6 +46,7 @@ import java.util.Calendar;
 
 public class RestaurantDetail extends AppCompatActivity {
     int number;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +58,14 @@ public class RestaurantDetail extends AppCompatActivity {
         ListView listView;   // ListView 객체 생성
         String[] result;   // ArrayAdapter에 넣을 배열 생성
 
-        TextView tvResName = (TextView) findViewById(R.id.resName);
-        TextView tvResAdd = (TextView) findViewById(R.id.resAddress);
-        TextView tvResPhone = (TextView) findViewById(R.id.resPhoneNumber);
-        TextView tvResOpen = (TextView) findViewById(R.id.resOpeningHours);
+        TextView tvResName = findViewById(R.id.resName);
+        TextView tvResAdd = findViewById(R.id.resAddress);
+        TextView tvResPhone = findViewById(R.id.resPhoneNumber);
+        TextView tvResOpen = findViewById(R.id.resOpeningHours);
 
         Intent intent = getIntent();
         int restaurantIndex = intent.getIntExtra("Restaurant Number", 0);
-        RestaurantItem thisItem = RestaurantItem.restaurantItemSearch(restaurantIndex,getApplication());
+        RestaurantItem thisItem = RestaurantItem.restaurantItemSearch(restaurantIndex, getApplication());
         tvResName.setText(thisItem.getRestaurantName());
 
         tvResAdd.setText(thisItem.getRestaurantPhoneNumber());
@@ -71,10 +73,18 @@ public class RestaurantDetail extends AppCompatActivity {
             tvResPhone.setText(thisItem.getRestaurantOpeningHours());
         }
         if (thisItem.getRestaurantCity() != null) {
-            tvResOpen.setText( thisItem.getRestaurantCity());
+            tvResOpen.setText(thisItem.getRestaurantCity());
         }
+        int drawable;
 
-        FirebaseApp.initializeApp(this);
+        drawable = getResources().
+                getIdentifier("image_" + restaurantIndex, "drawable", getPackageName());
+
+        ImageView myImage = findViewById(R.id.image);
+        myImage.setImageResource(drawable);
+
+
+        /*FirebaseApp.initializeApp(this);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + (restaurantIndex-111) + ".jpg");
         try { //레스토랑 사진 불러오기
@@ -93,10 +103,10 @@ public class RestaurantDetail extends AppCompatActivity {
                 }
             });
         } catch (IOException e) {
-        }
+        }*/
 
         //하트 버튼
-        RestaurantItem restaurantItem = RestaurantItem.restaurantItemSearch(restaurantIndex,getApplicationContext());
+        RestaurantItem restaurantItem = RestaurantItem.restaurantItemSearch(restaurantIndex, getApplicationContext());
 
         LikeButton likeButton = findViewById(R.id.heartButton);
         //likeButton.setLiked(true);
@@ -104,18 +114,17 @@ public class RestaurantDetail extends AppCompatActivity {
         String uid = user.getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         DatabaseReference ConditionRef = ref.child("User").child(uid).child("Scrap");
-        Integer [] scraps = new Integer[1000];
+        Integer[] scraps = new Integer[1000];
         ConditionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int i = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Integer temp = snapshot.getValue(Integer.class);
-                    if (restaurantIndex == temp){
+                    if (restaurantIndex == temp) {
                         likeButton.setLiked(true);
                         break;
-                    }
-                    else{
+                    } else {
                         likeButton.setLiked(false);
                     }
                     i++;
@@ -133,18 +142,16 @@ public class RestaurantDetail extends AppCompatActivity {
             @Override
             public void liked(LikeButton likeButton) {
                 DatabaseManager.ScrapDataAdd(restaurantIndex);
-                Toast.makeText(getApplicationContext(), restaurantItem.getRestaurantName()+"을/를 스크랩하였습니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), restaurantItem.getRestaurantName() + "을/를 스크랩하였습니다.", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
                 DatabaseManager.ScrapDataDelete(restaurantIndex);
-                Toast.makeText(getApplicationContext(), restaurantItem.getRestaurantName()+"을/를 지웠습니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), restaurantItem.getRestaurantName() + "을/를 지웠습니다.", Toast.LENGTH_LONG).show();
 
             }
         });
-
-
 
 
         //메뉴정보
@@ -204,7 +211,7 @@ public class RestaurantDetail extends AppCompatActivity {
             Calendar todayCal = Calendar.getInstance();
             String toYear = Integer.toString(todayCal.get(Calendar.YEAR));
             String toMonth = Integer.toString(todayCal.get(Calendar.MONTH) + 1);
-            if ((todayCal.get(Calendar.MONTH) + 1)<10) {
+            if ((todayCal.get(Calendar.MONTH) + 1) < 10) {
                 toMonth = "0" + toMonth;
             }
             String toDayofMonth = Integer.toString(todayCal.get(Calendar.DATE));
