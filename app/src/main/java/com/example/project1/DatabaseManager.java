@@ -55,7 +55,7 @@ public class DatabaseManager extends AppCompatActivity {
 
     }
 
-    public static void ScrapDataDelete(Integer index){
+    public static void ScrapDataDelete(int index){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -65,7 +65,7 @@ public class DatabaseManager extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Integer savedIndex = snapshot.getValue(Integer.class);
+                    int savedIndex = snapshot.getValue(Integer.class);
                     String deleteKey = snapshot.getKey();
                     if(savedIndex == index){
                         tempRef.child(deleteKey).removeValue();
