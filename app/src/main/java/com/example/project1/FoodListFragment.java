@@ -1,17 +1,10 @@
 package com.example.project1;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
-import android.os.Handler;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,11 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 
@@ -265,7 +259,7 @@ public class FoodListFragment extends Fragment {
                         WritingVO wVO1 = new WritingVO((float) Math.round(food_carbs / carbs * 100) , (float) 100);
 
                         writing.add(wVO1);
-                        CircleChart circleChart = new CircleChart(getActivity(),null,writing,60,300);
+                        CircleChart circleChart = new CircleChart(getActivity(),null,writing,50,250);
 
                         pongField.addView(circleChart);
 
@@ -277,7 +271,7 @@ public class FoodListFragment extends Fragment {
                         WritingVO wVO1_2 = new WritingVO((float) Math.round(food_protein / protein * 100) , (float) 100);
 
                         writing2.add(wVO1_2);
-                        CircleChart circleChart2 = new CircleChart(getActivity(),null,writing2,60,300);
+                        CircleChart circleChart2 = new CircleChart(getActivity(),null,writing2,50,250);
 
                         pongField2.addView(circleChart2);
 
@@ -289,7 +283,7 @@ public class FoodListFragment extends Fragment {
                         WritingVO wVO1_3 = new WritingVO((float) Math.round(food_fat / fat * 100) , (float) 100);
 
                         writing3.add(wVO1_3);
-                        CircleChart circleChart3 = new CircleChart(getActivity(),null,writing3,60,300);
+                        CircleChart circleChart3 = new CircleChart(getActivity(),null,writing3,50,250);
 
                         pongField3.addView(circleChart3);
                     }
