@@ -1,28 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="360dp"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-
-    <EditText
-        android:id="@+id/search_nutrients"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/add_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="검색하기" />
+        <LinearLayout
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
+
+            <EditText
+                android:id="@+id/search_nutrients"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:fontFamily="@font/jua"
+                android:inputType="textPersonName"
+                android:text="" />
+
+            <ImageButton
+                android:id="@+id/add_btn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="#0000"
+                android:tint="#5aa139"
+                app:srcCompat="@android:drawable/ic_search_category_default" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
 
     <ListView
-        android:layout_width="match_parent"
+        android:layout_width="330dp"
+        android:id="@+id/listView"
         android:layout_height="wrap_content"
-        android:id="@+id/listView" />
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:divider="#5aa139"
+        android:dividerHeight="2dp"
+        />
 
 
 </LinearLayout>

@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class FoodSearch extends AppCompatActivity implements View.OnClickListener {
-    Button searchButton;
+    ImageButton searchButton;
     EditText searchText;
 
     @Override
@@ -100,7 +100,7 @@ public class FoodSearch extends AppCompatActivity implements View.OnClickListene
 
             }
         });
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.simpleitemtwo, result);   // ArrayAdapter(this, 출력모양, 배열)
         listView.setAdapter(adapter);   // listView 객체에 Adapter를 붙인다
     }
 
