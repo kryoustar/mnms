@@ -71,16 +71,16 @@ public class RestaurantListByCity extends AppCompatActivity {
                 Intent intent = getIntent();
                 String clickedRestaurantCity = intent.getStringExtra("Restaurant City");
 
-                if (veganType == "지향 없음" || veganType == "페스코")
-                    sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%'";
-                else if (veganType == "락토 오보")
-                    sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%' AND (RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%' OR RestaurantVeganType like '%" + "오보" + "%' OR RestaurantVeganType like '%" + "락토 오보" + "%')";
-                else if (veganType == "락토")
-                    sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%' AND (RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "락토" + "%')";
-                else if (veganType == "오보")
-                    sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%' AND (RestaurantVeganType like '%" + "비건" + "%' OR RestaurantVeganType like '%" + "오보" + "%')";
+                if (veganType.equals("지향 없음") || veganType.equals( "페스코"))
+                    sql = "select * from veganRes03 where RestaurantCity = '" +  clickedRestaurantCity + "'";
+                else if (veganType.equals("락토 오보"))
+                    sql = "select * from veganRes03 where (RestaurantVeganType = '비건' OR RestaurantVeganType = '락토' OR RestaurantVeganType = '오보' OR RestaurantVeganType = '락토 오보') AND RestaurantCity = '" +  clickedRestaurantCity + "'";
+                else if (veganType.equals("락토"))
+                    sql = "select * from veganRes03 where (RestaurantVeganType = '비건' OR RestaurantVeganType like = '락토') AND RestaurantCity = '" +  clickedRestaurantCity + "'";
+                else if (veganType.equals("오보"))
+                    sql = "select * from veganRes03 where (RestaurantVeganType  = '비건' OR RestaurantVeganType = '오보') AND RestaurantCity like = '" +  clickedRestaurantCity + "'";
                 else
-                    sql = "select * from veganRes03 where RestaurantCity like '%" + clickedRestaurantCity + "%' AND RestaurantVeganType like '%" + "비건" + "%'";
+                    sql = "select * from veganRes03 where RestaurantVeganType  = '비건' AND RestaurantCity = '" +  clickedRestaurantCity + "'";
 
 
                 data = RestaurantItem.restaurantItemSQLSearch(getApplication(), sql);
@@ -115,7 +115,7 @@ public class RestaurantListByCity extends AppCompatActivity {
 
                 ArrayList<RestaurantItem> data2 = null;
                 sql = "select * from veganRes03 where RestaurantName like '%" + search
-                        + "%' AND RestaurantCity like '%" + clickedRestaurantCity + "%'";
+                        + "%' AND RestaurantCity = '" + clickedRestaurantCity + "'";
 
                 result = RestaurantItem.returnResult(getApplication(), sql);
                 data2 = RestaurantItem.restaurantItemSQLSearch(getApplication(), sql);
