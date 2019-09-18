@@ -228,7 +228,7 @@ public class FoodListFragment extends Fragment {
 
                         else {
                             todaykcal.setText("오늘 섭취해야 할 칼로리 "+ Math.round(kcal) +
-                                    "kcal 중 " + food_kcal + "kcal를 먹었습니다." );
+                                    "kcal 중 \n" + food_kcal + "kcal를 먹었습니다." );
                         }
 
 /*
