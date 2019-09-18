@@ -25,8 +25,8 @@
                 android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/my_border3"
-                android:backgroundTint="#1741B839"
+                android:background="@drawable/my_border"
+                android:backgroundTint="#515AA139"
                 android:orientation="vertical">
 
                 <LinearLayout
