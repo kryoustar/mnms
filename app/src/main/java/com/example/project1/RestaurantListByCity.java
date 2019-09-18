@@ -76,7 +76,7 @@ public class RestaurantListByCity extends AppCompatActivity {
                 else if (veganType.equals("락토 오보"))
                     sql = "select * from veganRes03 where (RestaurantVeganType = '비건' OR RestaurantVeganType = '락토' OR RestaurantVeganType = '오보' OR RestaurantVeganType = '락토 오보') AND RestaurantCity = '" +  clickedRestaurantCity + "'";
                 else if (veganType.equals("락토"))
-                    sql = "select * from veganRes03 where (RestaurantVeganType = '비건' OR RestaurantVeganType like = '락토') AND RestaurantCity = '" +  clickedRestaurantCity + "'";
+                    sql = "select * from veganRes03 where (RestaurantVeganType = '비건' OR RestaurantVeganType = '락토') AND RestaurantCity = '" +  clickedRestaurantCity + "'";
                 else if (veganType.equals("오보"))
                     sql = "select * from veganRes03 where (RestaurantVeganType  = '비건' OR RestaurantVeganType = '오보') AND RestaurantCity like = '" +  clickedRestaurantCity + "'";
                 else
