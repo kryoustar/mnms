@@ -80,7 +80,7 @@ public class RestaurantListFragment extends Fragment {
                 else if (veganType.equals("락토 오보"))
                     sql = "select * from veganRes03 where (RestaurantVeganType = '비건' OR RestaurantVeganType = '락토' OR RestaurantVeganType = '오보' OR RestaurantVeganType = '락토 오보') AND RestaurantCity = '용산구'";
                 else if (veganType.equals("락토"))
-                    sql = "select * from veganRes03 where (RestaurantVeganType = '비건' OR RestaurantVeganType like = '락토') AND RestaurantCity = '용산구'";
+                    sql = "select * from veganRes03 where (RestaurantVeganType = '비건' OR RestaurantVeganType = '락토') AND RestaurantCity = '용산구'";
                 else if (veganType.equals("오보"))
                     sql = "select * from veganRes03 where (RestaurantVeganType  = '비건' OR RestaurantVeganType = '오보') AND RestaurantCity like = '용산구'";
                 else

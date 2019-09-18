@@ -21,7 +21,7 @@
                 android:layout_width="310dp"
                 android:layout_height="wrap_content"
                 android:ems="15"
-                android:fontFamily="@font/jua"
+                android:fontFamily="@font/kbizm"
                 android:inputType="textPersonName"
                 android:text="" />
 
