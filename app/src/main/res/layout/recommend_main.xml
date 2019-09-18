@@ -198,6 +198,121 @@
                 android:paddingBottom="20dp"
                 android:textColor="#000000" />
 
+        <LinearLayout
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/sugar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/border_2"
+                        android:gravity="center"
+                        android:fontFamily="@font/kbizm"
+                        android:text="당류"
+                        android:textColor="#000000"
+                        android:textSize="12dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/kbizm"
+                        android:background="@drawable/border_2"
+                        android:gravity="center"
+                        android:text="나트륨"
+                        android:textColor="#000000"
+                        android:textSize="12dp"
+                        android:id="@+id/natrium"
+                        android:layout_marginRight="7.5dp"
+                        android:layout_marginLeft="7.5dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:fontFamily="@font/kbizm"
+                        android:background="@drawable/border_2"
+                        android:gravity="center"
+                        android:text="콜레스테롤"
+                        android:textColor="#000000"
+                        android:textSize="12dp"
+                        android:id="@+id/cholestrol"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="48dp"
+                    android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/border_2"
+                        android:gravity="center"
+                        android:fontFamily="@font/kbizm"
+                        android:text="포화지방산"
+                        android:textColor="#000000"
+                        android:textSize="12dp"
+                        android:id="@+id/saturatedfat"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:fontFamily="@font/kbizm"
+                        android:background="@drawable/border_2"
+                        android:gravity="center"
+                        android:text="트랜스지방산"
+                        android:textColor="#000000"
+                        android:textSize="12dp"
+                        android:id="@+id/transfat"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
         </LinearLayout>
 
 
