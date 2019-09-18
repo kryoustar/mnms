@@ -202,7 +202,7 @@
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -216,6 +216,7 @@
 
                     <TextView
                         android:id="@+id/sugar"
+                        android:backgroundTint="#515AA139"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
@@ -236,6 +237,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/kbizm"
+                        android:backgroundTint="#515AA139"
                         android:background="@drawable/border_2"
                         android:gravity="center"
                         android:text="나트륨"
@@ -259,6 +261,7 @@
                         android:background="@drawable/border_2"
                         android:gravity="center"
                         android:text="콜레스테롤"
+                        android:backgroundTint="#515AA139"
                         android:textColor="#000000"
                         android:textSize="12dp"
                         android:id="@+id/cholestrol"/>
@@ -289,6 +292,7 @@
                         android:fontFamily="@font/kbizm"
                         android:text="포화지방산"
                         android:textColor="#000000"
+                        android:backgroundTint="#515AA139"
                         android:textSize="12dp"
                         android:id="@+id/saturatedfat"/>
                 </LinearLayout>
@@ -307,6 +311,7 @@
                         android:gravity="center"
                         android:text="트랜스지방산"
                         android:textColor="#000000"
+                        android:backgroundTint="#515AA139"
                         android:textSize="12dp"
                         android:id="@+id/transfat"/>
                 </LinearLayout>
