@@ -181,10 +181,10 @@ public class RestaurantDetail extends AppCompatActivity {
             int MenuNumber2 = cursor.getInt(5);
             MenuItem menuItem = new MenuItem(MenuNumber, MenuName, MenuPrice, MenuType, MenuNutrients, MenuNumber2);
             if (MenuPrice.equals("미정")) {
-                result[i] = MenuName + " (" + MenuType + ")";
+                result[i] = MenuName ;
             }
             else
-                result[i] = MenuName + " " + MenuPrice + "원 " + "(" + MenuType + ")";
+                result[i] = MenuName + "\t \t" + MenuPrice + "원 " ;
 
             data.add(menuItem);
             foodData.add(FoodItem.FoodItemStringSearch(menuItem.getMenuName(), getApplicationContext()));

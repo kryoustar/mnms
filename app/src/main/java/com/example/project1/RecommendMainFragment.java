@@ -131,22 +131,24 @@ public class RecommendMainFragment extends Fragment {
 
                             }
                             int show_natrium = (int)food_natrium ;
+                            show_natrium = show_natrium / 100;
                             int show_sugar = (int)food_sugar;
                             int show_cholesterol = (int)food_cholesterol ;
+                            show_cholesterol = show_cholesterol / 100;
                             int show_saturatedFat = (int)food_saturatedFat ;
                             int show_transFat = (int)food_transFat ;
 
 
                             TextView forSugar = view.findViewById(R.id.sugar);
-                            forSugar.setText("\n당류: \n"+show_sugar + "(g)");
+                            forSugar.setText("당류\n"+show_sugar + "(g)");
                             TextView forNatrium = view.findViewById(R.id.natrium);
-                            forNatrium.setText("나트륨: \n" + show_natrium + "(mg)");
+                            forNatrium.setText("나트륨\n" + show_natrium + "(g)");
                             TextView forCholesterol = view.findViewById(R.id.cholestrol);
-                            forCholesterol.setText("\n콜레스테롤: \n"+ show_cholesterol + "(mg)");
+                            forCholesterol.setText("콜레스테롤\n"+ show_cholesterol + "(g)");
                             TextView forSatFat = view.findViewById(R.id.saturatedfat);
-                            forSatFat.setText("\n포화지방산: \n"+ show_saturatedFat + "(g)");
+                            forSatFat.setText("포화지방산\n"+ show_saturatedFat + "(g)");
                             TextView forTransFat = view.findViewById(R.id.transfat);
-                            forTransFat.setText("\n트랜스지방산: \n"+ show_transFat + "(g)");
+                            forTransFat.setText("트랜스지방산\n"+ show_transFat + "(g)");
 
                             PersonalItem personalItem = PersonalItem.PersonalItemSearch(result[0], result[1], getActivity());
                             Float kcal = personalItem.getPersonKcal() * 7;
