@@ -142,13 +142,13 @@ public class RestaurantDetail extends AppCompatActivity {
             @Override
             public void liked(LikeButton likeButton) {
                 DatabaseManager.ScrapDataAdd(restaurantIndex);
-                Toast.makeText(getApplicationContext(), restaurantItem.getRestaurantName() + "을/를 스크랩하였습니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), restaurantItem.getRestaurantName() + "을/를 스크랩하였습니다.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
                 DatabaseManager.ScrapDataDelete(restaurantIndex);
-                Toast.makeText(getApplicationContext(), restaurantItem.getRestaurantName() + "을/를 지웠습니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), restaurantItem.getRestaurantName() + "을/를 지웠습니다.", Toast.LENGTH_SHORT).show();
 
             }
         });
