@@ -113,7 +113,8 @@ public class RecommendMainFragment extends Fragment {
 
                             //띄움
                             float food_kcal = 0, food_carbs = 0,
-                                    food_protein = 0, food_fat = 0, food_natrium = 0;
+                                    food_protein = 0, food_fat = 0, food_natrium = 0, food_sugar = 0,
+                                      food_cholesterol = 0 , food_saturatedFat = 0, food_transFat = 0;
 
                             for (int i = 0; i < weekMeal.size(); i++) {
                                 Integer findIndex = weekMeal.get(i);
@@ -123,10 +124,23 @@ public class RecommendMainFragment extends Fragment {
                                 food_protein += foodItem.getFoodProtein();
                                 food_fat += foodItem.getFoodFat();
                                 food_natrium += foodItem.getFoodNatrium();
-
+                                food_sugar += foodItem.getFoodSugar();
+                                food_cholesterol += foodItem.getFoodCholesterol();
+                                food_saturatedFat += foodItem.getFoodSaturatedfat();
+                                food_transFat += foodItem.getFoodTransfat();
 
                             }
+                            int show_natrium = (int)food_natrium ;
+                            int show_sugar = (int)food_sugar;
+                            int show_cholesterol = (int)food_cholesterol ;
+                            int show_saturatedFat = (int)food_saturatedFat ;
+                            int show_transFat = (int)food_transFat ;
 
+/*
+                            TextView forToast = view.findViewById(R.id.toast);
+                            forToast.setText("나트륨 " + show_natrium +"\n당 "+show_sugar+
+                                    "\n콜레스테롤 "+ show_cholesterol+"\n포화지방산 "+ show_saturatedFat+
+                                    "\n트랜스 지방 "+ show_transFat);*/
 
                             PersonalItem personalItem = PersonalItem.PersonalItemSearch(result[0], result[1], getActivity());
                             Float kcal = personalItem.getPersonKcal() * 7;
