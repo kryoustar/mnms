@@ -91,7 +91,7 @@ public class PersonalInfo extends AppCompatActivity {
             int selectedId2 = radioGroup.getCheckedRadioButtonId();
             //null값 처리
             if (selectedId == -1 || selectedId2 == -1) {
-                Toast.makeText(PersonalInfo.this, "Please select one", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PersonalInfo.this, "선택해주세요.", Toast.LENGTH_SHORT).show();
             } else if (nickname.matches("") || age.matches("")) {
                 Toast.makeText(PersonalInfo.this, "입력해주세요.", Toast.LENGTH_LONG).show();
             } else {
