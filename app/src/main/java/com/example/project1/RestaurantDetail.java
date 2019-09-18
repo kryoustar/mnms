@@ -180,11 +180,14 @@ public class RestaurantDetail extends AppCompatActivity {
             String MenuNutrients = cursor.getString(4);
             int MenuNumber2 = cursor.getInt(5);
             MenuItem menuItem = new MenuItem(MenuNumber, MenuName, MenuPrice, MenuType, MenuNutrients, MenuNumber2);
-            result[i] = MenuName + " " + MenuPrice + "원 "
-                    + "(" + MenuType + ") (" + MenuNutrients + ")"; // 각각의 속성값들을 해당 배열의 i번째에 저장
+            if (MenuPrice.equals("미정")) {
+                result[i] = MenuName + " (" + MenuType + ")";
+            }
+            else
+                result[i] = MenuName + " " + MenuPrice + "원 " + "(" + MenuType + ")";
+
             data.add(menuItem);
             foodData.add(FoodItem.FoodItemStringSearch(menuItem.getMenuName(), getApplicationContext()));
-            //Toast.makeText(getApplicationContext(), Integer.toString(i), Toast.LENGTH_LONG).show();
         }
         final ArrayList<FoodItem> finalData = foodData;
         ArrayAdapter adapter = new ArrayAdapter(RestaurantDetail.this, R.layout.simpleitemtwo, result);   // ArrayAdapter(this, 출력모양, 배열)
