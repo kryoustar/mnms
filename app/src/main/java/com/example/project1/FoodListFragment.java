@@ -76,17 +76,17 @@ public class FoodListFragment extends Fragment {
         selectDateButton.setText(date);
 
         Bundle bundle = getActivity().getIntent().getExtras();
-        if (bundle != null){
+        if (bundle != null) {
             int yearselect = bundle.getInt("Selected Year");
             selectedYear = Integer.toString(yearselect);
             int monthselect = bundle.getInt("Selected Month");
             selectedMonth = Integer.toString(monthselect);
-            if (monthselect<10) {
+            if (monthselect < 10) {
                 selectedMonth = "0" + monthselect;
             }
             int dayselect = bundle.getInt("Selected Day");
             selectedDay = Integer.toString(dayselect);
-            if (dayselect<10) {
+            if (dayselect < 10) {
                 selectedDay = "0" + dayselect;
             }
             date = selectedYear + "-" + selectedMonth + "-" + selectedDay;
@@ -94,7 +94,7 @@ public class FoodListFragment extends Fragment {
         }
 
         String nullcheck = selectDateButton.getText().toString();
-        if(nullcheck.equals("0-0-0")){
+        if (nullcheck.equals("0-0-0")) {
             SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
             Date today2 = new Date();
             String date2 = formatter.format(today2);
@@ -143,7 +143,7 @@ public class FoodListFragment extends Fragment {
 
         String uid = user.getUid();
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(getActivity(),R.layout.simpleitem , mealItems);
+                new ArrayAdapter<String>(getActivity(), R.layout.simpleitem, mealItems);
 
 
         DatabaseReference ConditionRef = Database.child("User")
@@ -218,17 +218,13 @@ public class FoodListFragment extends Fragment {
 
 
                         if (kcal <= food_kcal) {
-                            todaykcal.setText("오늘 섭취해야 할 칼로리 "+ Math.round(kcal) +
+                            todaykcal.setText("오늘 섭취해야 할 칼로리 " + Math.round(kcal) +
                                     "kcal를 모두 섭취하였습니다.");
-                        }
-
-                        else if (food_kcal == 0) {
+                        } else if (food_kcal == 0) {
                             todaykcal.setText("오늘 먹은 음식이 없습니다.");
-                        }
-
-                        else {
-                            todaykcal.setText("오늘 섭취해야 할 칼로리 "+ Math.round(kcal) +
-                                    "kcal 중 \n" + food_kcal + "kcal를 먹었습니다." );
+                        } else {
+                            todaykcal.setText("오늘 섭취해야 할 칼로리 " + Math.round(kcal) +
+                                    "kcal 중 \n" + food_kcal + "kcal를 먹었습니다.");
                         }
 
 /*
@@ -256,10 +252,10 @@ public class FoodListFragment extends Fragment {
                         ArrayList<WritingVO> writing = new ArrayList<WritingVO>();
 
                         Canvas canvas = new Canvas();
-                        WritingVO wVO1 = new WritingVO((float) Math.round(food_carbs / carbs * 100) , (float) 100);
+                        WritingVO wVO1 = new WritingVO((float) Math.round(food_carbs / carbs * 100), (float) 100);
 
                         writing.add(wVO1);
-                        CircleChart circleChart = new CircleChart(getActivity(),null,writing,50,250);
+                        CircleChart circleChart = new CircleChart(getActivity(), null, writing, 50, 250);
 
                         pongField.addView(circleChart);
 
@@ -268,10 +264,10 @@ public class FoodListFragment extends Fragment {
                         ArrayList<WritingVO> writing2 = new ArrayList<WritingVO>();
 
                         Canvas canvas2 = new Canvas();
-                        WritingVO wVO1_2 = new WritingVO((float) Math.round(food_protein / protein * 100) , (float) 100);
+                        WritingVO wVO1_2 = new WritingVO((float) Math.round(food_protein / protein * 100), (float) 100);
 
                         writing2.add(wVO1_2);
-                        CircleChart circleChart2 = new CircleChart(getActivity(),null,writing2,50,250);
+                        CircleChart circleChart2 = new CircleChart(getActivity(), null, writing2, 50, 250);
 
                         pongField2.addView(circleChart2);
 
@@ -280,10 +276,10 @@ public class FoodListFragment extends Fragment {
                         ArrayList<WritingVO> writing3 = new ArrayList<WritingVO>();
 
                         Canvas canvas3 = new Canvas();
-                        WritingVO wVO1_3 = new WritingVO((float) Math.round(food_fat / fat * 100) , (float) 100);
+                        WritingVO wVO1_3 = new WritingVO((float) Math.round(food_fat / fat * 100), (float) 100);
 
                         writing3.add(wVO1_3);
-                        CircleChart circleChart3 = new CircleChart(getActivity(),null,writing3,50,250);
+                        CircleChart circleChart3 = new CircleChart(getActivity(), null, writing3, 50, 250);
 
                         pongField3.addView(circleChart3);
                     }
@@ -338,9 +334,10 @@ public class FoodListFragment extends Fragment {
 
         return view;
     }
+
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
-        super.onViewCreated(view,savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         //    CircleChart realCircleChart = view.findViewById(R.id.circleChart);
         //  realCircleChart.addView
