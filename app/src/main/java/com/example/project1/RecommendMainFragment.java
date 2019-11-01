@@ -138,7 +138,7 @@ public class RecommendMainFragment extends Fragment {
                             int show_saturatedFat = (int)food_saturatedFat ;
                             int show_transFat = (int)food_transFat ;
 
-
+                            /*
                             TextView forSugar = view.findViewById(R.id.sugar);
                             forSugar.setText("당류\n"+show_sugar + "(g)");
                             TextView forNatrium = view.findViewById(R.id.natrium);
@@ -148,7 +148,7 @@ public class RecommendMainFragment extends Fragment {
                             TextView forSatFat = view.findViewById(R.id.saturatedfat);
                             forSatFat.setText("포화지방산\n"+ show_saturatedFat + "(g)");
                             TextView forTransFat = view.findViewById(R.id.transfat);
-                            forTransFat.setText("트랜스지방산\n"+ show_transFat + "(g)");
+                            forTransFat.setText("트랜스지방산\n"+ show_transFat + "(g)");  */
 
                             PersonalItem personalItem = PersonalItem.PersonalItemSearch(result[0], result[1], getActivity());
                             Float kcal = personalItem.getPersonKcal() * 7;
