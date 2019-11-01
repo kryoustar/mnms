@@ -129,7 +129,7 @@ public class RecommendMainFragment extends Fragment {
                             //띄움
                             float food_kcal = 0, food_carbs = 0,
                                     food_protein = 0, food_fat = 0, food_natrium = 0, food_sugar = 0,
-                                    food_cholesterol = 0 , food_saturatedFat = 0, food_transFat = 0;
+                                      food_cholesterol = 0 , food_saturatedFat = 0, food_transFat = 0;
 
                             for (int i = 0; i < weekMeal.size(); i++) {
                                 Integer findIndex = weekMeal.get(i);
