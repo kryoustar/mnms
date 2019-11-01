@@ -1,5 +1,9 @@
 package com.example.project1;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,14 +25,24 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Random;
 
 public class RecommendMainFragment extends Fragment {
+
+    public Context mContext;
+    ImageView i1;
+    ImageView i2;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +64,14 @@ public class RecommendMainFragment extends Fragment {
         lacknutrients = view.findViewById(R.id.lacknutrients);
         lacknutrients2 = view.findViewById(R.id.lacknutrients2);
 
+        recommendImage1 = view.findViewById(R.id.recommendImage1);
+        recommendImage2 = view.findViewById(R.id.recommendImage2);
+
+        recommendTitle1 = view.findViewById(R.id.recommendTitle1);
+        recommendTitle2 = view.findViewById(R.id.recommendTitle2);
+        recommendMenu = view.findViewById(R.id.recommendMenu);
+        recommendMenu1 = view.findViewById(R.id.recommendMenu1);
+        recommendMenu2 = view.findViewById(R.id.recommendMenu2);
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
@@ -215,12 +239,12 @@ public class RecommendMainFragment extends Fragment {
                                 if (low<high) {
                                     lacknutrients.setText("지난 일주일 간 [탄수화물]이 가장 부족합니다.");
                                     lacknutrients2.setText("[탄수화물]이 부족할 땐 감자튀김, 쿠키 등을 먹는 것이 좋습니다.");
-                                    //recommendMenu.setText("[탄수화물] 섭취를 위한 내 주변 추천 메뉴");
+                                    recommendMenu.setText("[탄수화물] 섭취를 위한 내 주변 추천 메뉴");
                                     minNut = 1;
                                 } else {
                                     lacknutrients.setText("지난 일주일 간 [지방]이 가장 부족합니다.");
                                     lacknutrients2.setText("[지방]이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
-                                    //recommendMenu.setText("[지방] 섭취를 위한 내 주변 추천 메뉴");
+                                    recommendMenu.setText("[지방] 섭취를 위한 내 주변 추천 메뉴");
                                     minNut = 3;
 
                                 }
@@ -229,20 +253,20 @@ public class RecommendMainFragment extends Fragment {
                                 if (mid<high) {
                                     lacknutrients.setText("지난 일주일 간 [단백질]이 가장 부족합니다.");
                                     lacknutrients2.setText("[단백질]이 부족할 땐 브로콜리, 검정콩, 두부 등을 먹는 것이 좋습니다.");
-                                   // recommendMenu.setText("[단백질] 섭취를 위한 내 주변 추천 메뉴");
+                                    recommendMenu.setText("[단백질] 섭취를 위한 내 주변 추천 메뉴");
 
                                     minNut = 2;
 
                                 } else {
                                     lacknutrients.setText("지난 일주일 간 [지방]이 가장 부족합니다.");
                                     lacknutrients2.setText("[지방]이 부족할 땐 도넛, 아보카도, 견과류 등을 먹는 것이 좋습니다.");
-                                    //recommendMenu.setText("[지방] 섭취를 위한 내 주변 추천 메뉴");
+                                    recommendMenu.setText("[지방] 섭취를 위한 내 주변 추천 메뉴");
                                     minNut = 3;
 
                                 }
                             }
 
-                            /*
+
                             //부족한 영양소에 따른 메뉴 추천(용산구 내 식당 메뉴 임의로 10개씩 선택)
                             Integer [] temp;
                             Integer [] carbsRec = {233, 236, 241, 257, 268, 272, 320, 365, 384, 400};
@@ -258,8 +282,8 @@ public class RecommendMainFragment extends Fragment {
                             else {
                                 temp = fatRec;
                             }
-*/
-                            /*
+
+
                             int ranNum1 = new Random().nextInt(10);
                             int ranNum2 = new Random().nextInt(10);
                             while (ranNum1 == ranNum2) {
@@ -277,15 +301,28 @@ public class RecommendMainFragment extends Fragment {
                             RestaurantItem restaurantItem1 = RestaurantItem.restaurantItemSearch(ResNum1, getActivity());
                             RestaurantItem restaurantItem2 = RestaurantItem.restaurantItemSearch(ResNum2, getActivity());
                             String resName1 = restaurantItem1.getRestaurantName();
+                            int resInt1 = restaurantItem1.getNumber();
                             String resName2 = restaurantItem2.getRestaurantName();
+                            int resInt2 = restaurantItem2.getNumber();
 
                             recommendMenu1.setText(Menu1);
                             recommendMenu2.setText(Menu2);
                             recommendTitle1.setText(resName1);
                             recommendTitle2.setText(resName2);
-*/
-/*
-                            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+                            mContext = getContext();
+                            int drawable = mContext.getResources().
+                                    getIdentifier("image_" + resInt1,"drawable",mContext.getPackageName());
+                            i1 = view.findViewById(R.id.recommendImage1);
+                            i1.setImageResource(drawable);
+
+                            int drawable2 = mContext.getResources().
+                                    getIdentifier("image_"+resInt2,"drawable",mContext.getPackageName());
+                            i2 = view.findViewById(R.id.recommendImage2);
+                            i2.setImageResource(drawable2);
+
+
+     /*                       FirebaseStorage storage = FirebaseStorage.getInstance();
                             StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + 1 + ".jpg");
                             //StorageReference storageRef = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + resNum1 + ".jpg");
 
@@ -304,8 +341,8 @@ public class RecommendMainFragment extends Fragment {
                                 });
                             } catch (IOException e) {
                             }
-*/
-/*
+
+
 
 
                             StorageReference storageRef2 = storage.getReferenceFromUrl("gs://project1-cecd8.appspot.com").child("image_" + 1 + ".jpg");
@@ -327,7 +364,7 @@ public class RecommendMainFragment extends Fragment {
                             } catch (IOException e) {
                             }
 */
-/*
+
                             //첫 번째 추천메뉴 사진 클릭했을 때
                             recommendImage1.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -338,8 +375,8 @@ public class RecommendMainFragment extends Fragment {
                                     startActivity(intent);
                                 }
                             });
-*/
-/*
+
+
 
                             //두 번째 추천메뉴 사진 클릭했을 때
                             recommendImage2.setOnClickListener(new View.OnClickListener() {
@@ -351,7 +388,7 @@ public class RecommendMainFragment extends Fragment {
                                     startActivity(intent);
                                 }
                             });
-*/
+
 
 
                         }
