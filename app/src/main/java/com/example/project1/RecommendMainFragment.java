@@ -37,6 +37,7 @@ public class RecommendMainFragment extends Fragment {
     ImageView i1;
     ImageView i2;
     private boolean firstVisit;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -92,10 +93,11 @@ public class RecommendMainFragment extends Fragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         if (bundle != null) {
             int yearselect = bundle.getInt("Selected Year");
-            selectedYear = Integer.toString(yearselect);
+            // selectedYear = Integer.toString(yearselect);
             int monthselect = bundle.getInt("Selected Month");
-            selectedMonth = Integer.toString(monthselect);
-            if (monthselect < 10) {
+            //selectedMonth = Integer.toString(monthselect);
+            int dayselect = bundle.getInt("Selected Day");
+            /*  if (monthselect < 10) {
                 selectedMonth = "0" + monthselect;
             }
             int dayselect = bundle.getInt("Selected Day");
@@ -104,43 +106,56 @@ public class RecommendMainFragment extends Fragment {
                 selectedDay = "0" + dayselect;
             }
             date = selectedYear + "-" + selectedMonth + "-" + selectedDay;
-
+*/
 
             for (int i = 1; i < 8; i++) {
+                Calendar selectedCalendar = new GregorianCalendar();
+                selectedCalendar.set(Calendar.YEAR, yearselect);
+                selectedCalendar.set(Calendar.MONTH, monthselect - 1);
+                selectedCalendar.set(Calendar.DATE, dayselect);
+                selectedCalendar.add(Calendar.DATE, -i);
+
                 String tempDate;
-                String toYear = selectedYear;
-                String toMonth = selectedMonth;
-                String toDayofMonth = Integer.toString(dayselect - i);
-                if (dayselect < 10) {
+                String toYear = Integer.toString(selectedCalendar.get(Calendar.YEAR));
+                String toMonth = Integer.toString(selectedCalendar.get(Calendar.MONTH) + 1);
+                //String toDayofMonth = Integer.toString(dayselect - i);
+
+                if ((selectedCalendar.get(Calendar.MONTH) + 1) < 10) {
+                    toMonth = "0" + toMonth;
+                }
+                String toDayofMonth = Integer.toString(selectedCalendar.get(Calendar.DATE));
+                if (selectedCalendar.get(Calendar.DATE) < 10) {
+                    toDayofMonth = "0" + toDayofMonth;
+                }
+               /* if (dayselect < 10) {
+                    toDayofMonth = "0" + toDayofMonth;
+                }*/
+                tempDate = toYear + "-" + toMonth + "-" + toDayofMonth;
+                weekArray[i - 1] = tempDate;
+                // 일주일 치 날 짜 배열 생성
+            }
+        } else {
+
+            for (int i = 1; i < 8; i++) {
+                Calendar todayCalendar = new GregorianCalendar();
+                todayCalendar.add(Calendar.DATE, -i);
+                String tempDate;
+                String toYear = Integer.toString(todayCalendar.get(Calendar.YEAR));
+                String toMonth = Integer.toString(todayCalendar.get(Calendar.MONTH) + 1);
+                if ((todayCalendar.get(Calendar.MONTH) + 1) < 10) {
+                    toMonth = "0" + toMonth;
+                }
+                String toDayofMonth = Integer.toString(todayCalendar.get(Calendar.DATE));
+                if (todayCalendar.get(Calendar.DATE) < 10) {
                     toDayofMonth = "0" + toDayofMonth;
                 }
                 tempDate = toYear + "-" + toMonth + "-" + toDayofMonth;
                 weekArray[i - 1] = tempDate;
                 // 일주일 치 날 짜 배열 생성
             }
-        }
-        else {
 
-                for (int i = 1; i < 8; i++) {
-                    Calendar todayCalendar = new GregorianCalendar();
-                    todayCalendar.add(Calendar.DATE, -i);
-                    String tempDate;
-                    String toYear = Integer.toString(todayCalendar.get(Calendar.YEAR));
-                    String toMonth = Integer.toString(todayCalendar.get(Calendar.MONTH) + 1);
-                    if ((todayCalendar.get(Calendar.MONTH) + 1)<10) {
-                        toMonth = "0" + toMonth;
-                    }
-                    String toDayofMonth = Integer.toString(todayCalendar.get(Calendar.DATE));
-                    if (todayCalendar.get(Calendar.DATE) < 10) {
-                        toDayofMonth = "0" + toDayofMonth;
-                    }
-                    tempDate = toYear + "-" + toMonth + "-" + toDayofMonth;
-                    weekArray[i - 1] = tempDate;
-                    // 일주일 치 날 짜 배열 생성
-                }
-
-           // String weekdate = weekArray[6] + " ~ " + weekArray[0];
-           // week.setText(weekdate);
+            // String weekdate = weekArray[6] + " ~ " + weekArray[0];
+            // week.setText(weekdate);
 
         }
 
@@ -218,7 +233,7 @@ public class RecommendMainFragment extends Fragment {
                             //띄움
                             float food_kcal = 0, food_carbs = 0,
                                     food_protein = 0, food_fat = 0, food_natrium = 0, food_sugar = 0,
-                                      food_cholesterol = 0 , food_saturatedFat = 0, food_transFat = 0;
+                                    food_cholesterol = 0, food_saturatedFat = 0, food_transFat = 0;
 
                             for (int i = 0; i < weekMeal.size(); i++) {
                                 Integer findIndex = weekMeal.get(i);
@@ -234,13 +249,13 @@ public class RecommendMainFragment extends Fragment {
                                 food_transFat += foodItem.getFoodTransfat();
 
                             }
-                            int show_natrium = (int)food_natrium ;
+                            int show_natrium = (int) food_natrium;
                             show_natrium = show_natrium / 100;
-                            int show_sugar = (int)food_sugar;
-                            int show_cholesterol = (int)food_cholesterol ;
+                            int show_sugar = (int) food_sugar;
+                            int show_cholesterol = (int) food_cholesterol;
                             show_cholesterol = show_cholesterol / 100;
-                            int show_saturatedFat = (int)food_saturatedFat ;
-                            int show_transFat = (int)food_transFat ;
+                            int show_saturatedFat = (int) food_saturatedFat;
+                            int show_transFat = (int) food_transFat;
 
                             /*
                             TextView forSugar = view.findViewById(R.id.sugar);
@@ -266,12 +281,12 @@ public class RecommendMainFragment extends Fragment {
                             int mid = Math.round(food_protein / protein * 100);
                             int high = Math.round(food_fat / fat * 100);
 
-                            if (low>100)
+                            if (low > 100)
                                 low = 100;
-                            if (mid>100)
+                            if (mid > 100)
                                 mid = 100;
-                            if (high>100)
-                                high=100;
+                            if (high > 100)
+                                high = 100;
 
                             if (low < 30) {
                                 mLowBar.set(Color.RED, low);
@@ -315,8 +330,8 @@ public class RecommendMainFragment extends Fragment {
 
                             int minNut = 0; //가장 적은 영양소: 탄수화물_1, 단백질_2, 지방_3
 
-                            if (low<mid) {
-                                if (low<high) {
+                            if (low < mid) {
+                                if (low < high) {
                                     lacknutrients.setText("지난 일주일 간 [탄수화물]이 가장 부족합니다.");
                                     lacknutrients2.setText("[탄수화물]이 부족할 땐 감자튀김, 쿠키 등을 먹는 것이 좋습니다.");
                                     recommendMenu.setText("[탄수화물] 섭취를 위한 내 주변 추천 메뉴");
@@ -328,9 +343,8 @@ public class RecommendMainFragment extends Fragment {
                                     minNut = 3;
 
                                 }
-                            }
-                            else {
-                                if (mid<high) {
+                            } else {
+                                if (mid < high) {
                                     lacknutrients.setText("지난 일주일 간 [단백질]이 가장 부족합니다.");
                                     lacknutrients2.setText("[단백질]이 부족할 땐 브로콜리, 검정콩, 두부 등을 먹는 것이 좋습니다.");
                                     recommendMenu.setText("[단백질] 섭취를 위한 내 주변 추천 메뉴");
@@ -348,18 +362,16 @@ public class RecommendMainFragment extends Fragment {
 
 
                             //부족한 영양소에 따른 메뉴 추천(용산구 내 식당 메뉴 임의로 10개씩 선택)
-                            Integer [] temp;
-                            Integer [] carbsRec = {233, 236, 241, 257, 268, 272, 320, 365, 384, 400};
-                            Integer [] proteinRec = {206, 217, 273, 321, 325, 392, 417, 423, 436, 444};
-                            Integer [] fatRec = {194, 195, 201, 212, 244, 306, 357, 426, 333, 364};
+                            Integer[] temp;
+                            Integer[] carbsRec = {233, 236, 241, 257, 268, 272, 320, 365, 384, 400};
+                            Integer[] proteinRec = {206, 217, 273, 321, 325, 392, 417, 423, 436, 444};
+                            Integer[] fatRec = {194, 195, 201, 212, 244, 306, 357, 426, 333, 364};
 
                             if (minNut == 1) {
                                 temp = carbsRec;
-                            }
-                            else if (minNut == 2) {
+                            } else if (minNut == 2) {
                                 temp = proteinRec;
-                            }
-                            else {
+                            } else {
                                 temp = fatRec;
                             }
 
@@ -392,12 +404,12 @@ public class RecommendMainFragment extends Fragment {
 
                             mContext = getContext();
                             int drawable = mContext.getResources().
-                                    getIdentifier("image_" + resInt1,"drawable",mContext.getPackageName());
+                                    getIdentifier("image_" + resInt1, "drawable", mContext.getPackageName());
                             i1 = view.findViewById(R.id.recommendImage1);
                             i1.setImageResource(drawable);
 
                             int drawable2 = mContext.getResources().
-                                    getIdentifier("image_"+resInt2,"drawable",mContext.getPackageName());
+                                    getIdentifier("image_" + resInt2, "drawable", mContext.getPackageName());
                             i2 = view.findViewById(R.id.recommendImage2);
                             i2.setImageResource(drawable2);
 
@@ -457,7 +469,6 @@ public class RecommendMainFragment extends Fragment {
                             });
 
 
-
                             //두 번째 추천메뉴 사진 클릭했을 때
                             recommendImage2.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -468,7 +479,6 @@ public class RecommendMainFragment extends Fragment {
                                     startActivity(intent);
                                 }
                             });
-
 
 
                         }
@@ -484,11 +494,12 @@ public class RecommendMainFragment extends Fragment {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
+
                 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
                     if (requestCode == 1) {
 
-                        if(resultCode == RESULT_OK){
+                        if (resultCode == RESULT_OK) {
                             //Update List
                         }
 
