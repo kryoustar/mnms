@@ -36,31 +36,34 @@
                         android:textColor="#000000"
                         android:textSize="20dp" />
                 </LinearLayout>
-
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="180dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_width="170dp"
+                    android:layout_width="180dp"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <Button
                         android:id="@+id/weekdate"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:fontFamily="@font/kbizr"
-                        android:textAllCaps="false"
-                        android:textColor="#5aa139" />
+                        android:textColor="#5aa139"
+                        android:background="@drawable/border_1" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/my_border"
                 android:backgroundTint="#515AA139"
                 android:orientation="vertical">

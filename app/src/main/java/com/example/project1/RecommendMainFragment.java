@@ -29,15 +29,19 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
+import static android.app.Activity.RESULT_OK;
+
 public class RecommendMainFragment extends Fragment {
 
     public Context mContext;
     ImageView i1;
     ImageView i2;
+    private boolean firstVisit;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recommend_main, container, false);
+        firstVisit = true;
         TextView mLowLabel, mMidLabel, mHighLabel;
         TextView lacknutrients, lacknutrients2;
         BarView mLowBar, mMidBar, mHighBar;
@@ -63,17 +67,98 @@ public class RecommendMainFragment extends Fragment {
         recommendMenu = view.findViewById(R.id.recommendMenu);
         recommendMenu1 = view.findViewById(R.id.recommendMenu1);
         recommendMenu2 = view.findViewById(R.id.recommendMenu2);
+        TextView week = view.findViewById(R.id.weekdate);
+
+        week.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(getActivity(), CalendarActivityTwo.class);
+                startActivityForResult(intent2, 1);
+                //startActivity(intent2);
+                //onResume();
+            }
+        });
+
+        String selectedYear, selectedMonth, selectedDay;
+        String date = "";
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
-        String date = formatter.format(today);
+        date = formatter.format(today);
+        week.setText(date);
+
+        String[] weekArray = new String[7];
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if (bundle != null) {
+            int yearselect = bundle.getInt("Selected Year");
+            selectedYear = Integer.toString(yearselect);
+            int monthselect = bundle.getInt("Selected Month");
+            selectedMonth = Integer.toString(monthselect);
+            if (monthselect < 10) {
+                selectedMonth = "0" + monthselect;
+            }
+            int dayselect = bundle.getInt("Selected Day");
+            selectedDay = Integer.toString(dayselect);
+            if (dayselect < 10) {
+                selectedDay = "0" + dayselect;
+            }
+            date = selectedYear + "-" + selectedMonth + "-" + selectedDay;
+
+
+            for (int i = 1; i < 8; i++) {
+                String tempDate;
+                String toYear = selectedYear;
+                String toMonth = selectedMonth;
+                String toDayofMonth = Integer.toString(dayselect - i);
+                if (dayselect < 10) {
+                    toDayofMonth = "0" + toDayofMonth;
+                }
+                tempDate = toYear + "-" + toMonth + "-" + toDayofMonth;
+                weekArray[i - 1] = tempDate;
+                // 일주일 치 날 짜 배열 생성
+            }
+        }
+        else {
+
+                for (int i = 1; i < 8; i++) {
+                    Calendar todayCalendar = new GregorianCalendar();
+                    todayCalendar.add(Calendar.DATE, -i);
+                    String tempDate;
+                    String toYear = Integer.toString(todayCalendar.get(Calendar.YEAR));
+                    String toMonth = Integer.toString(todayCalendar.get(Calendar.MONTH) + 1);
+                    if ((todayCalendar.get(Calendar.MONTH) + 1)<10) {
+                        toMonth = "0" + toMonth;
+                    }
+                    String toDayofMonth = Integer.toString(todayCalendar.get(Calendar.DATE));
+                    if (todayCalendar.get(Calendar.DATE) < 10) {
+                        toDayofMonth = "0" + toDayofMonth;
+                    }
+                    tempDate = toYear + "-" + toMonth + "-" + toDayofMonth;
+                    weekArray[i - 1] = tempDate;
+                    // 일주일 치 날 짜 배열 생성
+                }
+
+           // String weekdate = weekArray[6] + " ~ " + weekArray[0];
+           // week.setText(weekdate);
+
+        }
+
+       /* String nullcheck = week.getText().toString();
+        if (nullcheck.equals("0-0-0")) {
+            SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+            Date today2 = new Date();
+            String date2 = formatter.format(today2);
+            //week.setText(date2);
+
+        }*/
 
         DatabaseReference Database = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         DatabaseReference ConditionRef = Database.child("User")
                 .child(uid).child("Meal");
-
+/*
         String[] weekArray = new String[7];
         for (int i = 1; i < 8; i++) {
             Calendar todayCalendar = new GregorianCalendar();
@@ -93,9 +178,13 @@ public class RecommendMainFragment extends Fragment {
             // 일주일 치 날 짜 배열 생성
         }
 
-        TextView week = view.findViewById(R.id.weekdate);
+*/
         String weekdate = weekArray[6] + " ~ " + weekArray[0];
         week.setText(weekdate);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = database.getReferenceFromUrl("https://project1-cecd8.firebaseio.com/");
+        dbRef = database.getReference("/User");
+        dbRef.child(uid).child("Week").setValue(weekdate);
 
         ArrayList<Integer> weekMeal = new ArrayList<Integer>(); // 빈 데이터 리스트 생성
         for (int i = 0; i < 7; i++) {
@@ -395,9 +484,31 @@ public class RecommendMainFragment extends Fragment {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
+                protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+                    if (requestCode == 1) {
+
+                        if(resultCode == RESULT_OK){
+                            //Update List
+                        }
+
+                    }
+                }//onActivityResult
+
             });
         }
 
         return view;
+
+
     }
+    /*@Override
+    public void onResume() {
+        //other stuff
+        if (firstVisit) {
+            //do stuff for first visit only
+
+            firstVisit = false;
+        }
+    }*/
 }

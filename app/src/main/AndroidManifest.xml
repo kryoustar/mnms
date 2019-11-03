@@ -38,6 +38,7 @@
         <activity android:name=".FoodDetail"></activity>
         <activity android:name=".GetCurrentGPSLocation"></activity>
         <activity android:name=".MainActivity"></activity>
+        <activity android:name=".CalendarActivityTwo"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
