@@ -33,7 +33,7 @@ public final class BarView extends View {
 
     public void set(int color, int percent) {
 
-        if(percent < 0 || percent > 100) {
+        if(percent < 0) {
             throw new IllegalArgumentException("Percent value must range from 0 to 100");
         }
 

@@ -281,12 +281,14 @@ public class RecommendMainFragment extends Fragment {
                             int mid = Math.round(food_protein / protein * 100);
                             int high = Math.round(food_fat / fat * 100);
 
+                            /*
                             if (low > 100)
                                 low = 100;
                             if (mid > 100)
                                 mid = 100;
                             if (high > 100)
                                 high = 100;
+                             */
 
                             if (low < 30) {
                                 mLowBar.set(Color.RED, low);
@@ -294,9 +296,13 @@ public class RecommendMainFragment extends Fragment {
                             if (low >= 30 && low < 70) {
                                 mLowBar.set(Color.rgb(255, 187, 0), low);
                             }
-                            if (low >= 70) {
+                            if (low >= 70 && low <= 100) {
                                 mLowBar.set(Color.rgb(1, 160, 26), low);
                             }
+                            if (low > 100) {
+                                mLowBar.set(Color.BLUE, low);
+                            }
+
                             if (mid < 30) {
                                 mMidBar.set(Color.RED, mid);
 
@@ -305,10 +311,14 @@ public class RecommendMainFragment extends Fragment {
                                 mMidBar.set(Color.rgb(255, 187, 0), mid);
 
                             }
-                            if (mid >= 70) {
+                            if (mid >= 70 && mid <= 100 ) {
                                 mMidBar.set(Color.rgb(1, 160, 26), mid);
 
                             }
+                            if (mid > 100) {
+                                mMidBar.set(Color.BLUE, mid);
+                            }
+
                             if (high < 30) {
                                 mHighBar.set(Color.RED, high);
 
@@ -318,9 +328,11 @@ public class RecommendMainFragment extends Fragment {
 
 
                             }
-                            if (high >= 70) {
+                            if (high >= 70 && high <= 100 ) {
                                 mHighBar.set(Color.rgb(1, 160, 26), high);
-
+                            }
+                            if (high > 100) {
+                                mHighBar.set(Color.BLUE, high);
                             }
 
                             mLowLabel.setText(low + "%");
